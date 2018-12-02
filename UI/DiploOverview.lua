@@ -1,5 +1,3 @@
-print("This is the modded DiploOverview from 'UI - Trade Opportunities'")
-
 include( "IconSupport" );
 -------------------------------------------------
 -- Diplomatic
