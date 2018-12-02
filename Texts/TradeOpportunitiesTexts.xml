@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameData>
+  <Language_en_US>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS" >
+      <Text>Trade Opportunities</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_CIV_STATUS" >
+      <Text>{1}{2} ({3_Num})</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_WAR" >
+      <Text>[COLOR:255:70:70:200]WAR[ENDCOLOR]</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_RA_TT" >
+      <Text>[ICON_RESEARCH] Can form Research Agreement; [ICON_INFLUENCE] agreement is already in place</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_RA_YES_TT" >
+      <Text>Can form Research Agreement</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_RA_NO_TT" >
+      <Text>Research Agreement is already in place</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_EMBASSY_TT" >
+      <Text>[ICON_CITY_STATE] Can form mutual Embassy Agreement; [ICON_INFLUENCE] agreement is already in place</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_EMBASSY_YES_TT" >
+      <Text>Can form mutual Embassy Agreement</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_EMBASSY_NO_TT" >
+      <Text>Mutual Embassy agreement is already in place</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_EMBASSY_US_TT" >
+      <Text>We already have an Embassy in their Capital</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_EMBASSY_THEM_TT" >
+      <Text>They already have an Embassy in our Capital</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_BORDERS_TT" >
+      <Text>[ICON_TRADE] Can form mutual Open Borders Agreement; [ICON_TRADE_WHITE] agreement is already in place</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_BORDERS_YES_TT" >
+      <Text>Can form mutual Open Borders Agreement</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_BORDERS_NO_TT" >
+      <Text>Mutual Open Borders is already in place</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_BORDERS_US_TT" >
+      <Text>We can already cross their borders</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_TRADE_STATUS_BORDERS_THEM_TT" >
+      <Text>They can already cross our borders</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_CS_STATUS" >
+      <Text>City-States</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_CS_SORT_TRAIT_TT" >
+      <Text>Sort by Trait</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_SORT_NAME_TT" >
+      <Text>Sort by City-State Name</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_SORT_ALLY_TT" >
+      <Text>Sort by City-State Ally</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_SORT_INFLUENCE_TT" >
+      <Text>Sort by Influence (right-click to sort by Influence needed)</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_CS_STATUS_CITY_STATE" >
+      <Text>City-State</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_STATUS_ALLIED_WITH" >
+      <Text>Allied with</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_STATUS_PROTECTED_BY" >
+      <Text>Protected by</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_STATUS_QUESTS" >
+      <Text>Quests</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_STATUS_INFLUENCE" >
+      <Text>Influence</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_STATUS_WAR" >
+      <Text>War status</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_CS_STATUS_PROTECT_TT" >
+      <Text>{1} is protected by[NEWLINE]{2}</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_STATUS_NO_PROTECT_TT" >
+      <Text>{1} is protected by nobody</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_CS_STATUS_QUEST_TT" >
+      <Text>{1_QuestText}</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_STATUS_NO_QUEST_TT" >
+      <Text>{1} currently has no requests</Text>
+    </Row>
+    
+    <Row Tag="TXT_KEY_DO_CS_STATUS_PEACE_TT" >
+      <Text>At war, may make peace</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DO_CS_STATUS_WAR_TT" >
+      <Text>At war, peace blocked</Text>
+    </Row>
+
+    <Row Tag="TXT_KEY_DO_HEADER_GROUP_1" >
+      <Text>Special</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_1_TT" >
+      <Text>Special luxury resources with additional abilities</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_2" >
+      <Text>Sea</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_2_TT" >
+      <Text>Underwater luxury resources</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_3" >
+      <Text>Mine</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_3_TT" >
+      <Text>Luxury resources that require mine</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_4" >
+      <Text>Quarry</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_4_TT" >
+      <Text>Luxury resources that require quarry</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_5" >
+      <Text>Plantation</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_5_TT" >
+      <Text>Luxury resources that require plantation</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_6" >
+      <Text>Camp</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_6_TT" >
+      <Text>Luxury resources that require camp</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_7" >
+      <Text>Unique</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_7_TT" >
+      <Text>Luxury resources available only for Brazil or Indonesia</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_8" >
+      <Text>City-State</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_8_TT" >
+      <Text>Luxury resources available only for City-States</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_9" >
+      <Text>Strategic</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_9_TT" >
+      <Text>Strategic resources which allow building unique structures or units</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_OTHER" >
+      <Text>...</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_HEADER_GROUP_OTHER_TT" >
+      <Text>Other luxury resources</Text>
+    </Row>
+	
+    <!-- Key -->
+    <Row Tag="TXT_KEY_DO_COLOUR_KEY_TITLE" >
+      <Text>[COLOR_LIGHT_GREY]Colour key:[ENDCOLOR]</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_COLOUR_KEY_1" >
+      <Text>[COLOR_LIGHT_GREY]Surplus = Local - Exported - Used          Total = Local + from City-States + Imported - Exported - Used          &apos; - strategic monopoly          &quot; - global monopoly[ENDCOLOR]</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_COLOUR_KEY_2" >
+      <Text>[COLOR_LIGHT_GREY]Active player:[ENDCOLOR]            [COLOR:0:135:0:255]Surplus &gt; 3[ENDCOLOR]     [COLOR:125:255:0:255]Surplus &gt; 1[ENDCOLOR]     [COLOR:200:180:0:255]Surplus = 1[ENDCOLOR]     [COLOR:255:70:70:255]Surplus &lt; 0[ENDCOLOR]     [COLOR_YIELD_FOOD]Total = 0[ENDCOLOR]     [COLOR_CYAN]One[ENDCOLOR][COLOR_LIGHT_GREY] or [ENDCOLOR][COLOR_CITY_BLUE]more[ENDCOLOR][COLOR_LIGHT_GREY] cities demand this resource[ENDCOLOR]     [COLOR_CITY_GREY]Rest[ENDCOLOR]</Text>
+    </Row>
+	<Row Tag="TXT_KEY_DO_COLOUR_KEY_3" >
+      <Text>[COLOR_LIGHT_GREY]Non-active player:     Active player doesn&apos;t have this resource and:[ENDCOLOR] [COLOR:0:135:0:255]Surplus &gt; 3[ENDCOLOR] [COLOR_LIGHT_GREY]or[ENDCOLOR] [COLOR:125:255:0:255]Surplus &gt; 1[ENDCOLOR]     [COLOR:255:70:70:255]Surplus &lt; 0[ENDCOLOR]     [COLOR_YIELD_FOOD]Total = 0 and Active player has this resource[ENDCOLOR]     [COLOR_CITY_GREY]Rest[ENDCOLOR]</Text>
+    </Row>
+  </Language_en_US>
+</GameData>

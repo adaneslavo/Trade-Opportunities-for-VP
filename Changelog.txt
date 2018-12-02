@@ -1,0 +1,106 @@
+Changelog:
+v8.1:
+- lua error fix.
+
+v8:
+- code:
+	- deleted check for useful resources at the lua file load (now only on window opening left),
+- texts:
+	- modified tooltips (those with monopoly info) for standard resources to be compatible with "Other luxury resources",
+	- "..." instead of "?" for "Other luxury resources,
+	- "City-State" instead of "CS" as a header for luxury resources form City-States,
+	- some capital letters substituted by small ones (Protected (B)y, Allied (W)ith, Current (D)eals and so on),
+	- fixed "Colour Key" tab,
+	- fixed spelling errors.
+- UI:
+	- made "..." mark for "Other luxury resources" more visible (orange),
+	- fixed alignment like always,
+- files:
+	- renamed few folders and files.
+
+v7:
+- new version numbering system: dropped "28m" part because mod was changed so hard including code refining; now any version starts counting from "v7".
+- resources:
+	- added Paper to "Strategics" part,
+	- added "Other luxury resources" to "Luxuries" part; makes all mod which add new luxuries compatible with TO; significantly reworked basic feature.
+- UI:
+	- totally reworked "Colour Key" tab,
+	- totally new colour palette in main window:
+		- cyan or blue - one or more cities respectively demands that resource (unavailable for non-active players),
+		- dark green, light green, yellowish green - player has more than 3, 1 or equal to 1 tradable resource copies respectively:
+			- yellowish green is not available for non-active players.
+		- orange - player has no tradable resources,
+		- red - new category: player uses more resources than he has (has deficit - means that he uses imported ones from CSs or from other players),
+		- brownish grey - rest of cases; new grey colour is much darker; now other colours are visible at first glance.
+	- now numbers are centred in the window instead of aligned to the right,
+	- new markers:
+		- ' shows strategic monopoly bonus for the resource,
+		- " shows strategic global bonus for the resource.
+	- bigger "No player met" text label,
+	- "War" status is now moved to the right; red background shows up instead with increased opacity; it now does not hide content below (you can still see numbers underneath),
+	- now different columns' colours for luxury (light gold) and strategic (light silver) resources,
+	- added ICON_CAPITAL icon before capital city on list with cities demanding some resource; added icon, name and some generic text; city names coloured,
+	- added icon, name and some generic text for unavailable resources,
+	- deleted resource icon before city-state name in tooltip,
+	- slightly scaled down CS icons to better fit the frames,
+	- added "Monopoly bonus" info to resource icon (header) tooltip,
+	- added "Current Deals" tooltip separate for every non-active player,
+	- few things moved in the main and City-State windows for better alignment.
+- code:
+	- cleaned UI xml code,
+	- cleaned and refined main lua code,
+	- fixed resource calculation: now it takes also resource used for units or buildings into account,
+	- hovering over CS icon shows all its resources instead of only strategic ones,
+	- reduced spoiler informations:
+		- now player on start can see only its own resources,
+		- during exploration, after meeting new players, new sources are "discovered",
+		- code checks available resources and resources in nearby area from cities,
+		- fixed resource logic for strategics: same like in CSL mod (now shows resource visible for active player not for target player; means that if active player researches iron then it will be searched for every other player including CSs):
+			- hovering the CS's icon still shows resources improved by that CS.
+	- reworked main file.
+
+v28m6:
+- added:
+	- strategic resources to the table,
+	- colour key info tab,
+	- orange colour when active player has only 1 copy of resource available for trade.
+- deleted:
+	- action icons for active player (useless),
+	- gold info in main tab (to make space for strategic resources).
+- improved "City-states View" tab:
+	- each line takes less space,
+	- better alignment,
+	- smaller font,
+	- deleted old gold gift options.
+- revised texts.
+
+v28m5:
+- added block condition from Global Relations and changed dependency from CBO to More Luxuries part of VP.
+
+v28m4:
+- refined working area (lines, fonts, scroll bar, positioning, icon resizing),
+- inverted grid colours,
+- war status centred,
+- small text corrections.
+
+v28m3:
+- further window adjustments,
+- moved Marble and Ivory to the left (new group: Special luxuries),
+- moved Fur from Plantation group to Camp where it should be,
+- added headers for each group.
+
+v28m2:
+- small fixes to scroll bar.
+
+v28m:
+- added all resources from VP,
+- sorted out existing resources grouping them using following pattern (alphabetical order inside groups):
+	- sea,
+	- mine,
+	- quarry,
+	- plantation,
+	- camp,
+	- Brazilian,
+	- Indonesian,
+	- city-states',
+- adjusted window to match new resources.
