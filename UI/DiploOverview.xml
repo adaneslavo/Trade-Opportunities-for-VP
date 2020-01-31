@@ -7,13 +7,13 @@
 
 		<!-- Panel Header Text -->
 		<Label String="TXT_KEY_DIPLOMACY_OVERVIEW" ID="TitleLabel" Anchor="C,T" Offset="0,19" Font="TwCenMT20" Color0="30.50.80.255" Color1="133.184.186.255" Color2="133.184.186.255" FontStyle="SoftShadow" Hidden="1"/>
-        <Label Style="MenuTitleCaption" String="TXT_KEY_DIPLOMACY_OVERVIEW" ID="TitleLabel"/>
+		<Label Style="MenuTitleCaption" String="TXT_KEY_DIPLOMACY_OVERVIEW" ID="TitleLabel"/>
 
-      <!-- Side treatments -->
-      <Box Style="MenuLeftSideTreatment"/>
-      <Box Style="MenuRightSideTreatment"/>
+		<!-- Side treatments -->
+		<Box Style="MenuLeftSideTreatment"/>
+		<Box Style="MenuRightSideTreatment"/>
 
-        <Image Anchor="C,T" AnchorSide="I.O" Size="256,64" Offset="0,-14"  Texture="assets\UI\Art\Icons\Top512IconTrim.dds" >
+		<Image Anchor="C,T" AnchorSide="I.O" Size="256,64" Offset="0,-14"  Texture="assets\UI\Art\Icons\Top512IconTrim.dds" >
 			<Image ID="CivIconBG" Size="64.64" Anchor="C,C" Offset="-1,-1" TextureOffset="77,0" Texture="CivIconBGSizes.dds" />
 			<Image ID="CivIconShadow" Size="48.48" Anchor="C,C" Offset="0,0" Texture="CivSymbolAtlas48.dds" Color="Black.128"/>
 			<Image ID="Icon" Size="48,48" Offset="-1,-1"  Anchor="C,C" Texture="CivSymbolsColor512.dds" />
@@ -21,7 +21,7 @@
 
 
 		<!-- Top Panel  -->
-    <!-- GK is 955,32 ... but we'll stick with the wider V5 value -->
+		<!-- GK is 955,32 ... but we'll stick with the wider V5 value -->
 		<Box Anchor="C,T" Size="971,32" Offset="0,44" Color="0.0.0.128" >
 
 			<Stack Anchor="C,T" Size="971,32" Offset="0,0" Padding="0" StackGrowth="Right">

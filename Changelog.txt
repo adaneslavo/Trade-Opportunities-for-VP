@@ -1,4 +1,7 @@
 Changelog:
+v8.2:
+- compatibility fix by @civplayer33;
+
 v8.1:
 - lua error fix.
 
@@ -14,7 +17,7 @@ v8:
 	- fixed spelling errors.
 - UI:
 	- made "..." mark for "Other luxury resources" more visible (orange),
-	- fixed alignment like always,
+	- fixed alignment like always.
 - files:
 	- renamed few folders and files.
 

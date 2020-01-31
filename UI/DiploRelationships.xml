@@ -54,13 +54,13 @@
 			<!-- City State Meters-->
 			<Image ID="StatusIconBG" Anchor="R,T" Offset="-4,8" Texture="Assets/UI/Art/Notification/CityStateMeterBlack32.dds" Size="32.32" Hidden="0">
 				<Image ID="StatusIcon" Anchor="C,C" Texture="Assets/UI/Art/Notification/CityStateMilitaristic.dds" Size="32.32" Hidden="0"/>
-					<Container Anchor="L,C" Offset="16,0" AnchorSide="O.I" Size="161.11" Hidden="0">
-						<TextureBar ID="NegativeStatusMeter" Anchor="L,C" Size="81.7" Direction="Left" Texture="Assets/UI/Art/Notification/CityStateMeterBaseRed.dds" Hidden="0"/>
-						<TextureBar ID="PositiveStatusMeter" Anchor="R,C" Size="81.7" Direction="Right" Texture="Assets/UI/Art/Notification/CityStateMeterBaseBlue.dds" Hidden="0"/>
-						<Image Anchor="C,C" AnchorSide="O.I" Texture="Assets/UI/Art/Notification/CityStateMeterFrameQuartered.dds" Size="161.11" Hidden="0">					
-							<Image ID="StatusMeterMarker" Anchor="C,C" Offset="0,1" AnchorSide="O.I" Texture="Assets/UI/Art/Notification/CityStateMeterFrameIcon32.dds" Size="32.32" Hidden="0"/>
-						</Image>
-					</Container>
+				<Container Anchor="L,C" Offset="16,0" AnchorSide="O.I" Size="161.11" Hidden="0">
+					<TextureBar ID="NegativeStatusMeter" Anchor="L,C" Size="81.7" Direction="Left" Texture="Assets/UI/Art/Notification/CityStateMeterBaseRed.dds" Hidden="0"/>
+					<TextureBar ID="PositiveStatusMeter" Anchor="R,C" Size="81.7" Direction="Right" Texture="Assets/UI/Art/Notification/CityStateMeterBaseBlue.dds" Hidden="0"/>
+					<Image Anchor="C,C" AnchorSide="O.I" Texture="Assets/UI/Art/Notification/CityStateMeterFrameQuartered.dds" Size="161.11" Hidden="0">
+						<Image ID="StatusMeterMarker" Anchor="C,C" Offset="0,1" AnchorSide="O.I" Texture="Assets/UI/Art/Notification/CityStateMeterFrameIcon32.dds" Size="32.32" Hidden="0"/>
+					</Image>
+				</Container>
 			</Image>
 			<Stack Anchor="L,T" Size="195,293" Offset="0.0" StackGrowth="B" Padding="8" ID="CityStack">
 				<Box Offset="-8,0" Anchor="L,T" Size="205,48" Color="Black.0">

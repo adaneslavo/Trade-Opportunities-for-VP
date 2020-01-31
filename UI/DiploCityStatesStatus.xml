@@ -13,7 +13,7 @@
 					<Box Color="White,0" Anchor="L,T" Size="36,32" Offset="0,-2">
 						<Image ID="CsTraitIcon" Offset="2,0" Anchor="C,C" Size="32,26" Texture="Assets/UI/Art/Notification/CityStateMilitaristic.dds" />
 					</Box>
-					
+
 					<Box Color="White,0" Anchor="L,T" Size="94,32" Offset="36,0">
 						<Label ID="CsName" Offset="0,0" Anchor="L,C" Size="94,32" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="CS!" />
 					</Box>

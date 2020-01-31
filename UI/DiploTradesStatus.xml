@@ -25,7 +25,7 @@
 					<Box Offset="116,-5" Anchor="L,T" Size="24,38" Color="White,0">
 						<Label ID="RESOURCE_OTHER_LUXURIES" Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
-					
+
 					<Box Offset="140,-5" Anchor="L,T" Size="24,38" Color="220,200,40,30">
 						<Label ID="RESOURCE_MARBLE"      Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
@@ -137,7 +137,7 @@
 					<Box Offset="1004,-5" Anchor="L,T" Size="24,38" Color="220,200,40,30">
 						<Label ID="RESOURCE_PORCELAIN"     Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
-					
+
 					<!-- STRATEGIC -->
 					<Box Offset="1042,-5" Anchor="L,T" Size="24,38" Color="White,30">
 						<Label ID="RESOURCE_HORSE"     Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
@@ -199,7 +199,7 @@
 					<Box ID="RESOURCE_OTHER_LUXURIES_BOX" Offset="116,0" Anchor="L,T" Size="24,0" Color="White,0">
 						<Stack ID="RESOURCE_OTHER_LUXURIES" Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					
+
 					<Box ID="RESOURCE_MARBLE_BOX" Offset="140,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
 						<Stack ID="RESOURCE_MARBLE"    Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
@@ -311,7 +311,7 @@
 					<Box ID="RESOURCE_PORCELAIN_BOX" Offset="1004,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
 						<Stack ID="RESOURCE_PORCELAIN"     Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					
+
 					<!-- STRATEGIC -->
 					<Box ID="RESOURCE_HORSE_BOX" Offset="1042,0" Anchor="L,T" Size="24,0" Color="White,30">
 						<Stack ID="RESOURCE_HORSE"     Anchor="L,T" StackGrowth="B" Padding="0" />
@@ -347,14 +347,14 @@
 	</Instance>
 
 	<Instance Name="TradeResourcesInstance" >
-		<Box Size="1286,25" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="TradeBox">			
+		<Box Size="1286,25" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="TradeBox">
 			<Box Size="1286,25" Anchor="L,T" Offset="0,0" Color="200,0,0,0">
 				<Container ID="Lux">
 					<!-- LUXURY -->
 					<Box ID="RESOURCE_OTHER_LUXURIES_ICON" Offset="116,0" Anchor="L,T" Size="24,25" Color="White,0" Hidden="1">
 						<Label ID="Other" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-				  
+
 					<Box Offset="140,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
 						<Label ID="Marble" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
@@ -425,7 +425,7 @@
 						<Label ID="Silk" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="692,0" Anchor="L,T" Size="24,25" Color="White,0">
-						<Label ID="Spices" Offset="1,0" Anchor="R,C" Size="24,25" />
+						<Label ID="Cinnamon" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="716,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
 						<Label ID="Sugar" Offset="1,0" Anchor="R,C" Size="24,25" />
@@ -466,7 +466,7 @@
 					<Box Offset="1004,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
 						<Label ID="Porcelain" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-				  
+
 					<!-- STRATEGIC -->
 					<Box Offset="1042,0" Anchor="L,T" Size="24,25" Color="White,30">
 						<Label ID="Horses" Offset="1,0" Anchor="R,C" Size="24,25" />
@@ -493,7 +493,7 @@
 			</Box>
 		</Box>
 	</Instance>
-		
+
 	<Box Size="1346,650" Anchor="C,C" Offset="0,42" Color="White,0" >
 		<Box Anchor="L,T" Size="1290,32" Offset="25,73" Color="White,0" ID="TradesPanelTitle">
 			<Stack Anchor="L,T" StackGrowth="B" Padding="0">
@@ -501,7 +501,7 @@
 					<Box ID="OtherHeader" Offset="111,0" Anchor="L,T" Size="24,26" Color="220,200,40,30" Hidden="1">
 						<Label String="TXT_KEY_DO_HEADER_GROUP_OTHER" ToolTip="TXT_KEY_DO_HEADER_GROUP_OTHER_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
 					</Box>
-					
+
 					<Box Offset="135,0" Anchor="L,T" Size="48,26" Color="White,0">
 						<Label String="TXT_KEY_DO_HEADER_GROUP_1" ToolTip="TXT_KEY_DO_HEADER_GROUP_1_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
 					</Box>
@@ -526,24 +526,24 @@
 					<Box Offset="950,0" Anchor="L,T" Size="72,26" Color="220,200,40,30">
 						<Label String="TXT_KEY_DO_HEADER_GROUP_8" ToolTip="TXT_KEY_DO_HEADER_GROUP_8_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
 					</Box>
-					
+
 					<Box Offset="1036,0" Anchor="L,T" Size="168,26" Color="White,30">
 						<Label String="TXT_KEY_DO_HEADER_GROUP_9" ToolTip="TXT_KEY_DO_HEADER_GROUP_9_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
 					</Box>
 				</Box>
 			</Stack>
-			
-			<Box Size="1286,25" Anchor="L,T" Offset="-6,29" Color="200,0,0,0" ID="ResourceBox" />	
+
+			<Box Size="1286,25" Anchor="L,T" Offset="-6,29" Color="200,0,0,0" ID="ResourceBox" />
 		</Box>
-		
+
 		<Image ID="BottomTrimNormal" Anchor="L,T" Offset="159,99" Texture="HorizontalTrim.dds" Size="888,3" />
 		<Image ID="BottomTrim" Anchor="L,T" Offset="1061,99" Texture="HorizontalTrim.dds" Size="168,3" />
 		<Image ID="BottomTrimOther" Anchor="L,T" Offset="136,99" Texture="HorizontalTrim.dds" Size="911,3" Hidden="1" />
-		
+
 		<Box Anchor="L,T" Size="1290,463" Offset="19,101" Color="White,0" ID="TradesPanel" >
 			<Stack Anchor="L,T" StackGrowth="B" Padding="0">
 				<Box Size="1286,25" Anchor="L,T" Offset="0,3" Color="200,0,0,0" ID="Header" />
-				
+
 				<Box Size="1286,40" Anchor="L,T" Offset="0,-2" Color="200,0,0,0" ID="PlayerBox" />
 
 				<Box Size="1286,415" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="AiBox" >
@@ -561,7 +561,7 @@
 		</Box>
 
 		<Image ID="BottomTrim" Anchor="C,B" Offset="0,90" Texture="HorizontalTrim.dds" Size="1296,5" />
-		
+
 		<Box Color="White,0" Anchor="L,T" Size="32,32" Offset="265,567">
 			<Label Anchor="C,C" Offset="0,-2" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_COLOUR_KEY_TITLE"/>
 			<Label Anchor="L,C" Offset="70,-15" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_COLOUR_KEY_1"/>

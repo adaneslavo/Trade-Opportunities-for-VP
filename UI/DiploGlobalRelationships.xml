@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Context Color0="Beige" Color1="Black,256" Font="TwCenMT18" FontStyle="Shadow" >
 
-    <Instance Name="TextEntry" >
-        <Label WrapWidth="200" Font="TwCenMT18" Anchor="R,T" ID="Text" />
-    </Instance>
+	<Instance Name="TextEntry" >
+		<Label WrapWidth="200" Font="TwCenMT18" Anchor="R,T" ID="Text" />
+	</Instance>
 	<Instance Name="LTextEntry" >
 		<Label WrapWidth="200" Font="TwCenMT18" Anchor="L,T" ID="Text" />
 	</Instance>
@@ -22,7 +22,7 @@
 					<Grid ID="ButtonAnimGrid" Anchor="L,C"   Size="900,300" Offset="0,0" Padding="0,0" Style="Grid9FrameTurnsHL" />
 				</AlphaAnim>
 			</ShowOnMouseOver>
-			
+
 			<Image Anchor="L,T" Offset="0,0" Size="128,128"   Texture="Assets/UI/Art/Icons/LeaderPortraits1024Frame.dds"  >
 				<Image Anchor="C,C" Offset="0,0" Size="128,128"   Texture="Assets/UI/Art/Icons/LeaderPortraits1024.dds"  ID="LeaderPortrait"/>
 			</Image>
@@ -68,31 +68,31 @@
 			<Image Anchor="C,B" Offset="0,3" Texture="bar900x2.dds" Size="900.1" />
 		</Button>
 
-    </Instance>
+	</Instance>
 
 
 
-    <!--=======================================================================================================================-->
-    <!--=======================================================================================================================-->
-    <Box Size="990,650" Anchor="C,C" Offset="0,42" Color="White.0"   >
-        <Box Anchor="T.L" Size="954,463" Offset="19,72" Color="White.0"  ID="RelationsPanel" >
+	<!--=======================================================================================================================-->
+	<!--=======================================================================================================================-->
+	<Box Size="990,650" Anchor="C,C" Offset="0,42" Color="White.0"   >
+		<Box Anchor="T.L" Size="954,463" Offset="19,72" Color="White.0"  ID="RelationsPanel" >
 
-            <Label ID="NoMajorCivs" Offset="0,0" Anchor="C,C" String="{TXT_KEY_DO_NO_MAJORS:upper}" WrapWidth="425" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+			<Label ID="NoMajorCivs" Offset="0,0" Anchor="C,C" String="{TXT_KEY_DO_NO_MAJORS:upper}" WrapWidth="425" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 
-            <ScrollPanel Anchor="L,T" ID="MajorCivScrollPanel" Vertical="1"  Size="950,452" Offset="0,8" AutoScrollBar="1">
+			<ScrollPanel Anchor="L,T" ID="MajorCivScrollPanel" Vertical="1"  Size="950,452" Offset="0,8" AutoScrollBar="1">
 
-                <!-- Scroll Controls -->
-                <ScrollBar  Anchor="R,T" Offset="0.18" Length="416" Style="VertSlider"/>
-                <UpButton   Anchor="R,T" Offset="0.0" Style="ScrollBarUp"/>
-                <DownButton Anchor="R,B" Offset="0.0" Style="ScrollBarDown"/>
+				<!-- Scroll Controls -->
+				<ScrollBar  Anchor="R,T" Offset="0.18" Length="416" Style="VertSlider"/>
+				<UpButton   Anchor="R,T" Offset="0.0" Style="ScrollBarUp"/>
+				<DownButton Anchor="R,B" Offset="0.0" Style="ScrollBarDown"/>
 
-                <!-- Listing Stack (Dynamic) -->
-                <Stack ID="ItemStack" StackGrowth="B" Offset="20,0" Padding="0" />
+				<!-- Listing Stack (Dynamic) -->
+				<Stack ID="ItemStack" StackGrowth="B" Offset="20,0" Padding="0" />
 
-            </ScrollPanel>
-        </Box>
+			</ScrollPanel>
+		</Box>
 
 
-        <Image Anchor="C,B" Offset="0,110" Texture="HorizontalTrim.dds" Size="1296.5" />
-    </Box>
+		<Image Anchor="C,B" Offset="0,110" Texture="HorizontalTrim.dds" Size="1296.5" />
+	</Box>
 </Context>
