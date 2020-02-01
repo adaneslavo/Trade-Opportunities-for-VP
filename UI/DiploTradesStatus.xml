@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Context Color0="Beige" Color1="Black,256" Font="TwCenMT16" FontStyle="Shadow" >
+	<!-- active player line -->
 	<Instance Name="TradeStatusInstance" >
 		<Box Size="1286,40" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="TradeBox">
 			<Box Size="1266,32" Anchor="L,T" Offset="0,5" Color="200,0,0,0">
@@ -69,34 +70,34 @@
 						<Label ID="RESOURCE_LAPIS"       Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="476,-5" Anchor="L,T" Size="24,38" Color="220,200,40,30">
-						<Label ID="RESOURCE_CITRUS"    Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+						<Label ID="RESOURCE_SPICES"     Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="500,-5" Anchor="L,T" Size="24,38" Color="White,0">
-						<Label ID="RESOURCE_COCOA"    Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+						<Label ID="RESOURCE_CITRUS"    Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="524,-5" Anchor="L,T" Size="24,38" Color="220,200,40,30">
-						<Label ID="RESOURCE_COFFEE"     Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+						<Label ID="RESOURCE_COCOA"    Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="548,-5" Anchor="L,T" Size="24,38" Color="White,0">
-						<Label ID="RESOURCE_COTTON"    Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+						<Label ID="RESOURCE_COFFEE"     Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="572,-5" Anchor="L,T" Size="24,38" Color="220,200,40,30">
-						<Label ID="RESOURCE_DYE"      Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+						<Label ID="RESOURCE_COTTON"    Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="596,-5" Anchor="L,T" Size="24,38" Color="White,0">
-						<Label ID="RESOURCE_INCENSE"  Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+						<Label ID="RESOURCE_DYE"      Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="620,-5" Anchor="L,T" Size="24,38" Color="220,200,40,30">
-						<Label ID="RESOURCE_OLIVE"   Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+						<Label ID="RESOURCE_INCENSE"  Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="644,-5" Anchor="L,T" Size="24,38" Color="White,0">
-						<Label ID="RESOURCE_PERFUME" Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+						<Label ID="RESOURCE_OLIVE"   Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="668,-5" Anchor="L,T" Size="24,38" Color="220,200,40,30">
-						<Label ID="RESOURCE_SILK"     Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+						<Label ID="RESOURCE_PERFUME" Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="692,-5" Anchor="L,T" Size="24,38" Color="White,0">
-						<Label ID="RESOURCE_SPICES"     Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+						<Label ID="RESOURCE_SILK"     Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 					</Box>
 					<Box Offset="716,-5" Anchor="L,T" Size="24,38" Color="220,200,40,30">
 						<Label ID="RESOURCE_SUGAR"     Offset="1,0" Anchor="C,C" Size="24,35" TruncateWidth="22" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
@@ -182,7 +183,8 @@
 			<Image Anchor="L,B" Offset="8,0" Texture="HorizontalTrim.dds" Size="1270,2" ID="Divider"/>
 		</Box>
 	</Instance>
-
+	
+	<!-- city-state vertical list -->
 	<Instance Name="CityStateInstance" >
 		<Box Size="1286,40" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="TradeBox">
 			<Box Size="1266,32" Anchor="L,T" Offset="0,0" Color="200,0,0,0">
@@ -242,35 +244,35 @@
 					<Box ID="RESOURCE_LAPIS_BOX" Offset="452,0" Anchor="L,T" Size="24,0" Color="White,0">
 						<Stack ID="RESOURCE_LAPIS"      Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					<Box ID="RESOURCE_CITRUS_BOX" Offset="476,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
+					<Box ID="RESOURCE_SPICES_BOX" Offset="476,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
+						<Stack ID="RESOURCE_SPICES"     Anchor="L,T" StackGrowth="B" Padding="0" />
+					</Box>
+					<Box ID="RESOURCE_CITRUS_BOX" Offset="500,0" Anchor="L,T" Size="24,0" Color="White,0">
 						<Stack ID="RESOURCE_CITRUS"    Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					<Box ID="RESOURCE_COCOA_BOX" Offset="500,0" Anchor="L,T" Size="24,0" Color="White,0">
+					<Box ID="RESOURCE_COCOA_BOX" Offset="524,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
 						<Stack ID="RESOURCE_COCOA"     Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					<Box ID="RESOURCE_COFFEE_BOX" Offset="524,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
+					<Box ID="RESOURCE_COFFEE_BOX" Offset="548,0" Anchor="L,T" Size="24,0" Color="White,0">
 						<Stack ID="RESOURCE_COFFEE"   Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					<Box ID="RESOURCE_COTTON_BOX" Offset="548,0" Anchor="L,T" Size="24,0" Color="White,0">
+					<Box ID="RESOURCE_COTTON_BOX" Offset="572,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
 						<Stack ID="RESOURCE_COTTON"  Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					<Box ID="RESOURCE_DYE_BOX" Offset="572,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
+					<Box ID="RESOURCE_DYE_BOX" Offset="596,0" Anchor="L,T" Size="24,0" Color="White,0">
 						<Stack ID="RESOURCE_DYE"   Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					<Box ID="RESOURCE_INCENSE_BOX" Offset="596,0" Anchor="L,T" Size="24,0" Color="White,0">
+					<Box ID="RESOURCE_INCENSE_BOX" Offset="620,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
 						<Stack ID="RESOURCE_INCENSE"     Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					<Box ID="RESOURCE_OLIVE_BOX" Offset="620,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
+					<Box ID="RESOURCE_OLIVE_BOX" Offset="644,0" Anchor="L,T" Size="24,0" Color="White,0">
 						<Stack ID="RESOURCE_OLIVE"     Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					<Box ID="RESOURCE_PERFUME_BOX" Offset="644,0" Anchor="L,T" Size="24,0" Color="White,0">
+					<Box ID="RESOURCE_PERFUME_BOX" Offset="668,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
 						<Stack ID="RESOURCE_PERFUME"     Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
-					<Box ID="RESOURCE_SILK_BOX" Offset="668,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
+					<Box ID="RESOURCE_SILK_BOX" Offset="692,0" Anchor="L,T" Size="24,0" Color="White,0">
 						<Stack ID="RESOURCE_SILK"     Anchor="L,T" StackGrowth="B" Padding="0" />
-					</Box>
-					<Box ID="RESOURCE_SPICES_BOX" Offset="692,0" Anchor="L,T" Size="24,0" Color="White,0">
-						<Stack ID="RESOURCE_SPICES"     Anchor="L,T" StackGrowth="B" Padding="0" />
 					</Box>
 					<Box ID="RESOURCE_SUGAR_BOX" Offset="716,0" Anchor="L,T" Size="24,0" Color="220,200,40,30">
 						<Stack ID="RESOURCE_SUGAR"     Anchor="L,T" StackGrowth="B" Padding="0" />
@@ -338,7 +340,8 @@
 			</Box>
 		</Box>
 	</Instance>
-
+	
+	<!-- city-state name -->
 	<Instance Name="CityStateButtonInstance" >
 		<Button Anchor="L,T"  Size="40,26" Color="255,255,255,255" Offset="0,0" ID="CsButton" >
 			<Label ID="CsLuxuryIcon" Anchor="L,C" Offset="0,0" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"  Size="18,26"/>
@@ -346,6 +349,7 @@
 		</Button>
 	</Instance>
 
+	<!-- resource headers -->
 	<Instance Name="TradeResourcesInstance" >
 		<Box Size="1286,25" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="TradeBox">
 			<Box Size="1286,25" Anchor="L,T" Offset="0,0" Color="200,0,0,0">
@@ -398,35 +402,35 @@
 						<Label ID="Lapis Lazuli" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="476,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
-						<Label ID="Citrus" Offset="1,0" Anchor="R,C" Size="24,25" />
-					</Box>
-					<Box Offset="500,0" Anchor="L,T" Size="24,25" Color="White,0">
-						<Label ID="Cocoa" Offset="1,0" Anchor="R,C" Size="24,25" />
-					</Box>
-					<Box Offset="524,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
-						<Label ID="Coffee" Offset="1,0" Anchor="R,C" Size="24,25" />
-					</Box>
-					<Box Offset="548,0" Anchor="L,T" Size="24,25" Color="White,0">
-						<Label ID="Cotton" Offset="1,0" Anchor="R,C" Size="24,25" />
-					</Box>
-					<Box Offset="572,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
-						<Label ID="Dyes" Offset="1,0" Anchor="R,C" Size="24,25" />
-					</Box>
-					<Box Offset="596,0" Anchor="L,T" Size="24,25" Color="White,0">
-						<Label ID="Incense" Offset="1,0" Anchor="R,C" Size="24,25" />
-					</Box>
-					<Box Offset="620,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
-						<Label ID="Olives" Offset="1,0" Anchor="R,C" Size="24,25" />
-					</Box>
-					<Box Offset="644,0" Anchor="L,T" Size="24,25" Color="White,0">
-						<Label ID="Perfume" Offset="1,0" Anchor="R,C" Size="24,25" />
-					</Box>
-					<Box Offset="668,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
-						<Label ID="Silk" Offset="1,0" Anchor="R,C" Size="24,25" />
-					</Box>
-					<Box Offset="692,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Cinnamon" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
+					<Box Offset="500,0" Anchor="L,T" Size="24,25" Color="White,0">
+						<Label ID="Citrus" Offset="1,0" Anchor="R,C" Size="24,25" />
+					</Box>
+					<Box Offset="524,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+						<Label ID="Cocoa" Offset="1,0" Anchor="R,C" Size="24,25" />
+					</Box>
+					<Box Offset="548,0" Anchor="L,T" Size="24,25" Color="White,0">
+						<Label ID="Coffee" Offset="1,0" Anchor="R,C" Size="24,25" />
+					</Box>
+					<Box Offset="572,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+						<Label ID="Cotton" Offset="1,0" Anchor="R,C" Size="24,25" />
+					</Box>
+					<Box Offset="596,0" Anchor="L,T" Size="24,25" Color="White,0">
+						<Label ID="Dyes" Offset="1,0" Anchor="R,C" Size="24,25" />
+					</Box>
+					<Box Offset="620,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+						<Label ID="Incense" Offset="1,0" Anchor="R,C" Size="24,25" />
+					</Box>
+					<Box Offset="644,0" Anchor="L,T" Size="24,25" Color="White,0">
+						<Label ID="Olives" Offset="1,0" Anchor="R,C" Size="24,25" />
+					</Box>
+					<Box Offset="668,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+						<Label ID="Perfume" Offset="1,0" Anchor="R,C" Size="24,25" />
+					</Box>
+					<Box Offset="692,0" Anchor="L,T" Size="24,25" Color="White,0">
+						<Label ID="Silk" Offset="1,0" Anchor="R,C" Size="24,25" />
+					</Box>					
 					<Box Offset="716,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
 						<Label ID="Sugar" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>

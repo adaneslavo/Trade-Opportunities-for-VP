@@ -1,4 +1,10 @@
 Changelog:
+v9:
+- set luxuries alphabetically (cinnamon instead of spices);
+- cut help text from other luxuries;
+- added info in other resources about OnlyMinorCiv value and required improvement;
+- HELPS?
+
 v8.2:
 - compatibility fix by @civplayer33;
 

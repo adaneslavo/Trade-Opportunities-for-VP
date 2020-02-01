@@ -1,61 +1,74 @@
+print("Loading DiploTradeStatus.lua from TOfVP");
+--------------------------------------------------------------
+-- New Trade Opportunities panel
+-- Dec 13, 2017: Retrofitted for Vox Populi, Infixo
+-- Jan 14, 2020: Improved, adan_eslavo
+--------------------------------------------------------------
 include("IconSupport")
 include("SupportFunctions")
 include("InstanceManager")
 include("InfoTooltipInclude")
 
-local gPlayerIM = InstanceManager:new("TradeStatusInstance", "TradeBox", Controls.PlayerBox)
-local gAiIM = InstanceManager:new("TradeStatusInstance", "TradeBox", Controls.AiStack)
-local gCsIM = InstanceManager:new("CityStateInstance", "TradeBox", Controls.AiStack)
-local gResourceIM = InstanceManager:new("TradeResourcesInstance", "TradeBox", Controls.ResourceBox)
+local g_PlayerIM = InstanceManager:new("TradeStatusInstance", "TradeBox", Controls.PlayerBox)
+local g_AiIM = InstanceManager:new("TradeStatusInstance", "TradeBox", Controls.AiStack)
+local g_CsIM = InstanceManager:new("CityStateInstance", "TradeBox", Controls.AiStack)
+local g_ResourceIM = InstanceManager:new("TradeResourcesInstance", "TradeBox", Controls.ResourceBox)
 
-local gSortTable
+local g_SortTable
 local iPreviousResourceID = -1
-	
+
+local tValidImprovements = {
+	"IMPROVEMENT_CAMP",
+	"IMPROVEMENT_MINE",
+	"IMPROVEMENT_QUARRY",
+	"IMPROVEMENT_PLANTATION",
+	"IMPROVEMENT_FISHING_BOATS"
+}
 -- open window?
 function ShowHideHandler(bIsHide, bIsInit)
-	if (not bIsInit and not bIsHide) then
-		gPlayerIM:ResetInstances()
-		gAiIM:ResetInstances()
-		gCsIM:ResetInstances()
-		gResourceIM:ResetInstances()
+	if not bIsInit and not bIsHide then
+		g_PlayerIM:ResetInstances()
+		g_AiIM:ResetInstances()
+		g_CsIM:ResetInstances()
+		g_ResourceIM:ResetInstances()
 	  
-		local iPlayer = Game.GetActivePlayer()
+		local ePlayer = Game.GetActivePlayer()
 		
-		InitPlayer(iPlayer)
-		InitAiList(iPlayer)
+		InitPlayer(ePlayer)
+		InitAiList(ePlayer)
 	end
 end
 ContextPtr:SetShowHideHandler(ShowHideHandler)
 
--- draw first resource line
-function InitPlayer(iPlayer)
-	GetCivControl(gPlayerIM, iPlayer, false)
+-- draw first player line
+function InitPlayer(ePlayer)
+	GetCivControl(g_PlayerIM, ePlayer, false)
 end
 
--- check if there are AIs
-function InitAiList(iPlayer)
-	local pPlayer = Players[iPlayer]
+-- check if there are AIs and run lines for them
+function InitAiList(ePlayer)
+	local pPlayer = Players[ePlayer]
 	local pTeam = Teams[pPlayer:GetTeam()]
 	local iCount = 0
 
-	gSortTable = {}
+	g_SortTable = {}
   
 	for playerLoop = 0, GameDefines.MAX_MAJOR_CIVS-1, 1 do
 		local pOtherPlayer = Players[playerLoop]
-		local iOtherTeam = pOtherPlayer:GetTeam()
+		local eOtherTeam = pOtherPlayer:GetTeam()
 		
 		-- draw new resource lines for each met civ
-		if (playerLoop ~= iPlayer and pOtherPlayer:IsAlive()) then
-			if (pTeam:IsHasMet(iOtherTeam)) then
-				iCount = iCount+1
-				GetCivControl(gAiIM, playerLoop, true)
+		if playerLoop ~= ePlayer and pOtherPlayer:IsAlive() then
+			if pTeam:IsHasMet(eOtherTeam) then
+				iCount = iCount + 1
+				GetCivControl(g_AiIM, playerLoop, true)
 			end
 		end
 	end
 	
 	-- draw CSs columns for each resource
 	if InitCsList() then
-		iCount = iCount+1
+		iCount = iCount + 1
 	end
 
 	if iCount == 0 then
@@ -74,8 +87,8 @@ end
 
 -- sorting rules
 function ByScore(a, b)
-	local entryA = gSortTable[tostring(a)]
-	local entryB = gSortTable[tostring(b)]
+	local entryA = g_SortTable[tostring(a)]
+	local entryB = g_SortTable[tostring(b)]
 
 	if entryA == nil or entryB == nil then 
 		if entryA ~= nil and entryB == nil then
@@ -91,39 +104,39 @@ function ByScore(a, b)
 end
 
 -- function drawing resource lines
-function GetCivControl(im, iPlayer, bCanTrade)
-	local iActivePlayer = Game.GetActivePlayer()
-	local pActivePlayer = Players[iActivePlayer]
-	local iActiveTeam = pActivePlayer:GetTeam()
-	local pActiveTeam = Teams[iActiveTeam]
-	local bIsActivePlayer = (iActivePlayer == iPlayer)
+function GetCivControl(im, ePlayer, bCanTrade)
+	local eActivePlayer = Game.GetActivePlayer()
+	local pActivePlayer = Players[eActivePlayer]
+	local eActiveTeam = pActivePlayer:GetTeam()
+	local pActiveTeam = Teams[eActiveTeam]
+	local bIsActivePlayer = (eActivePlayer == ePlayer)
 
-	local pPlayer = Players[iPlayer]
-	local iTeam = pPlayer:GetTeam()
-	local pTeam = Teams[iTeam]
+	local pPlayer = Players[ePlayer]
+	local eTeam = pPlayer:GetTeam()
+	local pTeam = Teams[eTeam]
 	local eCivilization = GameInfo.Civilizations[pPlayer:GetCivilizationType()]
         
 	local pDeal = UI.GetScratchDeal()
 
+	local imControlTableHeader = g_ResourceIM:GetInstance()
 	local imControlTable = im:GetInstance()
-	local imControlTableHeader = gResourceIM:GetInstance()
 	local tSortEntry = {}
 
 	imControlTable.TradeOps:SetHide(false)
-	imControlTable.TradeWar:SetHide(pActiveTeam:IsAtWar(iTeam) == false)
+	imControlTable.TradeWar:SetHide(pActiveTeam:IsAtWar(eTeam) == false)
 
 	imControlTable.CivName:SetText(Locale.ConvertTextKey(eCivilization.ShortDescription))
-	CivIconHookup(iPlayer, 32, imControlTable.CivSymbol, imControlTable.CivIconBG, imControlTable.CivIconShadow, false, true)
+	CivIconHookup(ePlayer, 32, imControlTable.CivSymbol, imControlTable.CivIconBG, imControlTable.CivIconShadow, false, true)
 	imControlTable.CivIconBG:SetHide(false)
 
 	imControlTable.CivButton:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DO_CIV_STATUS", GetApproach(pActivePlayer, pPlayer), GameInfo.Eras[pPlayer:GetCurrentEra()].Description, pPlayer:GetScore()))
 
 	if (bCanTrade) then        
-		imControlTable.CivButton:SetVoid1(iPlayer)
+		imControlTable.CivButton:SetVoid1(ePlayer)
 		imControlTable.CivButton:RegisterCallback(Mouse.eLClick, OnCivSelected)
 
-		gSortTable[tostring(imControlTable.TradeBox)] = tSortEntry
-		tSortEntry.PlayerID = iPlayer
+		g_SortTable[tostring(imControlTable.TradeBox)] = tSortEntry
+		tSortEntry.PlayerID = ePlayer
 	else
 		imControlTable.CivButtonHL:SetHide(true)
 	end
@@ -138,19 +151,31 @@ function GetCivControl(im, iPlayer, bCanTrade)
 	imControlTableHeader.RESOURCE_OTHER_LUXURIES_ICON:SetHide(true)
 	imControlTableHeader["Other"]:SetText("")
 	
-	-- loop through resources
+	-- draw headers and lines
 	for resource in GameInfo.Resources() do
 		if resource.ResourceUsage > 0 then
 			-- header
 			local controlHeader = imControlTableHeader[Locale.ConvertTextKey(resource.Description)]
 			
 			if controlHeader == nil then
-				local sResourcePart = Locale.ConvertTextKey(resource.IconString) .. " " .. Locale.ConvertTextKey(resource.Description) .. ":[NEWLINE]" .. Locale.ConvertTextKey(resource.Help)
+				local sResourcePart = Locale.ConvertTextKey(resource.IconString) .. " " .. Locale.ConvertTextKey(resource.Description)
 				
+				if resource.OnlyMinorCivs then
+					sResourcePart = sResourcePart .. " (City-State)"
+				end
+
+				for _, validImprovement in ipairs(tValidImprovements) do
+					for improvement in GameInfo.Improvement_ResourceTypes() do
+						if improvement.ResourceType == resource.Type and improvement.ImprovementType == validImprovement then
+							sResourcePart = sResourcePart .. " (" .. Locale.ConvertTextKey("TXT_KEY_" .. improvement.ImprovementType) .. ")"
+						end
+					end
+				end
+
 				if sGatheredOtherResources == "" then
 					sGatheredOtherResources = sResourcePart
 				else
-					sGatheredOtherResources = sGatheredOtherResources .. "[NEWLINE][NEWLINE]" .. sResourcePart
+					sGatheredOtherResources = sGatheredOtherResources .. "[NEWLINE]" .. sResourcePart
 				end
 				
 				local controlHeaderBox = imControlTableHeader.RESOURCE_OTHER_LUXURIES_ICON
@@ -161,7 +186,7 @@ function GetCivControl(im, iPlayer, bCanTrade)
 				controlHeader:SetToolTipString(sGatheredOtherResources)
 			else
 				controlHeader:SetText(Locale.ConvertTextKey(resource.IconString))
-				controlHeader:SetToolTipString(string.format("%s %s:[NEWLINE]%s", resource.IconString, Locale.ConvertTextKey(resource.Description), Locale.ConvertTextKey(resource.Help)))
+				controlHeader:SetToolTipString(string.format("%s %s", resource.IconString, Locale.ConvertTextKey(resource.Description)))
 			end
 			
 			-- values
@@ -185,6 +210,7 @@ function GetCivControl(im, iPlayer, bCanTrade)
 		end
 	end 
 
+	-- add deals to other luxuries
 	if sGatheredOtherTooltips ~= "" then
 		if sDeals ~= "" then
 			sGatheredOtherTooltips = sGatheredOtherTooltips .."[NEWLINE][NEWLINE]" .. sDeals
@@ -201,7 +227,7 @@ function GetCivControl(im, iPlayer, bCanTrade)
 		Controls.OtherHeader:SetHide(true)
 	end
 	
-	--draw three additional action buttons
+	-- draw three additional action buttons
 	local sResearchIcon = ""
 	local sResearchTip = ""
   
@@ -209,10 +235,10 @@ function GetCivControl(im, iPlayer, bCanTrade)
 		sResearchIcon = ""
 		sResearchTip = ""
 	else
-		if pDeal:IsPossibleToTradeItem(iPlayer, iActivePlayer, TradeableItems.TRADE_ITEM_RESEARCH_AGREEMENT, Game.GetDealDuration()) then
+		if pDeal:IsPossibleToTradeItem(ePlayer, eActivePlayer, TradeableItems.TRADE_ITEM_RESEARCH_AGREEMENT, Game.GetDealDuration()) then
 			sResearchIcon = "[ICON_RESEARCH]"
 			sResearchTip = "TXT_KEY_DO_TRADE_STATUS_RA_YES_TT"
-		elseif pTeam:IsHasResearchAgreement(iActiveTeam) then
+		elseif pTeam:IsHasResearchAgreement(eActiveTeam) then
 			sResearchIcon = "[ICON_SWAP]"
 			sResearchTip = "TXT_KEY_DO_TRADE_STATUS_RA_NO_TT"
 		end
@@ -228,17 +254,17 @@ function GetCivControl(im, iPlayer, bCanTrade)
 		sEmbassyIcon = ""
 		sEmbassyTip = ""
 	else
-		if pDeal:IsPossibleToTradeItem(iPlayer, iActivePlayer, TradeableItems.TRADE_ITEM_ALLOW_EMBASSY, Game.GetDealDuration()) and
-			pDeal:IsPossibleToTradeItem(iActivePlayer, iPlayer, TradeableItems.TRADE_ITEM_ALLOW_EMBASSY, Game.GetDealDuration()) then
+		if pDeal:IsPossibleToTradeItem(ePlayer, eActivePlayer, TradeableItems.TRADE_ITEM_ALLOW_EMBASSY, Game.GetDealDuration()) and
+			pDeal:IsPossibleToTradeItem(eActivePlayer, ePlayer, TradeableItems.TRADE_ITEM_ALLOW_EMBASSY, Game.GetDealDuration()) then
 			sEmbassyIcon = "[ICON_CITY_STATE]"
 			sEmbassyTip = "TXT_KEY_DO_TRADE_STATUS_EMBASSY_YES_TT"
-		elseif pTeam:HasEmbassyAtTeam(iActiveTeam) and pActiveTeam:HasEmbassyAtTeam(iTeam) then
+		elseif pTeam:HasEmbassyAtTeam(eActiveTeam) and pActiveTeam:HasEmbassyAtTeam(eTeam) then
 			sEmbassyIcon = "[ICON_INFLUENCE]"
 			sEmbassyTip = "TXT_KEY_DO_TRADE_STATUS_EMBASSY_NO_TT"
-		elseif pActiveTeam:HasEmbassyAtTeam(iTeam) then
+		elseif pActiveTeam:HasEmbassyAtTeam(eTeam) then
 			sEmbassyIcon = "[ICON_CAPITAL]"
 			sEmbassyTip = "TXT_KEY_DO_TRADE_STATUS_EMBASSY_US_TT"
-		elseif pTeam:HasEmbassyAtTeam(iActiveTeam) then
+		elseif pTeam:HasEmbassyAtTeam(eActiveTeam) then
 			sEmbassyIcon = "[ICON_CAPITAL]"
 			sEmbassyTip = "TXT_KEY_DO_TRADE_STATUS_EMBASSY_THEM_TT"
 		end
@@ -254,17 +280,17 @@ function GetCivControl(im, iPlayer, bCanTrade)
 		sBordersIcon = ""
 		sBordersTip = ""
 	else
-		if pDeal:IsPossibleToTradeItem(iPlayer, iActivePlayer, TradeableItems.TRADE_ITEM_OPEN_BORDERS, Game.GetDealDuration()) and
-			pDeal:IsPossibleToTradeItem(iActivePlayer, iPlayer, TradeableItems.TRADE_ITEM_OPEN_BORDERS, Game.GetDealDuration()) then
+		if pDeal:IsPossibleToTradeItem(ePlayer, eActivePlayer, TradeableItems.TRADE_ITEM_OPEN_BORDERS, Game.GetDealDuration()) and
+			pDeal:IsPossibleToTradeItem(eActivePlayer, ePlayer, TradeableItems.TRADE_ITEM_OPEN_BORDERS, Game.GetDealDuration()) then
 			sBordersIcon = "[ICON_TRADE]"
 			sBordersTip = "TXT_KEY_DO_TRADE_STATUS_BORDERS_YES_TT"
-		elseif pTeam:IsAllowsOpenBordersToTeam(iActiveTeam) and pActiveTeam:IsAllowsOpenBordersToTeam(iTeam) then
+		elseif pTeam:IsAllowsOpenBordersToTeam(eActiveTeam) and pActiveTeam:IsAllowsOpenBordersToTeam(eTeam) then
 			sBordersIcon = "[ICON_TRADE_WHITE]"
 			sBordersTip = "TXT_KEY_DO_TRADE_STATUS_BORDERS_NO_TT"
-		elseif pTeam:IsAllowsOpenBordersToTeam(iActiveTeam) then
+		elseif pTeam:IsAllowsOpenBordersToTeam(eActiveTeam) then
 			sBordersIcon = "[ICON_ARROW_RIGHT]"
 			sBordersTip = "TXT_KEY_DO_TRADE_STATUS_BORDERS_US_TT"
-		elseif pActiveTeam:IsAllowsOpenBordersToTeam(iTeam) then
+		elseif pActiveTeam:IsAllowsOpenBordersToTeam(eTeam) then
 			sBordersIcon = "[ICON_ARROW_LEFT]"
 			sBordersTip = "TXT_KEY_DO_TRADE_STATUS_BORDERS_THEM_TT"
 		end
@@ -376,7 +402,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local iActiveImports = pActivePlayer:GetResourceImport(iResource)
 			local iActiveExports = pActivePlayer:GetResourceExport(iResource)
 			local iActiveLocal   = pActivePlayer:GetNumResourceTotal(iResource, false) + iActiveExports
-			local iActiveUsed = pActivePlayer:GetNumResourceUsed(iResource)
+			local iActiveUsed	 = pActivePlayer:GetNumResourceUsed(iResource)
 			
 			local iActiveSurplus = iActiveLocal - iActiveExports - iActiveUsed
 	
@@ -397,8 +423,8 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local tDealsFinalTurn = {}
 			local tDeals = table()
 			local iCurrentTurn = Game.GetGameTurn()-1
-			local iActivePlayer = pActivePlayer:GetID()
-			local iPlayer = pPlayer:GetID()
+			local eActivePlayer = pActivePlayer:GetID()
+			local ePlayer = pPlayer:GetID()
 				
 			local tDealItems = {}
 			local tFinalTurns = table()
@@ -406,10 +432,10 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			
 			EUI.PushScratchDeal()
 			
-			for i = 0, UI.GetNumCurrentDeals(iActivePlayer) - 1 do
-				UI.LoadCurrentDeal(iActivePlayer, i)
+			for i = 0, UI.GetNumCurrentDeals(eActivePlayer) - 1 do
+				UI.LoadCurrentDeal(eActivePlayer, i)
 				
-				local iToPlayer = pDeal:GetOtherPlayer(iActivePlayer)
+				local iToPlayer = pDeal:GetOtherPlayer(eActivePlayer)
 				
 				pDeal:ResetIterator()
 				
@@ -417,8 +443,8 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 					local iItem, iDuration, iFinalTurn, data1, data2, data3, flag1, iFromPlayer = pDeal:GetNextItem()
 					
 					if iItem then
-						if iToPlayer == iPlayer or iFromPlayer == iPlayer then
-							local bIsFromUs = iFromPlayer == iActivePlayer
+						if iToPlayer == ePlayer or iFromPlayer == ePlayer then
+							local bIsFromUs = iFromPlayer == eActivePlayer
 							local tDealItem = tDealItems[iFinalTurn]
 							
 							if not tDealItem then
@@ -446,7 +472,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			
 			for i = 1, #tFinalTurns do
 				local iFinalTurn = tFinalTurns[i]
-				local tDealItem = tDealItems[ iFinalTurn ] or {}
+				local tDealItem = tDealItems[iFinalTurn] or {}
 				local tDeal = table()
 				local iQuantity = tDealItem.GPT
 				
@@ -503,19 +529,19 @@ end
 
 -- check for discovered resources (no spoilers addon)
 function IsVisibleUsefulResource(eResource, pPlayer)
-	local iPlayer = pPlayer:GetID()
+	local ePlayer = pPlayer:GetID()
 	local pTeam = Teams[pPlayer:GetTeam()]
 	
 	for playerLoop = 0, GameDefines.MAX_CIV_PLAYERS-1, 1 do
 		local pOtherPlayer = Players[playerLoop]
-		local iOtherTeam = pOtherPlayer:GetTeam()
+		local eOtherTeam = pOtherPlayer:GetTeam()
     
-		if playerLoop == iPlayer then
+		if playerLoop == ePlayer then
 			if IsPlayerHasResource(pPlayer, eResource) or IsPlayerNearResource(pPlayer, eResource) then
 				return true
 			end
-		elseif playerLoop ~= iPlayer and pOtherPlayer:IsAlive() then
-			if pTeam:IsHasMet(iOtherTeam) then
+		elseif playerLoop ~= ePlayer and pOtherPlayer:IsAlive() then
+			if pTeam:IsHasMet(eOtherTeam) then
 				if IsPlayerHasResource(pOtherPlayer, eResource) or IsPlayerNearResource(pOtherPlayer, eResource) then
 					return true
 				end
@@ -533,10 +559,10 @@ end
 
 -- check for nearby resources
 function IsPlayerNearResource(pPlayer, eResource)
-	local iPlayer = pPlayer:GetID()
+	local ePlayer = pPlayer:GetID()
 	
 	for city in pPlayer:Cities() do
-		if (city ~= nil) then
+		if city ~= nil then
 			local iThisX = city:GetX()
 			local iThisY = city:GetY()
 			
@@ -548,12 +574,12 @@ function IsPlayerNearResource(pPlayer, eResource)
 					local pTargetPlot = Map.GetPlotXY(iThisX, iThisY, iDX, iDY)
 			
 					if pTargetPlot ~= nil then
-						local iOwner = pTargetPlot:GetOwner()
+						local eOwner = pTargetPlot:GetOwner()
 			  
-						if iOwner == iPlayer or iOwner == -1 then
+						if eOwner == ePlayer or eOwner == -1 then
 							local plotDistance = Map.PlotDistance(iThisX, iThisY, pTargetPlot:GetX(), pTargetPlot:GetY())
 				
-							if plotDistance <= iRange and (plotDistance <= iCloseRange or iOwner == iPlayer) then
+							if plotDistance <= iRange and (plotDistance <= iCloseRange or eOwner == ePlayer) then
 								if pTargetPlot:GetResourceType(Game.GetActiveTeam()) == eResource then
 									return true
 								end
@@ -608,11 +634,11 @@ end
 function InitCsList()
 	local bCsMet = false
 
-	local iActivePlayer = Game.GetActivePlayer()
-	local pActivePlayer = Players[iActivePlayer]
+	local eActivePlayer = Game.GetActivePlayer()
+	local pActivePlayer = Players[eActivePlayer]
 	local pActiveTeam = Teams[pActivePlayer:GetTeam()]
 
-	local imControlTable = gCsIM:GetInstance()
+	local imControlTable = g_CsIM:GetInstance()
 	local iMaxY = imControlTable.TradeBox:GetSizeY()
 			
 	for resource in GameInfo.Resources() do
@@ -659,7 +685,7 @@ function InitCsList()
 						local iCsAlly = pCs:GetAlly()
 						
 						if iCsAlly ~= nil and iCsAlly ~= -1 then
-							if iCsAlly ~= iActivePlayer then
+							if iCsAlly ~= eActivePlayer then
 								if pActiveTeam:IsHasMet(Players[iCsAlly]:GetTeam()) then
 									sCsAlly = Players[iCsAlly]:GetCivilizationShortDescriptionKey()
 								else
@@ -717,12 +743,12 @@ function IsCsNearResource(pCs, iResource)
 				local pTargetPlot = Map.GetPlotXY(iThisX, iThisY, iDX, iDY)
         
 				if pTargetPlot ~= nil then
-					local iOwner = pTargetPlot:GetOwner()
+					local eOwner = pTargetPlot:GetOwner()
           
-					if iOwner == iCs or iOwner == -1 then
+					if eOwner == iCs or eOwner == -1 then
 						local plotDistance = Map.PlotDistance(iThisX, iThisY, pTargetPlot:GetX(), pTargetPlot:GetY())
             
-						if plotDistance <= iRange and (plotDistance <= iCloseRange or iOwner == iCs) then
+						if plotDistance <= iRange and (plotDistance <= iCloseRange or eOwner == iCs) then
 							if pTargetPlot:GetResourceType(Game.GetActiveTeam()) == iResource then
 								return true
 							end
@@ -772,8 +798,8 @@ function GetCsResourceCount(pCs, pResource)
 end
 
 -- it's a City State being founded, so we may now have Mercantile luxuries
-function OnCityCreated(hexPos, iPlayer)
-	if (iPlayer >= GameDefines.MAX_MAJOR_CIVS) then
+function OnCityCreated(hexPos, ePlayer)
+	if (ePlayer >= GameDefines.MAX_MAJOR_CIVS) then
 		GetCsLuxuriesAndStrategics()
 	end
 end
@@ -782,13 +808,13 @@ Events.SerialEventCityCreated.Add(OnCityCreated)
 ---------------
 -- callbacks --
 ---------------
-function OnCivSelected(iPlayer)
-	if (Players[iPlayer]:IsHuman()) then
-		Events.OpenPlayerDealScreenEvent(iPlayer)
+function OnCivSelected(ePlayer)
+	if (Players[ePlayer]:IsHuman()) then
+		Events.OpenPlayerDealScreenEvent(ePlayer)
 	else
-		UI.SetRepeatActionPlayer(iPlayer)
+		UI.SetRepeatActionPlayer(ePlayer)
 		UI.ChangeStartDiploRepeatCount(1)
-		Players[iPlayer]:DoBeginDiploWithHuman()
+		Players[ePlayer]:DoBeginDiploWithHuman()
 	end
 end
 
@@ -883,3 +909,8 @@ function GetCivLuxuriesAndStrategics()
 end
 
 GetAvailableUsefulResources()
+--------------------------------------------------------------
+--------------------------------------------------------------
+print("Loaded DiploTradeStatus.lua from TOfVP");
+--------------------------------------------------------------
+--------------------------------------------------------------
