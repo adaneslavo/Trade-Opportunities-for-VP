@@ -183,7 +183,7 @@
 			<Image Anchor="L,B" Offset="8,0" Texture="HorizontalTrim.dds" Size="1270,2" ID="Divider"/>
 		</Box>
 	</Instance>
-	
+
 	<!-- city-state vertical list -->
 	<Instance Name="CityStateInstance" >
 		<Box Size="1286,40" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="TradeBox">
@@ -340,8 +340,8 @@
 			</Box>
 		</Box>
 	</Instance>
-	
-	<!-- city-state name -->
+
+	<!-- city-state icons in stack -->
 	<Instance Name="CityStateButtonInstance" >
 		<Button Anchor="L,T"  Size="40,26" Color="255,255,255,255" Offset="0,0" ID="CsButton" >
 			<Label ID="CsLuxuryIcon" Anchor="L,C" Offset="0,0" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"  Size="18,26"/>
@@ -359,138 +359,138 @@
 						<Label ID="Other" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 
-					<Box Offset="140,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="140,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Marble" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="164,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Ivory" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="188,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="188,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Coral" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="212,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Crab" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="236,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="236,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Pearls" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="260,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Whales" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="284,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="284,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Copper" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="308,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Gems" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="332,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="332,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Gold" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="356,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Salt" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="380,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="380,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Silver" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="404,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Amber" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="428,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="428,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Jade" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="452,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Lapis Lazuli" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="476,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="476,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Cinnamon" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="500,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Citrus" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="524,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="524,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Cocoa" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="548,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Coffee" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="572,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="572,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Cotton" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="596,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Dyes" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="620,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="620,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Incense" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="644,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Olives" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="668,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="668,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Perfume" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="692,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Silk" Offset="1,0" Anchor="R,C" Size="24,25" />
-					</Box>					
-					<Box Offset="716,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					</Box>
+					<Box Offset="716,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Sugar" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="740,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Tea" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="764,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="764,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Tobacco" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="788,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Wine" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="812,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="812,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Furs" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="836,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Truffles" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="860,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="860,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Brazilwood" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="884,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Cloves" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="908,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="908,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Nutmeg" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="932,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Pepper" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="956,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="956,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Glass" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="980,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Jewelry" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="1004,0" Anchor="L,T" Size="24,25" Color="220,200,40,30">
+					<Box Offset="1004,0" Anchor="L,T" Size="24,25" Color="220,200,40,15">
 						<Label ID="Porcelain" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 
 					<!-- STRATEGIC -->
-					<Box Offset="1042,0" Anchor="L,T" Size="24,25" Color="White,30">
+					<Box Offset="1042,0" Anchor="L,T" Size="24,25" Color="White,15">
 						<Label ID="Horses" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="1066,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Iron" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="1090,0" Anchor="L,T" Size="24,25" Color="White,30">
+					<Box Offset="1090,0" Anchor="L,T" Size="24,25" Color="White,15">
 						<Label ID="Coal" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="1114,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Oil" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="1138,0" Anchor="L,T" Size="24,25" Color="White,30">
+					<Box Offset="1138,0" Anchor="L,T" Size="24,25" Color="White,15">
 						<Label ID="Aluminum" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 					<Box Offset="1162,0" Anchor="L,T" Size="24,25" Color="White,0">
 						<Label ID="Uranium" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
-					<Box Offset="1186,0" Anchor="L,T" Size="24,25" Color="White,30">
+					<Box Offset="1186,0" Anchor="L,T" Size="24,25" Color="White,15">
 						<Label ID="Paper" Offset="1,0" Anchor="R,C" Size="24,25" />
 					</Box>
 				</Container>
@@ -498,44 +498,42 @@
 		</Box>
 	</Instance>
 
-	<Box Size="1346,650" Anchor="C,C" Offset="0,42" Color="White,0" >
-		<Box Anchor="L,T" Size="1290,32" Offset="25,73" Color="White,0" ID="TradesPanelTitle">
-			<Stack Anchor="L,T" StackGrowth="B" Padding="0">
-				<Box ID="HeaderOfHeaders" Size="1290,32" Anchor="L,T" Offset="0,0" Color="200,0,0,0">
-					<Box ID="OtherHeader" Offset="111,0" Anchor="L,T" Size="24,26" Color="220,200,40,30" Hidden="1">
-						<Label String="TXT_KEY_DO_HEADER_GROUP_OTHER" ToolTip="TXT_KEY_DO_HEADER_GROUP_OTHER_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
-					</Box>
-
-					<Box Offset="135,0" Anchor="L,T" Size="48,26" Color="White,0">
-						<Label String="TXT_KEY_DO_HEADER_GROUP_1" ToolTip="TXT_KEY_DO_HEADER_GROUP_1_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
-					</Box>
-					<Box Offset="183,0" Anchor="L,T" Size="95,26" Color="220,200,40,30">
-						<Label String="TXT_KEY_DO_HEADER_GROUP_2" ToolTip="TXT_KEY_DO_HEADER_GROUP_2_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
-					</Box>
-					<Box Offset="278,0" Anchor="L,T" Size="119,26" Color="White,0">
-						<Label String="TXT_KEY_DO_HEADER_GROUP_3" ToolTip="TXT_KEY_DO_HEADER_GROUP_3_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
-					</Box>
-					<Box Offset="398,0" Anchor="L,T" Size="72,26" Color="220,200,40,30">
-						<Label String="TXT_KEY_DO_HEADER_GROUP_4" ToolTip="TXT_KEY_DO_HEADER_GROUP_4_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
-					</Box>
-					<Box Offset="470,0" Anchor="L,T" Size="336,26" Color="White,0">
-						<Label String="TXT_KEY_DO_HEADER_GROUP_5" ToolTip="TXT_KEY_DO_HEADER_GROUP_5_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
-					</Box>
-					<Box Offset="806,0" Anchor="L,T" Size="48,26" Color="220,200,40,30">
-						<Label String="TXT_KEY_DO_HEADER_GROUP_6" ToolTip="TXT_KEY_DO_HEADER_GROUP_6_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
-					</Box>
-					<Box Offset="854,0" Anchor="L,T" Size="96,26" Color="White,0">
-						<Label String="TXT_KEY_DO_HEADER_GROUP_7" ToolTip="TXT_KEY_DO_HEADER_GROUP_7_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
-					</Box>
-					<Box Offset="950,0" Anchor="L,T" Size="72,26" Color="220,200,40,30">
-						<Label String="TXT_KEY_DO_HEADER_GROUP_8" ToolTip="TXT_KEY_DO_HEADER_GROUP_8_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
-					</Box>
-
-					<Box Offset="1036,0" Anchor="L,T" Size="168,26" Color="White,30">
-						<Label String="TXT_KEY_DO_HEADER_GROUP_9" ToolTip="TXT_KEY_DO_HEADER_GROUP_9_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
-					</Box>
+	<Box Size="1346,650" Anchor="C,C" Offset="0,42" Color="200,0,0,0">
+		<Box Anchor="L,T" Size="1290,32" Offset="25,73" Color="200,0,0,0" ID="TradesPanelTitle">
+			<Box ID="HeaderOfHeaders" Size="1290,32" Anchor="L,T" Offset="0,0" Color="200,0,0,0">
+				<Box ID="OtherHeader" Offset="111,0" Anchor="L,T" Size="24,26" Color="220,200,40,30" Hidden="1">
+					<Label String="TXT_KEY_DO_HEADER_GROUP_OTHER" ToolTip="TXT_KEY_DO_HEADER_GROUP_OTHER_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
 				</Box>
-			</Stack>
+
+				<Box Offset="135,0" Anchor="L,T" Size="48,26" Color="White,0">
+					<Label String="TXT_KEY_DO_HEADER_GROUP_1" ToolTip="TXT_KEY_DO_HEADER_GROUP_1_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
+				</Box>
+				<Box Offset="183,0" Anchor="L,T" Size="95,26" Color="220,200,40,30">
+					<Label String="TXT_KEY_DO_HEADER_GROUP_2" ToolTip="TXT_KEY_DO_HEADER_GROUP_2_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
+				</Box>
+				<Box Offset="278,0" Anchor="L,T" Size="119,26" Color="White,0">
+					<Label String="TXT_KEY_DO_HEADER_GROUP_3" ToolTip="TXT_KEY_DO_HEADER_GROUP_3_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
+				</Box>
+				<Box Offset="398,0" Anchor="L,T" Size="72,26" Color="220,200,40,30">
+					<Label String="TXT_KEY_DO_HEADER_GROUP_4" ToolTip="TXT_KEY_DO_HEADER_GROUP_4_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
+				</Box>
+				<Box Offset="470,0" Anchor="L,T" Size="336,26" Color="White,0">
+					<Label String="TXT_KEY_DO_HEADER_GROUP_5" ToolTip="TXT_KEY_DO_HEADER_GROUP_5_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
+				</Box>
+				<Box Offset="806,0" Anchor="L,T" Size="48,26" Color="220,200,40,30">
+					<Label String="TXT_KEY_DO_HEADER_GROUP_6" ToolTip="TXT_KEY_DO_HEADER_GROUP_6_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
+				</Box>
+				<Box Offset="854,0" Anchor="L,T" Size="96,26" Color="White,0">
+					<Label String="TXT_KEY_DO_HEADER_GROUP_7" ToolTip="TXT_KEY_DO_HEADER_GROUP_7_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
+				</Box>
+				<Box Offset="950,0" Anchor="L,T" Size="72,26" Color="220,200,40,30">
+					<Label String="TXT_KEY_DO_HEADER_GROUP_8" ToolTip="TXT_KEY_DO_HEADER_GROUP_8_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
+				</Box>
+
+				<Box Offset="1036,0" Anchor="L,T" Size="168,26" Color="White,30">
+					<Label String="TXT_KEY_DO_HEADER_GROUP_9" ToolTip="TXT_KEY_DO_HEADER_GROUP_9_TT" Offset="0,0" Anchor="C,C" Size="5,25" Font="TwCenMT14"/>
+				</Box>
+			</Box>
 
 			<Box Size="1286,25" Anchor="L,T" Offset="-6,29" Color="200,0,0,0" ID="ResourceBox" />
 		</Box>
@@ -544,11 +542,9 @@
 		<Image ID="BottomTrim" Anchor="L,T" Offset="1061,99" Texture="HorizontalTrim.dds" Size="168,3" />
 		<Image ID="BottomTrimOther" Anchor="L,T" Offset="136,99" Texture="HorizontalTrim.dds" Size="911,3" Hidden="1" />
 
-		<Box Anchor="L,T" Size="1290,463" Offset="19,101" Color="White,0" ID="TradesPanel" >
+		<Box Anchor="L,T" Size="1290,436" Offset="19,127" Color="200,0,0,00" ID="TradesPanel" >
 			<Stack Anchor="L,T" StackGrowth="B" Padding="0">
-				<Box Size="1286,25" Anchor="L,T" Offset="0,3" Color="200,0,0,0" ID="Header" />
-
-				<Box Size="1286,40" Anchor="L,T" Offset="0,-2" Color="200,0,0,0" ID="PlayerBox" />
+				<Box Size="1286,40" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="PlayerBox" />
 
 				<Box Size="1286,415" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="AiBox" >
 					<ScrollPanel Anchor="L,T" Vertical="1" Size="1300,385" Offset="0,0" AutoScrollBar="1" ID="AiScrollPanel">

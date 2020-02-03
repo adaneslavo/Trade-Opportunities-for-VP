@@ -15,15 +15,35 @@ local g_CsIM = InstanceManager:new("CityStateInstance", "TradeBox", Controls.AiS
 local g_ResourceIM = InstanceManager:new("TradeResourcesInstance", "TradeBox", Controls.ResourceBox)
 
 local g_SortTable
-local iPreviousResourceID = -1
+local g_ePreviousResource = -1
 
-local tValidImprovements = {
+local L = Locale.ConvertTextKey
+
+local g_tValidImprovements = {
 	"IMPROVEMENT_CAMP",
 	"IMPROVEMENT_MINE",
 	"IMPROVEMENT_QUARRY",
 	"IMPROVEMENT_PLANTATION",
 	"IMPROVEMENT_FISHING_BOATS"
 }
+
+local g_sColorBrown = "[COLOR_CITY_GREY]"
+local g_sColorDarkGreen = "[COLOR:0:135:0:255]"
+local g_sColorLightGreen = "[COLOR:125:255:0:255]"
+local g_sColorYellowGreen = "[COLOR:200:180:0:255]"
+local g_sColorRed = "[COLOR:255:70:70:255]"
+local g_sColorBlue = "[COLOR_CITY_BLUE]"
+local g_sColorCyan = "[COLOR_CYAN]"	
+local g_sColorOrange = "[COLOR_YIELD_FOOD]"
+
+local g_sColorResource = "[COLOR:255:235:30:255]"
+
+local g_sColorWar = "[COLOR_NEGATIVE_TEXT]"
+local g_sColorFriendly = "[COLOR_POSITIVE_TEXT]"
+local g_sColorGuarded = "[COLOR_YELLOW]"
+local g_sColorDenounce = "[COLOR_MAGENTA]"
+local g_sColorAfraid = "[COLOR_YIELD_FOOD]"
+		
 -- open window?
 function ShowHideHandler(bIsHide, bIsInit)
 	if not bIsInit and not bIsHide then
@@ -121,17 +141,17 @@ function GetCivControl(im, ePlayer, bCanTrade)
 	local imControlTableHeader = g_ResourceIM:GetInstance()
 	local imControlTable = im:GetInstance()
 	local tSortEntry = {}
-
+		
 	imControlTable.TradeOps:SetHide(false)
 	imControlTable.TradeWar:SetHide(pActiveTeam:IsAtWar(eTeam) == false)
 
-	imControlTable.CivName:SetText(Locale.ConvertTextKey(eCivilization.ShortDescription))
+	imControlTable.CivName:SetText(L(eCivilization.ShortDescription))
 	CivIconHookup(ePlayer, 32, imControlTable.CivSymbol, imControlTable.CivIconBG, imControlTable.CivIconShadow, false, true)
 	imControlTable.CivIconBG:SetHide(false)
 
-	imControlTable.CivButton:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DO_CIV_STATUS", GetApproach(pActivePlayer, pPlayer), GameInfo.Eras[pPlayer:GetCurrentEra()].Description, pPlayer:GetScore()))
+	--imControlTable.CivButton:SetToolTipString(L("TXT_KEY_DO_CIV_STATUS", GetApproach(pActivePlayer, pPlayer), GameInfo.Eras[pPlayer:GetCurrentEra()].Description, pPlayer:GetScore()))
 
-	if (bCanTrade) then        
+	if bCanTrade then        
 		imControlTable.CivButton:SetVoid1(ePlayer)
 		imControlTable.CivButton:RegisterCallback(Mouse.eLClick, OnCivSelected)
 
@@ -143,7 +163,7 @@ function GetCivControl(im, ePlayer, bCanTrade)
 	
 	local sGatheredOtherResources = ""
 	local sGatheredOtherTooltips = ""
-	local sText, sToolTip, iCount, sDeals
+	local sText, sToolTip, sDeals
 	local controlOther = imControlTable["RESOURCE_OTHER_LUXURIES"]
 		controlOther:SetText("")		
 		controlOther:SetToolTipString("")
@@ -155,22 +175,28 @@ function GetCivControl(im, ePlayer, bCanTrade)
 	for resource in GameInfo.Resources() do
 		if resource.ResourceUsage > 0 then
 			-- header
-			local controlHeader = imControlTableHeader[Locale.ConvertTextKey(resource.Description)]
-			
+			local controlHeader = imControlTableHeader[L(resource.Description)]
+			local sColorResourceSource = "[COLOR_CYAN]"
+
 			if controlHeader == nil then
-				local sResourcePart = Locale.ConvertTextKey(resource.IconString) .. " " .. Locale.ConvertTextKey(resource.Description)
+				local sResourcePart = L(resource.IconString) .. " " .. g_sColorResource .. L(resource.Description) .. "[ENDCOLOR]"
 				
 				if resource.OnlyMinorCivs then
-					sResourcePart = sResourcePart .. " (City-State)"
-				end
-
-				for _, validImprovement in ipairs(tValidImprovements) do
-					for improvement in GameInfo.Improvement_ResourceTypes() do
-						if improvement.ResourceType == resource.Type and improvement.ImprovementType == validImprovement then
-							sResourcePart = sResourcePart .. " (" .. Locale.ConvertTextKey("TXT_KEY_" .. improvement.ImprovementType) .. ")"
+					sResourcePart = sResourcePart .. sColorResourceSource .. " (City-State)[ENDCOLOR]"
+				else
+					for _, validImprovement in ipairs(g_tValidImprovements) do
+						for improvement in GameInfo.Improvement_ResourceTypes() do
+							if improvement.ResourceType == resource.Type and improvement.ImprovementType == validImprovement then
+								sResourcePart = sResourcePart .. sColorResourceSource .. " (" .. L("TXT_KEY_" .. improvement.ImprovementType) .. ")[ENDCOLOR]"
+							end
 						end
 					end
 				end
+
+				local sHelp = L(resource.Help)
+				sHelp = string.gsub(sHelp, "(.-)(Monopoly Bonus)(.-)", "[COLOR_POSITIVE_TEXT]%2[ENDCOLOR]%3")
+
+				sResourcePart = sResourcePart .. g_sColorResource .. ":[ENDCOLOR] " .. sHelp
 
 				if sGatheredOtherResources == "" then
 					sGatheredOtherResources = sResourcePart
@@ -185,21 +211,40 @@ function GetCivControl(im, ePlayer, bCanTrade)
 				controlHeader:SetText("[ICON_RES_HIDDEN_ARTIFACTS]")
 				controlHeader:SetToolTipString(sGatheredOtherResources)
 			else
-				controlHeader:SetText(Locale.ConvertTextKey(resource.IconString))
-				controlHeader:SetToolTipString(string.format("%s %s", resource.IconString, Locale.ConvertTextKey(resource.Description)))
+				controlHeader:SetText(L(resource.IconString))
+				controlHeader:SetToolTipString(string.format("%s %s%s:[ENDCOLOR] %s", resource.IconString, g_sColorResource, L(resource.Description), L(resource.Help)))
 			end
 			
 			-- values
-			sText, sToolTip, iCount, sDeals = GetUsefulResourceText(pPlayer, resource, bIsActivePlayer, pActivePlayer)
+			sText, sToolTip, sDeals = GetUsefulResourceText(pPlayer, resource, bIsActivePlayer, pActivePlayer)
 			local control = imControlTable[resource.Type]
 			
 			if control == nil then
 				if sGatheredOtherTooltips == "" then
-					sGatheredOtherTooltips = sToolTip .. ": " .. sText
+					sGatheredOtherTooltips = sToolTip
 				else
-					sGatheredOtherTooltips = sGatheredOtherTooltips .. "[NEWLINE]" .. sToolTip .. ": ".. sText
+					sGatheredOtherTooltips = sGatheredOtherTooltips .. "[NEWLINE]" .. sToolTip
+				end
+
+				-- add deals to other luxuries
+				if sGatheredOtherTooltips ~= "" then
+					print("other", sDeals)
+					if sDeals ~= "" then
+						sGatheredOtherTooltips = sGatheredOtherTooltips .."[NEWLINE][NEWLINE]" .. sDeals
+					end
+		
+					controlOther:SetText(g_sColorOrange .. "...[ENDCOLOR]")		
+					controlOther:SetToolTipString(sGatheredOtherTooltips)
+					Controls.BottomTrimNormal:SetHide(true)
+					Controls.BottomTrimOther:SetHide(false)
+					Controls.OtherHeader:SetHide(false)
+				else
+					Controls.BottomTrimNormal:SetHide(false)
+					Controls.BottomTrimOther:SetHide(true)
+					Controls.OtherHeader:SetHide(true)
 				end
 			else
+				print("non-other", sDeals)
 				if sDeals ~= "" then
 					sToolTip = sToolTip .. "[NEWLINE][NEWLINE]" .. sDeals
 				end
@@ -210,23 +255,11 @@ function GetCivControl(im, ePlayer, bCanTrade)
 		end
 	end 
 
-	-- add deals to other luxuries
-	if sGatheredOtherTooltips ~= "" then
-		if sDeals ~= "" then
-			sGatheredOtherTooltips = sGatheredOtherTooltips .."[NEWLINE][NEWLINE]" .. sDeals
-		end
-		
-		controlOther:SetText("[COLOR_YIELD_FOOD]...[ENDCOLOR]")		
-		controlOther:SetToolTipString(sGatheredOtherTooltips)
-		Controls.BottomTrimNormal:SetHide(true)
-		Controls.BottomTrimOther:SetHide(false)
-		Controls.OtherHeader:SetHide(false)
-	else
-		Controls.BottomTrimNormal:SetHide(false)
-		Controls.BottomTrimOther:SetHide(true)
-		Controls.OtherHeader:SetHide(true)
-	end
-	
+	local sPlayerTooltip = L("TXT_KEY_DO_CIV_STATUS", GetApproach(pActivePlayer, pPlayer), GameInfo.Eras[pPlayer:GetCurrentEra()].Description, pPlayer:GetScore())
+	sPlayerTooltip = sPlayerTooltip .. "[NEWLINE][NEWLINE]" .. sDeals
+	print("player", sDeals)
+	imControlTable.CivButton:SetToolTipString(sPlayerTooltip)
+
 	-- draw three additional action buttons
 	local sResearchIcon = ""
 	local sResearchTip = ""
@@ -245,7 +278,7 @@ function GetCivControl(im, ePlayer, bCanTrade)
 	end
 	
 	imControlTable.ResearchText:SetText(sResearchIcon)
-	imControlTable.ResearchText:SetToolTipString(Locale.ConvertTextKey(sResearchTip))
+	imControlTable.ResearchText:SetToolTipString(L(sResearchTip))
 
 	local sEmbassyIcon = ""
 	local sEmbassyTip = ""
@@ -271,7 +304,7 @@ function GetCivControl(im, ePlayer, bCanTrade)
 	end
   
 	imControlTable.EmbassyText:SetText(sEmbassyIcon)
-	imControlTable.EmbassyText:SetToolTipString(Locale.ConvertTextKey(sEmbassyTip))
+	imControlTable.EmbassyText:SetToolTipString(L(sEmbassyTip))
 
 	local sBordersIcon = ""
 	local sBordersTip = ""
@@ -297,7 +330,7 @@ function GetCivControl(im, ePlayer, bCanTrade)
 	end
   
 	imControlTable.BordersText:SetText(sBordersIcon)
-	imControlTable.BordersText:SetToolTipString(Locale.ConvertTextKey(sBordersTip))
+	imControlTable.BordersText:SetToolTipString(L(sBordersTip))
 
 	return imControlTable
 end
@@ -308,24 +341,24 @@ function GetApproach(pActivePlayer, pPlayer)
 
 	if pActivePlayer:GetID() ~= pPlayer:GetID() then
 		if Teams[pActivePlayer:GetTeam()]:IsAtWar(pPlayer:GetTeam()) then
-			sApproach = Locale.ConvertTextKey("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_WAR")
+			sApproach = g_sColorWar .. L("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_WAR") .. "[ENDCOLOR]"
 		elseif pPlayer:IsDenouncingPlayer(pActivePlayer:GetID()) then
-			sApproach = Locale.ConvertTextKey("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_DENOUNCING")
+			sApproach = g_sColorDenounce .. L("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_DENOUNCING") .. "[ENDCOLOR]"
 		else
 			local iApproach = pActivePlayer:GetApproachTowardsUsGuess(pPlayer:GetID())
   
 			if iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_WAR then
-				sApproach = Locale.ConvertTextKey("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_WAR")
+				sApproach = g_sColorWar .. L("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_WAR") .. "[ENDCOLOR]"
 			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_HOSTILE then
-				sApproach = Locale.ConvertTextKey("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_HOSTILE")
+				sApproach = g_sColorWar .. L("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_HOSTILE") .. "[ENDCOLOR]"
 			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_GUARDED then
-				sApproach = Locale.ConvertTextKey("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_GUARDED")
+				sApproach = g_sColorGuarded .. L("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_GUARDED") .. "[ENDCOLOR]"
 			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_NEUTRAL then
-				sApproach = Locale.ConvertTextKey("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_NEUTRAL")
+				sApproach = L("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_NEUTRAL") .. "[ENDCOLOR]"
 			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_FRIENDLY then
-				sApproach = Locale.ConvertTextKey("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_FRIENDLY")
+				sApproach = g_sColorFriendly .. L("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_FRIENDLY") .. "[ENDCOLOR]"
 			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_AFRAID then
-				sApproach = Locale.ConvertTextKey("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_AFRAID")
+				sApproach = g_sColorAfraid .. L("TXT_KEY_DIPLO_MAJOR_CIV_DIPLO_STATE_AFRAID") .. "[ENDCOLOR]"
 			end
 		end
 	end
@@ -342,20 +375,13 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 	local iResource = pResource.ID
 	local bIsPaper = iResource == GameInfoTypes.RESOURCE_PAPER
 	
-	local sColourStart = "[COLOR_CITY_GREY]"
-	local sColourDarkGreen = "[COLOR:0:135:0:255]"
-	local sColourLightGreen = "[COLOR:125:255:0:255]"
-	local sColourYellowGreen = "[COLOR:200:180:0:255]"
-	local sColourRed = "[COLOR:255:70:70:255]"
-	local sColourBlue = "[COLOR_CITY_BLUE]"
-	local sColourCyan = "[COLOR_CYAN]"
-	local sColourOrange = "[COLOR_YIELD_FOOD]"
-	
 	local sText = ""
 	local sToolTip = ""
 	local sDeals = ""
+	local sCityList = ""
 	local iTotal = 0
-	
+	local sValueColor = g_sColorBrown
+
 	if IsAvailableLuxury(iResource) and IsVisibleUsefulResource(iResource, pActivePlayer) then
 		local iMinors  = pPlayer:GetResourceFromMinors(iResource)
 		local iImports = pPlayer:GetResourceImport(iResource)
@@ -371,31 +397,27 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			if iTotal == 0 then
 				local iCounter = 0
 				
-				sToolTip, iCounter = GetGoldenAgeCities(pPlayer, pResource)
+				sCityList, iCounter = GetGoldenAgeCities(pPlayer, pResource)
 
-				if sToolTip ~= "" then
+				if sCityList ~= "" then
 					if iCounter > 1 then
-						sColourStart = sColourBlue
+						sValueColor = g_sColorBlue
 					else
-						sColourStart = sColourCyan
+						sValueColor = g_sColorCyan
 					end
 				else
-					sColourStart = sColourOrange
+					sValueColor = g_sColorOrange
 				end
 			else
 				if iSurplus > 3 then
-					sColourStart = sColourDarkGreen
+					sValueColor = g_sColorDarkGreen
 				elseif iSurplus > 1 then
-					sColourStart = sColourLightGreen
+					sValueColor = g_sColorLightGreen
 				elseif iSurplus == 1 then
-					sColourStart = sColourYellowGreen
+					sValueColor = g_sColorYellowGreen
 				elseif iSurplus < 0 then
-					sColourStart = sColourRed
+					sValueColor = g_sColorRed
 				end
-			end
-
-			if sToolTip == "" then
-				sToolTip = string.format("%s %s", pResource.IconString, Locale.ConvertTextKey(pResource.Description))
 			end
 		else
 			local iActiveMinors  = pActivePlayer:GetResourceFromMinors(iResource)
@@ -405,17 +427,16 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local iActiveUsed	 = pActivePlayer:GetNumResourceUsed(iResource)
 			
 			local iActiveSurplus = iActiveLocal - iActiveExports - iActiveUsed
-	
 			local iActiveTotal   = iActiveLocal + iActiveMinors + iActiveImports - iActiveExports - iActiveUsed
 			
 			if iSurplus > 3 and iActiveTotal <= 0 then
-				sColourStart = sColourDarkGreen
+				sValueColor = g_sColorDarkGreen
 			elseif iSurplus > 1 and iActiveTotal <= 0 then
-				sColourStart = sColourLightGreen
+				sValueColor = g_sColorLightGreen
 			elseif iSurplus < 0 then
-				sColourStart = sColourRed
+				sValueColor = g_sColorRed
 			elseif iTotal == 0 and iActiveSurplus > 0 then
-				sColourStart = sColourOrange
+				sValueColor = g_sColorOrange
 			end
 			
 			-- current deals part copied and modified from EUI
@@ -495,11 +516,9 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			
 			if #tDeals > 0 then
 				for i = 0, #tDeals do
-					sDeals = string.format("%s with %s:[NEWLINE]%s", Locale.ConvertTextKey("Current deals"), pPlayer:GetName(), table.concat(tDeals))
+					sDeals = string.format("%s with %s:[NEWLINE]%s", L("Current deals"), pPlayer:GetName(), table.concat(tDeals))
 				end
 			end
-			
-			sToolTip = string.format("%s %s", pResource.IconString, Locale.ConvertTextKey(pResource.Description))
 		end
 		
 		-- monopolies
@@ -508,7 +527,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		local bGlobalMonopoly = fRatio > 0.5
 		local bStrategicMonopoly = fRatio > 0.25
 			
-		sText = string.format("%s%d", sColourStart, iTotal)
+		sText = string.format("%s%d", sValueColor, iTotal)
 		
 		if not bIsPaper then
 			if bGlobalMonopoly then
@@ -519,12 +538,17 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		end
 		
 		sText = sText .. "[ENDCOLOR]"
+		sToolTip = string.format("%s %s%s:[ENDCOLOR] %s", pResource.IconString, g_sColorResource, L(pResource.Description), sText)
+
+		if sCityList ~= "" then
+			sToolTip = sToolTip .. sCityList
+		end
 	else
-		sText = string.format("%s-[ENDCOLOR]", sColourStart)
-		sToolTip = pResource.IconString .. " " .. Locale.ConvertTextKey(pResource.Description) .. " - unavailable"
+		sText = string.format("%s-[ENDCOLOR]", g_sColorBrown)
+		sToolTip = string.format("%s %s%s:[ENDCOLOR] %s%s[ENDCOLOR]", pResource.IconString, g_sColorResource, L(pResource.Description), g_sColorBrown, "unavailable")
 	end
 
-	return sText, sToolTip, iTotal, sDeals
+	return sText, sToolTip, sDeals
 end
 
 -- check for discovered resources (no spoilers addon)
@@ -598,9 +622,7 @@ end
 function GetGoldenAgeCities(pPlayer,pResource)
 	local sCityList = ""
 	local iCounter = 0
-	local sColourBlue = "[COLOR_CITY_BLUE]"
-	local sColourCyan = "[COLOR_CYAN]"
-	local sColour = sColourCyan
+	local sColor = g_sColorCyan
 
 	for city in pPlayer:Cities() do
 		if city:GetWeLoveTheKingDayCounter() == 0 and city:GetResourceDemanded(true) == pResource.ID then
@@ -616,15 +638,13 @@ function GetGoldenAgeCities(pPlayer,pResource)
 			iCounter = iCounter+1
 			
 			if iCounter > 1 then
-				sColour = sColourBlue
+				sColor = g_sColorBlue
 			end
 		end
 	end
 	
 	if sCityList ~= "" then
-		local sHeader = pResource.IconString .. " " .. Locale.ConvertTextKey(pResource.Description) .. ": following cities demand this resource: "
-	
-		sCityList = sHeader .. sColour .. sCityList .. "[ENDCOLOR]"
+		sCityList = " (following cities demand this resource: " .. sColor .. sCityList .. "[ENDCOLOR])"
 	end
 	
 	return sCityList, iCounter
@@ -654,10 +674,10 @@ function InitCsList()
 				imPlusBox = imControlTable["RESOURCE_OTHER_LUXURIES_BOX"]
 				local iResourceID = resource.ID
 				
-				if iResourceID > iPreviousResourceID then
-					iPreviousResourceID = iResourceID
+				if iResourceID > g_ePreviousResource then
+					g_ePreviousResource = iResourceID
 				else
-					iPreviousResourceID = -1
+					g_ePreviousResource = -1
 					im:DestroyAllChildren()
 				end
 			end
@@ -696,7 +716,7 @@ function InitCsList()
 							end
 						end
 
-						local sToolTip = Locale.ConvertTextKey(pCs:GetCivilizationShortDescriptionKey()) .. " (" .. Locale.ConvertTextKey(sCsAlly) .. ") " .. GetCsStrategicsOrLuxuries(pCs)
+						local sToolTip = L(pCs:GetCivilizationShortDescriptionKey()) .. " (" .. L(sCsAlly) .. ") " .. GetCsStrategicsOrLuxuries(pCs)
 						
 						tCSTextControlTable.CsButton:SetToolTipString(sToolTip)
 						tCSTextControlTable.CsButton:SetVoid1(csloop)
