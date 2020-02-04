@@ -1,13 +1,17 @@
 Changelog:
 v9:
-- set luxuries alphabetically (cinnamon instead of spices);
-- reworked help text formatting;
+- sorted luxuries alphabetically (after cinnamon change);
 - added info in other resources about OnlyMinorCiv value and required improvement;
-- refined ui file and colouring (added approach colors, resource name colors, "unavailable" now brown);
-- reworked tooltips;
-- added deals to players and other resources?
-- "..." variants?
-- strategic color?
+- added deals to players' headers;
+- reworked help text formatting for all possible outcomes (less newlines, colouring, less space);
+- refined ui file and colouring:
+	- added other players' approach colors;
+	- resource name colors (gold for luxury, silver for strategic; useful for non-vp resources), 
+	- "unavailable" now brown;
+	- "..." has now two variants (orange if any of those resources was found and brwon if not);
+- reworked tooltips (new formatting for needed resources, less new lines, les spaces, no doubled info);
+
+- strategic color
 
 v8.2:
 - compatibility fix by @civplayer33;

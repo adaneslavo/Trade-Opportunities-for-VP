@@ -175,7 +175,7 @@
 
 				<Container ID="TradeWar" Hidden="1">
 					<Box Offset="8,15" Anchor="L,C" Size="1270,40" Color="255,70,70,80">
-						<Label ID="WarText" Offset="10,-2" Anchor="R,C" Font="TwCenMT24" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_TRADE_STATUS_WAR"/>
+						<Label ID="WarText" Offset="9,-2" Anchor="R,C" Font="TwCenMT24" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_TRADE_STATUS_WAR"/>
 					</Box>
 				</Container>
 			</Box>
