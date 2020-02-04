@@ -46,7 +46,6 @@ local g_sColorGuarded = "[COLOR_YELLOW]"
 local g_sColorDenounce = "[COLOR_MAGENTA]"
 local g_sColorAfraid = "[COLOR_YIELD_FOOD]"
 
-local g_sColorCSResource
 local g_tIsCsHasResourceUnimproved = {}
 
 -- open window?
@@ -709,7 +708,7 @@ function InitCsList()
 				local pCs = Players[csloop]
 		
 				if pCs:IsAlive() and pActiveTeam:IsHasMet(pCs:GetTeam()) then
-					if IsCsHasResource(pCs, resource) or IsCsNearResource(pCs, resource.ID) then
+					if IsCsHasResource(pCs, eResource) or IsCsNearResource(pCs, eResource) then
 						local tCSTextControlTable = {}
 						
 						ContextPtr:BuildInstanceForControl("CityStateButtonInstance", tCSTextControlTable, im)
@@ -721,13 +720,11 @@ function InitCsList()
 						local sTrait = GameInfo.MinorCivilizations[pCs:GetMinorCivType()].MinorCivTrait
 						tCSTextControlTable.CsTraitIcon:SetTexture(GameInfo.MinorCivTraits[sTrait].TraitIcon)
 						
-						if g_tIsCsHasResourceUnimproved[eResource] then
-							tCSTextControlTable.CsTraitIcon:SetColor({x = 0.8, y = 0.8, z = 0.8, w = 1})
-							g_sColorCSResource = "[COLOR_NEGATIVE_TEXT]"
-						else
+						if IsCsHasResource(pCs, eResource) then
 							local primaryColor, secondaryColor = pCs:GetPlayerColors()
 							tCSTextControlTable.CsTraitIcon:SetColor({x = secondaryColor.x, y = secondaryColor.y, z = secondaryColor.z, w = 1})
-							g_sColorCSResource = "[COLOR_POSITIVE_TEXT]"
+						elseif g_tIsCsHasResourceUnimproved[eResource] then
+							tCSTextControlTable.CsTraitIcon:SetColor({x = 0.2, y = 0.2, z = 0.2, w = 1})
 						end
 
 						local sCsAlly = "TXT_KEY_CITY_STATE_NOBODY"
@@ -799,20 +796,15 @@ function IsCsNearResource(pCs, eResource)
             
 						if plotDistance <= iRange and (plotDistance <= iCloseRange or eOwner == iCs) then
 							if pTargetPlot:GetResourceType(Game.GetActiveTeam()) == eResource then
-								print(eResource)
-								for resource in GameInfo.Resources{ID=eResource} do
-									print(eResource, "found")
-									if not IsCsHasResource(pCs, resource) then
-										print(eResource, "true")
-										g_tIsCsHasResourceUnimproved[eResource] = true
-									else
-										print(eResource, "false_1")
-										g_tIsCsHasResourceUnimproved[eResource] = false
-									end
-
-									break
+								print(eResource, "found")
+								if IsCsHasResource(pCs, eResource) then
+									print(eResource, "false_1")
+									g_tIsCsHasResourceUnimproved[eResource] = false
+								else
+									print(eResource, "true")
+									g_tIsCsHasResourceUnimproved[eResource] = true
 								end
-
+								
 								return true
 							end
 						end
@@ -828,8 +820,8 @@ function IsCsNearResource(pCs, eResource)
 end
 
 -- checks for CS resources
-function IsCsHasResource(pCs, pResource)
-	return (GetCsResourceCount(pCs, pResource) > 0)
+function IsCsHasResource(pCs, eResource)
+	return (GetCsResourceCount(pCs, eResource) > 0)
 end
 
 -- checks for available resource list
@@ -840,20 +832,20 @@ function GetCsStrategicsOrLuxuries(pCs)
 		local eResource = resource.ID
 
 		if Game.GetResourceUsageType(eResource) > 0  then
-			iAmount = GetCsResourceCount(pCs, resource)
+			iAmount = GetCsResourceCount(pCs, eResource)
 
+			if iAmount > 0 or g_tIsCsHasResourceUnimproved[eResource] then
+				if sStrategicsOrLuxuries ~= "" then
+					sStrategicsOrLuxuries = sStrategicsOrLuxuries .. ", "
+				end
+			end
+			
+			sStrategicsOrLuxuries = sStrategicsOrLuxuries .. resource.IconString
+			
 			if iAmount > 0 then
-				if sStrategicsOrLuxuries ~= "" then
-					sStrategicsOrLuxuries = sStrategicsOrLuxuries .. ", "
-				end
-
-				sStrategicsOrLuxuries = sStrategicsOrLuxuries .. resource.IconString .. " " .. g_sColorCSResource .. iAmount .. "[ENDCOLOR]"
+				sStrategicsOrLuxuries = sStrategicsOrLuxuries .. " [COLOR_POSITIVE_TEXT]" .. iAmount .. "[ENDCOLOR]"
 			elseif g_tIsCsHasResourceUnimproved[eResource] then
-				if sStrategicsOrLuxuries ~= "" then
-					sStrategicsOrLuxuries = sStrategicsOrLuxuries .. ", "
-				end
-
-				sStrategicsOrLuxuries = sStrategicsOrLuxuries .. resource.IconString .. " " .. g_sColorCSResource .. "?[ENDCOLOR]"
+				sStrategicsOrLuxuries = sStrategicsOrLuxuries .. " [COLOR_NEGATIVE_TEXT]?[ENDCOLOR]"
 			end
 		end
 	end
@@ -862,9 +854,7 @@ function GetCsStrategicsOrLuxuries(pCs)
 end
 
 -- subfunction
-function GetCsResourceCount(pCs, pResource)
-	local eResource = pResource.ID
-	
+function GetCsResourceCount(pCs, eResource)
 	return pCs:GetNumResourceTotal(eResource, false) + pCs:GetResourceExport(eResource)
 end
 
