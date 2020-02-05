@@ -170,7 +170,7 @@ function GetCivControl(im, ePlayer, bCanTrade)
 	local sGatheredOtherTooltips = ""
 	local sText, sToolTip, sDeals = ""
 	local sVerifiedDeals = ""
-	local sColorOther = g_sColorBrown
+	local sColorDots = g_sColorBrown
 	
 	local controlOther = imControlTable["RESOURCE_OTHER_LUXURIES"]
 	controlOther:SetText("")		
@@ -229,7 +229,7 @@ function GetCivControl(im, ePlayer, bCanTrade)
 			end
 			
 			-- values
-			sText, sToolTip, sDeals = GetUsefulResourceText(pPlayer, resource, bIsActivePlayer, pActivePlayer)
+			sText, sToolTip, sDeals, sColorValue = GetUsefulResourceText(pPlayer, resource, bIsActivePlayer, pActivePlayer)
 			local control = imControlTable[resource.Type]
 			
 			if control == nil then
@@ -241,8 +241,10 @@ function GetCivControl(im, ePlayer, bCanTrade)
 
 				local iPosStart, iPosEnd = string.find(sToolTip, "unavailable")
 				
-				if iPosStart == nil then
-					sColorOther = g_sColorOrange
+				if iPosStart == nil and sColorValue ~= g_sColorBrown then
+					if sColorDots ~= g_sColorCyan and sColorDots ~= g_sColorBlue then
+						sColorDots = sColorValue
+					end
 				end
 			else
 				if sDeals ~= "" then
@@ -264,7 +266,7 @@ function GetCivControl(im, ePlayer, bCanTrade)
 			sGatheredOtherTooltips = sGatheredOtherTooltips .."[NEWLINE][NEWLINE]" .. sVerifiedDeals
 		end
 
-		controlOther:SetText(sColorOther .. "...[ENDCOLOR]")
+		controlOther:SetText(sColorDots .. "...[ENDCOLOR]")
 		controlOther:SetToolTipString(sGatheredOtherTooltips)
 		Controls.BottomTrimNormal:SetHide(true)
 		Controls.BottomTrimOther:SetHide(false)
@@ -401,7 +403,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 	local sDeals = ""
 	local sCityList = ""
 	local iTotal = 0
-	local sValueColor = g_sColorBrown
+	local sColorValue = g_sColorBrown
 
 	if IsAvailableLuxury(eResource) and IsVisibleUsefulResource(eResource, pActivePlayer) then
 		local iMinors  = pPlayer:GetResourceFromMinors(eResource)
@@ -422,22 +424,22 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 
 				if sCityList ~= "" then
 					if iCounter > 1 then
-						sValueColor = g_sColorBlue
+						sColorValue = g_sColorBlue
 					else
-						sValueColor = g_sColorCyan
+						sColorValue = g_sColorCyan
 					end
 				else
-					sValueColor = g_sColorOrange
+					sColorValue = g_sColorOrange
 				end
 			else
 				if iSurplus > 3 then
-					sValueColor = g_sColorDarkGreen
+					sColorValue = g_sColorDarkGreen
 				elseif iSurplus > 1 then
-					sValueColor = g_sColorLightGreen
+					sColorValue = g_sColorLightGreen
 				elseif iSurplus == 1 then
-					sValueColor = g_sColorYellowGreen
+					sColorValue = g_sColorYellowGreen
 				elseif iSurplus < 0 then
-					sValueColor = g_sColorRed
+					sColorValue = g_sColorRed
 				end
 			end
 		else
@@ -451,13 +453,13 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local iActiveTotal   = iActiveLocal + iActiveMinors + iActiveImports - iActiveExports - iActiveUsed
 			
 			if iSurplus > 3 and iActiveTotal <= 0 then
-				sValueColor = g_sColorDarkGreen
+				sColorValue = g_sColorDarkGreen
 			elseif iSurplus > 1 and iActiveTotal <= 0 then
-				sValueColor = g_sColorLightGreen
+				sColorValue = g_sColorLightGreen
 			elseif iSurplus < 0 then
-				sValueColor = g_sColorRed
+				sColorValue = g_sColorRed
 			elseif iTotal == 0 and iActiveSurplus > 0 then
-				sValueColor = g_sColorOrange
+				sColorValue = g_sColorOrange
 			end
 			
 			-- current deals part copied and modified from EUI
@@ -548,7 +550,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		local bGlobalMonopoly = fRatio > 0.5
 		local bStrategicMonopoly = fRatio > 0.25
 			
-		sText = string.format("%s%d", sValueColor, iTotal)
+		sText = string.format("%s%d", sColorValue, iTotal)
 		
 		if not bIsPaper then
 			if bGlobalMonopoly then
@@ -569,7 +571,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		sToolTip = string.format("%s %s%s:[ENDCOLOR] %s%s[ENDCOLOR]", pResource.IconString, g_sColorResourceName, L(pResource.Description), g_sColorBrown, "unavailable")
 	end
 
-	return sText, sToolTip, sDeals
+	return sText, sToolTip, sDeals, sColorValue
 end
 
 -- check for discovered resources (no spoilers addon)
@@ -708,12 +710,11 @@ function InitCsList()
 				local pCs = Players[csloop]
 		
 				if pCs:IsAlive() and pActiveTeam:IsHasMet(pCs:GetTeam()) then
-					if IsCsHasResource(pCs, eResource) or IsCsNearResource(pCs, eResource) then
+					if IsCsNearResource(pCs, eResource) or IsCsHasResource(pCs, eResource) then
 						local tCSTextControlTable = {}
 						
 						ContextPtr:BuildInstanceForControl("CityStateButtonInstance", tCSTextControlTable, im)
 
-						tCSTextControlTable.CsLuxuryIcon:SetHide(true)
 						tCSTextControlTable.CsTraitIcon:SetOffsetVal(-3,0)
 						tCSTextControlTable.CsTraitIcon:SetSizeVal(31,24)
 
@@ -721,28 +722,38 @@ function InitCsList()
 						tCSTextControlTable.CsTraitIcon:SetTexture(GameInfo.MinorCivTraits[sTrait].TraitIcon)
 						
 						if IsCsHasResource(pCs, eResource) then
+							tCSTextControlTable.CsLuxuryIcon:SetHide(true)
 							local primaryColor, secondaryColor = pCs:GetPlayerColors()
 							tCSTextControlTable.CsTraitIcon:SetColor({x = secondaryColor.x, y = secondaryColor.y, z = secondaryColor.z, w = 1})
 						elseif g_tIsCsHasResourceUnimproved[eResource] then
-							tCSTextControlTable.CsTraitIcon:SetColor({x = 0.2, y = 0.2, z = 0.2, w = 1})
+							tCSTextControlTable.CsLuxuryIcon:SetHide(false)
+							tCSTextControlTable.CsTraitIcon:SetColor({x = 0.4, y = 0.4, z = 0.4, w = 1})
 						end
 
-						local sCsAlly = "TXT_KEY_CITY_STATE_NOBODY"
-						local iCsAlly = pCs:GetAlly()
+						local sCsAlly = L("TXT_KEY_CITY_STATE_NOBODY")
+						local eCsAlly = pCs:GetAlly()
 						
-						if iCsAlly ~= nil and iCsAlly ~= -1 then
-							if iCsAlly ~= eActivePlayer then
-								if pActiveTeam:IsHasMet(Players[iCsAlly]:GetTeam()) then
-									sCsAlly = Players[iCsAlly]:GetCivilizationShortDescriptionKey()
+						if eCsAlly ~= nil and eCsAlly ~= -1 then
+							if eCsAlly ~= eActivePlayer then
+								local pAlly = Players[eCsAlly]
+
+								if pActiveTeam:IsHasMet(pAlly:GetTeam()) then
+									sCsAlly = L(Players[eCsAlly]:GetCivilizationShortDescriptionKey())
+									sCsAlly = GetApproachForCS(pActivePlayer, pAlly, sCsAlly)
 								else
-									sCsAlly = "TXT_KEY_MISC_UNKNOWN"
+									sCsAlly = L("TXT_KEY_MISC_UNKNOWN")
 								end
 							else
-								sCsAlly = "TXT_KEY_YOU"
-							end
+								sCsAlly = "[COLOR_CYAN]" .. L("TXT_KEY_YOU") .. "[ENDCOLOR]"
+							end					
 						end
 
-						local sToolTip = resource.IconString .. " " .. L(pCs:GetCivilizationShortDescriptionKey()) .. " (" .. L(sCsAlly) .. ") " .. GetCsStrategicsOrLuxuries(pCs)
+						local sAmount = GetResourceTotalPossibleAmount(pCs, eResource)
+						g_tIsCsHasResourceUnimproved[eResource] = false
+						
+						local iCSInfluence = pCs:GetMinorCivFriendshipWithMajor(ePlayer)
+
+						local sToolTip = sAmount .. resource.IconString .. " " .. L(pCs:GetCivilizationShortDescriptionKey()) .. " (" .. iCSInfluence .. ", " .. sCsAlly .. ") " .. GetCsStrategicsOrLuxuries(pCs, eResource)
 						
 						tCSTextControlTable.CsButton:SetToolTipString(sToolTip)
 						tCSTextControlTable.CsButton:SetVoid1(csloop)
@@ -776,7 +787,8 @@ end
 function IsCsNearResource(pCs, eResource)
 	local iCs = pCs:GetID()
 	local pCapital = pCs:GetCapitalCity()
-	
+	local bFound = false
+
 	if pCapital ~= nil then
 		local iThisX = pCapital:GetX()
 		local iThisY = pCapital:GetY()
@@ -796,16 +808,16 @@ function IsCsNearResource(pCs, eResource)
             
 						if plotDistance <= iRange and (plotDistance <= iCloseRange or eOwner == iCs) then
 							if pTargetPlot:GetResourceType(Game.GetActiveTeam()) == eResource then
-								print(eResource, "found")
-								if IsCsHasResource(pCs, eResource) then
-									print(eResource, "false_1")
-									g_tIsCsHasResourceUnimproved[eResource] = false
-								else
-									print(eResource, "true")
+								local eImprovement = pTargetPlot:GetImprovementType()
+
+								if (eImprovement == (-1) 
+								or pTargetPlot:IsImprovementPillaged()
+								or (eImprovement ~= (-1) and not pTargetPlot:IsResourceConnectedByImprovement(eImprovement)))
+								and not pTargetPlot:IsCity() then
 									g_tIsCsHasResourceUnimproved[eResource] = true
 								end
 								
-								return true
+								bFound = true
 							end
 						end
 					end
@@ -814,9 +826,53 @@ function IsCsNearResource(pCs, eResource)
 		end
 	end
 
-	print(eResource, "false_2")
-	g_tIsCsHasResourceUnimproved[eResource] = false
-	return false
+	if bFound then
+		return true
+	else
+		g_tIsCsHasResourceUnimproved[eResource] = false
+		return false
+	end
+end
+
+-- checks for available resource list
+function GetCsStrategicsOrLuxuries(pCs, eOmittedResource)
+	local sStrategicsOrLuxuries = ""
+	
+	for resource in GameInfo.Resources() do
+		local eResource = resource.ID
+
+		if Game.GetResourceUsageType(eResource) > 0 and eResource ~= eOmittedResource then
+			if IsCsNearResource(pCs, eResource) or IsCsHasResource(pCs, eResource) then
+				if sStrategicsOrLuxuries ~= "" then
+					sStrategicsOrLuxuries = sStrategicsOrLuxuries .. ", "
+				else
+					sStrategicsOrLuxuries = sStrategicsOrLuxuries .. "[NEWLINE][ICON_BULLET] has also: "
+				end
+				
+				sStrategicsOrLuxuries = sStrategicsOrLuxuries .. GetResourceTotalPossibleAmount(pCs, eResource) .. resource.IconString
+				g_tIsCsHasResourceUnimproved[eResource] = false
+			end	
+		end
+	end
+
+	return sStrategicsOrLuxuries
+end
+
+-- gather list of resources that CS have or can have
+function GetResourceTotalPossibleAmount(pCs, eResource)
+	local sAmount = ""
+	
+	if IsCsHasResource(pCs, eResource) then
+		sAmount = "[COLOR_POSITIVE_TEXT]" .. GetCsResourceCount(pCs, eResource) .. "[ENDCOLOR]"
+		
+		if g_tIsCsHasResourceUnimproved[eResource] then
+			sAmount = sAmount .. "+[COLOR_NEGATIVE_TEXT]?[ENDCOLOR]"
+		end
+	elseif g_tIsCsHasResourceUnimproved[eResource] then
+		sAmount = "[COLOR_NEGATIVE_TEXT]?[ENDCOLOR]"
+	end
+
+	return sAmount
 end
 
 -- checks for CS resources
@@ -824,38 +880,44 @@ function IsCsHasResource(pCs, eResource)
 	return (GetCsResourceCount(pCs, eResource) > 0)
 end
 
--- checks for available resource list
-function GetCsStrategicsOrLuxuries(pCs)
-	local sStrategicsOrLuxuries = ""
-	
-	for resource in GameInfo.Resources() do
-		local eResource = resource.ID
+-- subfunction
+function GetCsResourceCount(pCs, eResource)
+	return pCs:GetNumResourceTotal(eResource, false) + pCs:GetResourceExport(eResource)
+end
 
-		if Game.GetResourceUsageType(eResource) > 0  then
-			iAmount = GetCsResourceCount(pCs, eResource)
+-- approach types checking for CS
+function GetApproachForCS(pActivePlayer, pPlayer, sPlayerName)
+	local sApproach = ""
 
-			if iAmount > 0 or g_tIsCsHasResourceUnimproved[eResource] then
-				if sStrategicsOrLuxuries ~= "" then
-					sStrategicsOrLuxuries = sStrategicsOrLuxuries .. ", "
-				end
-			end
-			
-			sStrategicsOrLuxuries = sStrategicsOrLuxuries .. resource.IconString
-			
-			if iAmount > 0 then
-				sStrategicsOrLuxuries = sStrategicsOrLuxuries .. " [COLOR_POSITIVE_TEXT]" .. iAmount .. "[ENDCOLOR]"
-			elseif g_tIsCsHasResourceUnimproved[eResource] then
-				sStrategicsOrLuxuries = sStrategicsOrLuxuries .. " [COLOR_NEGATIVE_TEXT]?[ENDCOLOR]"
+	if pActivePlayer:GetID() ~= pPlayer:GetID() then
+		if Teams[pActivePlayer:GetTeam()]:IsAtWar(pPlayer:GetTeam()) then
+			sApproach = g_sColorWar .. sPlayerName .. "[ENDCOLOR]"
+		elseif pPlayer:IsDenouncingPlayer(pActivePlayer:GetID()) then
+			sApproach = g_sColorDenounce .. sPlayerName .. "[ENDCOLOR]"
+		else
+			local iApproach = pActivePlayer:GetApproachTowardsUsGuess(pPlayer:GetID())
+  
+			if iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_WAR then
+				sApproach = g_sColorWar .. sPlayerName .. "[ENDCOLOR]"
+			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_HOSTILE then
+				sApproach = g_sColorWar .. sPlayerName .. "[ENDCOLOR]"
+			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_GUARDED then
+				sApproach = g_sColorGuarded .. sPlayerName .. "[ENDCOLOR]"
+			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_NEUTRAL then
+				sApproach = sPlayerName .. "[ENDCOLOR]"
+			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_FRIENDLY then
+				sApproach = g_sColorFriendly .. sPlayerName .. "[ENDCOLOR]"
+			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_AFRAID then
+				sApproach = g_sColorAfraid .. sPlayerName .. "[ENDCOLOR]"
 			end
 		end
 	end
 
-	return sStrategicsOrLuxuries
-end
+	if sApproach ~= "" then
+		sApproach = sApproach
+	end
 
--- subfunction
-function GetCsResourceCount(pCs, eResource)
-	return pCs:GetNumResourceTotal(eResource, false) + pCs:GetResourceExport(eResource)
+	return sApproach
 end
 
 -- it's a City State being founded, so we may now have Mercantile luxuries

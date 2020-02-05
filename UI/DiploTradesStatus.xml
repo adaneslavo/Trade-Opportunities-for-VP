@@ -344,8 +344,8 @@
 	<!-- city-state icons in stack -->
 	<Instance Name="CityStateButtonInstance" >
 		<Button Anchor="L,T"  Size="40,26" Color="255,255,255,255" Offset="0,0" ID="CsButton" >
-			<Label ID="CsLuxuryIcon" Anchor="L,C" Offset="0,0" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"  Size="18,26"/>
 			<Image ID="CsTraitIcon"  Anchor="L,C" Offset="12,0" Texture="Assets/UI/Art/Notification/CityStateMilitaristic.dds" Size="32,26" />
+			<Label ID="CsLuxuryIcon" String="?" Anchor="L,C" Offset="9,2" Font="TwCenMT18" Color0="245,55,55,240" Color1="245,55,55,230" FontStyle="Shadow"  Size="18,26"/>
 		</Button>
 	</Instance>
 

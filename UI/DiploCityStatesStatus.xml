@@ -24,7 +24,7 @@
 				</Box>
 
 				<Box Offset="190,2" Anchor="L,C" Size="120,32" Color="White,0">
-					<Label ID="CsAlly" Offset="0,0" Anchor="L,C" Size="120,32" TruncateWidth="115" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+					<Label ID="CsAlly" Offset="0,0" Anchor="L,C" Size="120,32" TruncateWidth="105" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 				</Box>
 
 				<Box Offset="300,2" Anchor="L,C" Size="230,32" Color="White,0">

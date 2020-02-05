@@ -1,0 +1,7 @@
+-- Credits
+-- 5 Feb 2020: adan_eslavo
+--------------------------------------------------------------
+- initial creator of this mod: whoward69;
+- guy who took care of my mod during my absence: civplayer33;
+- VP creator and supporter: Gazebo;
+- other supporters: ChickenFighter, CppMaster, Phalanx BR, ryanmusante;
