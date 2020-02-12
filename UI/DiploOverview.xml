@@ -22,7 +22,7 @@
 
 		<!-- Top Panel  -->
 		<!-- GK is 955,32 ... but we'll stick with the wider V5 value -->
-		<Box Anchor="C,T" Size="971,32" Offset="0,44" Color="0.0.0.128" >
+		<Box Anchor="C,T" Size="971,32" Offset="0,44" Color="White,0" >
 
 			<Stack Anchor="C,T" Size="971,32" Offset="0,0" Padding="0" StackGrowth="Right">
 

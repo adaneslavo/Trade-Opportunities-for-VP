@@ -1,6 +1,29 @@
 Changelog:
 v10:
-- added credits file and supporters;
+- Trade View:
+	- fix for resources added by Great Admiral;
+	- added colours for cs approach;
+	- reworked player's tooltip (added name; name coloured instead of approach text);
+	- fixed player's highlight;
+- City-State View:
+	- better colours for cs approach;
+	- added clolour for allies and protectors approach;
+	- added background colours;
+	- reworked table structure:
+		- much wider table with more content;
+		- added new columns (military cs, spies, personality and possible protection);
+		- added sorting for all columns; improved existing sorting;
+		- added new and modified existing tooltips;
+			- added unique unit with description;
+			- added approach colors; highlighted important parts;
+			- fixed spaces and newlines;
+		- added few more flags (they were added to cs name before);
+		- added few additional action buttons (pledge/revoke protection, make peace);
+	- reworked tooltips for headers; added colours;
+	- added influence change value;
+- overall:
+	- added credits file and supporters;
+	- changed colour of buttons for pages in Diplomacy View;
 
 v9:
 - sorted luxuries alphabetically (after cinnamon change);
@@ -19,7 +42,7 @@ v9:
 	- other resources that CS has are listed in line below and do not consist currently checked resource;
 	- added "?" for resources that are inside the borders, but not improved, pillaged or with wrong improvement on them;
 	- number + "?" for improvement which are available, but still there are few that can be improved;
-	- added current CS influeance;
+	- added current CS influence;
 	- greyed out icon with red "?" for resources that have not been improved yet;
 - moved "WAR" sign by few pixels;
 - increased truncate for CS Ally in City-States screen;
