@@ -208,9 +208,9 @@ function GetCsControl(im, eCs, ePlayer)
 	sortEntry.protected = iSortProtected
 	
 	-- Distance
-	local iMinDistance = CheckDistance(pPlayer, pCs)
+	local iMinDistance, sClosestCity = CheckDistance(pPlayer, pCs)
 	controlTable.CsDistance:SetText(iMinDistance)
-	controlTable.CsDistance:SetToolTipString(L("TXT_KEY_DO_CS_STATUS_DISTANCE_TT", g_sCsName))
+	controlTable.CsDistance:SetToolTipString(L("TXT_KEY_DO_CS_STATUS_DISTANCE_TT", sClosestCity, g_sCsName))
 	sortEntry.distance = iMinDistance
 	
 	controlTable.CsCenter:SetVoid1(eCs)
@@ -237,6 +237,7 @@ end
 
 function CheckDistance(pPlayer, pCs)
 	local iMinDistance = 10000
+	local sClosestCity = ""
 	local eCs = pCs:GetID()
 
 	for city in pPlayer:Cities() do
@@ -247,10 +248,11 @@ function CheckDistance(pPlayer, pCs)
 		
 		if iPlotDistance < iMinDistance then
 			iMinDistance = iPlotDistance
+			sClosestCity = city.GetName()
 		end
 	end
 
-	return iMinDistance
+	return iMinDistance, sClosestCity
 end
 
 function GetUnitSpawnFlag(pIcon, pCs, pPlayer)

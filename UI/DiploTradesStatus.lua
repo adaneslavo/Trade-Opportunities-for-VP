@@ -507,7 +507,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			
 			if #tDeals > 0 then
 				for i = 0, #tDeals do
-					sDeals = string.format("%s with %s:[NEWLINE]%s", L("Current deals"), pPlayer:GetName(), table.concat(tDeals))
+					sDeals = string.format("%s with %s:[NEWLINE]%s", L("Current deals"), GetApproach(pActivePlayer, pPlayer, pPlayer:GetName()), table.concat(tDeals))
 				end
 			end
 		end

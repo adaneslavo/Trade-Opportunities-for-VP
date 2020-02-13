@@ -167,7 +167,7 @@
 			<Text>City-State</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY" >
-			<Text>[ICON_VIEW_CITY]</Text>
+			<Text>[ICON_SWAP]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_INFLUENCE" >
 			<Text>Influence</Text>
@@ -176,7 +176,7 @@
 			<Text>[ICON_SILVER_FIST]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_SPY" >
-			<Text>[ICON_SPY]</Text>
+			<Text>[ICON_VIEW_CITY]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_WAR" >
 			<Text>[ICON_RESISTANCE]</Text>
@@ -286,7 +286,7 @@
 			<Text>{1} is protected by:[NEWLINE]{2}</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_DISTANCE_TT" >
-			<Text>Click on distance to center map on {1_cs}.</Text>
+			<Text>Your closest City is [COLOR_CYAN]{1_city}[ENDCOLOR].[NEWLINE][NEWLINE]Click on distance to center map on {2_cs}.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_QUEST_TT" >
 			<Text>{1_QuestText}</Text>
