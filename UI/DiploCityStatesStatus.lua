@@ -219,6 +219,8 @@ function GetCsControl(im, eCs, ePlayer)
 	-- Quests
 	iSortQuests = SetQuests(controlTable.CsQuest, pCs, pPlayer, false)
 	sortEntry.quests = iSortQuests
+
+	Controls.Refresh:RegisterCallback(Mouse.eLClick, OnRefresh)
 	
 	return controlTable
 end
@@ -233,6 +235,10 @@ function OnCsCenter(eCs)
 	if pPlot ~= nil then
 		UI.LookAt(pPlot)
 	end
+end
+
+function OnRefresh()
+	InitCsList()
 end
 
 function CheckDistance(pPlayer, pCs)
@@ -326,7 +332,6 @@ end
 function OnSpawnChangeSelected(eCs)
 	local bSpawnDisabled = Players[eCs]:IsMinorCivUnitSpawningDisabled(Game.GetActivePlayer())
 	Network.SendMinorNoUnitSpawning(eCs, not bSpawnDisabled)
-	InitCsList()
 end
 
 function GetSpy(pIcon, pCs, pPlayer)
@@ -453,7 +458,6 @@ end
 function OnPledgeProtectionSelected(eCs)
 	local bPledgeProtect = Players[Game.GetActivePlayer()]:IsProtectingMinor(eCs)
 	Network.SendPledgeMinorProtection(eCs, not bPledgeProtect)
-	InitCsList()
 end
 
 function GetProtectingPlayers(pCs, pActivePlayer)

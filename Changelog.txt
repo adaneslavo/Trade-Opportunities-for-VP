@@ -3,8 +3,9 @@ v10:
 - Trade View:
 	- fix for resources added by Great Admiral;
 	- added colours for cs approach;
-	- reworked player's tooltip (added name; name coloured instead of approach text);
+	- reworked player's tooltip (added name; name coloured instead of approach text; coloured leaders name; added back (in different place) gold and gold per turn info);
 	- fixed player's highlight;
+	- lenghten trim under player's resources;
 - City-State View:
 	- better colours for cs approach;
 	- added colours for allies and protectors approach;
@@ -23,6 +24,8 @@ v10:
 			- fixed spaces and newlines;
 	- reworked tooltips for headers; added colours;
 	- added influence change value;
+	- added temporary "Refresh" button;
+	- used abbreviation "M.B.:" instead of "Monopoly Bonus:" make other resources description more compact;
 - overall:
 	- code cleaning;
 	- added credits file and supporters;

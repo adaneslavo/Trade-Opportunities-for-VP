@@ -546,6 +546,8 @@
 			<Stack Anchor="L,T" StackGrowth="B" Padding="0">
 				<Box Size="1286,40" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="PlayerBox" />
 
+				<Image Anchor="L,B" Offset="1278,-2" Texture="HorizontalTrim.dds" Size="24,2" ID="DividerPlayerRest"/>
+
 				<Box Size="1286,415" Anchor="L,T" Offset="0,0" Color="200,0,0,0" ID="AiBox" >
 					<ScrollPanel Anchor="L,T" Vertical="1" Size="1300,385" Offset="0,0" AutoScrollBar="1" ID="AiScrollPanel">
 						<ScrollBar  Anchor="R,T" Offset="0,18" Length="350" Style="VertSlider"/>

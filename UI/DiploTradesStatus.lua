@@ -52,6 +52,10 @@ local g_sColorMagenta = "[COLOR_MAGENTA]"
 
 local g_tIsCsHasResourceUnimproved = {}
 
+local g_iNeutralThreshold = GameDefines.FRIENDSHIP_THRESHOLD_NEUTRAL
+local g_iFriendThreshold = GameDefines.FRIENDSHIP_THRESHOLD_FRIENDS
+local g_iAllyThreshold = GameDefines.FRIENDSHIP_THRESHOLD_ALLIES
+
 -- open window?
 function ShowHideHandler(bIsHide, bIsInit)
 	if not bIsInit and not bIsHide then
@@ -211,7 +215,7 @@ function GetCivControl(im, ePlayer, bCanTrade)
 				end
 
 				local sHelp = L(resource.Help)
-				sHelp = string.gsub(sHelp, "(.-)(Monopoly Bonus)(.-)", "[COLOR_POSITIVE_TEXT]%2[ENDCOLOR]%3")
+				sHelp = string.gsub(sHelp, "(.-)(Monopoly Bonus:)(.-)", "[COLOR_POSITIVE_TEXT]M.B.:[ENDCOLOR]%3")
 
 				local sOtherHeader = L("TXT_KEY_DO_TRADE_OTHER_HEADER", L(resource.IconString), g_sColorResourceName, L(resource.Description), sColorResourceImprovement, sImprovement, sHelp)
 
@@ -281,10 +285,18 @@ function GetCivControl(im, ePlayer, bCanTrade)
 		Controls.OtherHeader:SetHide(true)
 	end
 
-	local sPlayerTooltip = L("TXT_KEY_DO_TRADE_CIV_STATUS", GetApproach(pActivePlayer, pPlayer, L(civilization.ShortDescription)), pPlayer:GetScore(), GameInfo.Eras[pPlayer:GetCurrentEra()].Description)
+	local sCivName = GetApproach(pActivePlayer, pPlayer, L(civilization.ShortDescription))
+	local sEraName = GameInfo.Eras[pPlayer:GetCurrentEra()].Description
+	local iScore = pPlayer:GetScore()
+	local iGoldPerTurn = ("%+2g"):format(pPlayer:CalculateGoldRate())
+	local iTreasure = pPlayer:GetGold()
+
+	local sPlayerTooltip = L("TXT_KEY_DO_TRADE_CIV_STATUS", sCivName, iScore, sEraName, iTreasure, iGoldPerTurn)
+
 	if sVerifiedDeals ~= "" then
 		sPlayerTooltip = sPlayerTooltip .. "[NEWLINE][NEWLINE]" .. sVerifiedDeals
 	end
+
 	imControlTable.CivButton:SetToolTipString(sPlayerTooltip)
 
 	-- draw three additional action buttons
@@ -759,14 +771,12 @@ function GetCSInfluence(pCs, pPlayer)
 	local eTeam = pPlayer:GetTeam()
 	local bWar = Teams[eTeam]:IsAtWar(pCs:GetTeam())
 	local iInfluence = pCs:GetMinorCivFriendshipWithMajor(ePlayer)
-	local iNeutralThreshold = GameDefines.FRIENDSHIP_THRESHOLD_NEUTRAL
-	local iFriendshipThreshold = GameDefines.FRIENDSHIP_THRESHOLD_FRIENDS
 	local iNeededInfluence = GetNeededInfluence(pCs, pPlayer)
 	
 	local sColour = ""
 	
 	local iNeededInfPercentage = (iInfluence / (iNeededInfluence + iInfluence)) * 100
-	local iNeededForFriendshipInfPercentage = (iInfluence / iFriendshipThreshold) * 100
+	local iNeededForFriendshipInfPercentage = (iInfluence / g_iFriendThreshold) * 100
 	
 	if pCs:IsAllies(ePlayer) then
 		sColour = g_sColorCyan
@@ -778,11 +788,11 @@ function GetCSInfluence(pCs, pPlayer)
 		sColour = g_sColorDarkGreen
 	elseif pCs:IsFriends(ePlayer) and iNeededInfPercentage <= 75 then
 		sColour = g_sColorLightGreen
-	elseif iInfluence < iNeutralThreshold and pCs:CanMajorBullyGold(ePlayer) then
+	elseif iInfluence < g_iNeutralThreshold and pCs:CanMajorBullyGold(ePlayer) then
 		sColour = g_sColorLightOrange
 	elseif iNeededForFriendshipInfPercentage > 75 then
 		sColour = g_sColorYellowGreen
-	elseif iInfluence < iNeutralThreshold and not pCs:CanMajorBullyGold(ePlayer) then
+	elseif iInfluence < g_iNeutralThreshold and not pCs:CanMajorBullyGold(ePlayer) then
 		sColour = g_sColorDenounce
 	end
 
@@ -800,7 +810,7 @@ function GetNeededInfluence(pCs, pPlayer)
 			iNeededInfluence = pCs:GetMinorCivFriendshipWithMajor(eAlly) - iPlayerInfluence + 1
 		end
 	else
-		iNeededInfluence = GameDefines["FRIENDSHIP_THRESHOLD_ALLIES"] - iPlayerInfluence
+		iNeededInfluence = g_iAllyThreshold - iPlayerInfluence
 	end
 
 	return iNeededInfluence

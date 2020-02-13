@@ -12,7 +12,7 @@
 			<Text>{1_icon} {2_c_resource}{3_resource}:[ENDCOLOR] {4_help}</Text>
 		</Row> 
 		<Row Tag="TXT_KEY_DO_TRADE_CIV_STATUS" >
-			<Text>{1_civ} ({2_points})[NEWLINE]{3_era}</Text>
+			<Text>{1_civ} ({2_points})[NEWLINE]{3_era}[NEWLINE]{4_gold}[ICON_GOLD] ({5_gold_change}[ICON_GOLD] GPT)</Text>
 		</Row>
 
 		<Row Tag="TXT_KEY_DO_TRADE_STATUS_WAR" >
@@ -185,7 +185,7 @@
 			<Text>Allied with</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_POSSIBLE_PROTECTION" >
-			<Text>[ICON_STRENGTH]</Text>
+			<Text>[ICON_CAPITAL]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_PROTECTED_BY" >
 			<Text>Protected by</Text>
@@ -195,6 +195,13 @@
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_QUESTS" >
 			<Text>Quests</Text>
+		</Row>
+
+		<Row Tag="TXT_KEY_DO_CS_REFRESH" >
+			<Text>[ICON_SWAP]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_REFRESH_TT" >
+			<Text>Click to refresh icons in current window.</Text>
 		</Row>
 
 		<Row Tag="TXT_KEY_DO_CS_SORT_TRAIT_TT" >
