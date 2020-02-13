@@ -248,7 +248,7 @@ function CheckDistance(pPlayer, pCs)
 		
 		if iPlotDistance < iMinDistance then
 			iMinDistance = iPlotDistance
-			sClosestCity = city.GetName()
+			sClosestCity = city:GetName()
 		end
 	end
 
