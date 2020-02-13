@@ -45,6 +45,12 @@ local g_tNotIdleSpyStates = {
 	["TXT_KEY_SPY_STATE_UNASSIGNED"]		= false	
 }
 
+local g_iNeutralThreshold = GameDefines.FRIENDSHIP_THRESHOLD_NEUTRAL
+local g_iFriendThreshold = GameDefines.FRIENDSHIP_THRESHOLD_FRIENDS
+local g_iAllyThreshold = GameDefines.FRIENDSHIP_THRESHOLD_ALLIES
+
+local g_tCsCoordinates = {}
+
 function ShowHideHandler(bIsHide, bIsInit)
 	if not bIsInit and not bIsHide then
 		InitCsList()
@@ -103,6 +109,12 @@ function GetCsControl(im, eCs, ePlayer)
 	local sortEntry = {}
 	g_SortTable[tostring(controlTable.CsBox)] = sortEntry
 
+	local pCsCity = pCs:GetCapitalCity()
+	g_tCsCoordinates[eCs] = {
+		iX = pCsCity:GetX(),
+		iY = pCsCity:GetY()
+	}
+
 	-- Trait
 	controlTable.CsTraitIcon:SetTexture(GameInfo.MinorCivTraits[sCsTrait].TraitIcon)
 	local primaryColor, secondaryColor = pCs:GetPlayerColors()
@@ -111,24 +123,24 @@ function GetCsControl(im, eCs, ePlayer)
 	
 	-- Name
 	local sName = pCs:GetName()
+	controlTable.CsName:SetText(sName)
 	sortEntry.name = sName
-	g_sCsName = GetCsApproach(pCs, pPlayer, sName)
-
-	local iMinDistance = CheckDistance(pPlayer, pCs)
-
-	sortEntry.distance = iMinDistance
-	controlTable.CsName:SetText(sName .. " (" .. iMinDistance .. ")")
 	
-	-- CS Button
+	g_sCsName = GetCsApproach(pCs, pPlayer, sName)
+	
 	controlTable.CsButton:SetVoid1(eCs)
-	controlTable.CsButton:RegisterCallback(Mouse.eLClick, OnCsSelected)
+	controlTable.CsButton:RegisterCallback(Mouse.eLClick, OnCsSelectedGetInto)
 	
 	-- Influence
 	local iSortInfluence, iInfluence, sInfluence, iNeededInfluence, sNeededInfluence = GetInfluence(pCs, pPlayer)
 	controlTable.CsInfluence:SetText(sInfluence)
 	controlTable.CsInfluence:SetToolTipString(sNeededInfluence)
 	sortEntry.influence = iSortInfluence
-	sortEntry.neededInfluence = iNeededInfluence
+	if iNeededInfluence ~= 0 then
+		sortEntry.neededInfluence = iNeededInfluence
+	else
+		sortEntry.neededInfluence = iSortInfluence + 1000
+	end
 	
 	-- Personality
 	local sPersonality = ""
@@ -136,14 +148,14 @@ function GetCsControl(im, eCs, ePlayer)
 	sortEntry.personality = pCs:GetPersonality()
 	
 	if sortEntry.personality == 0 then
-		sPersonality = "[ICON_TEAM_4]"
-		sPersonalityTT = "Friendly"
+		sPersonality = L("TXT_KEY_DO_CS_GREEN_FLAG")
+		sPersonalityTT = L("TXT_KEY_DO_CS_STATUS_PERSONALITY_FRIEND_TT")
 	elseif sortEntry.personality == 1 then
-		sPersonality = "[ICON_TEAM_1]"
-		sPersonalityTT = "Neutral"
+		sPersonality = L("TXT_KEY_DO_CS_WHITE_FLAG")
+		sPersonalityTT = L("TXT_KEY_DO_CS_STATUS_PERSONALITY_NEUTRAL_TT")
 	else
-		sPersonality = "[ICON_TEAM_2]"
-		sPersonalityTT = "Hostile"
+		sPersonality = L("TXT_KEY_DO_CS_RED_FLAG")
+		sPersonalityTT = L("TXT_KEY_DO_CS_STATUS_PERSONALITY_HOSTILE_TT")
 	end
 	
 	controlTable.CsPersonality:SetText(sPersonality)
@@ -188,16 +200,22 @@ function GetCsControl(im, eCs, ePlayer)
 	sortEntry.possprotect = iSortPossProtect
 	
 	-- Protected by anyone?
-	local sProtectingPlayers, iSortProtected = GetProtectingPlayers(pCs, pPlayer)
-
+	local iSortProtected, sProtectingPlayers, sProtectingPlayersTT = GetProtectingPlayers(pCs, pPlayer)
+	controlTable.CsProtect:SetText(sProtectingPlayers)
 	if sProtectingPlayers ~= "" then
-		controlTable.CsProtect:SetText(sProtectingPlayers)
-		controlTable.CsProtect:SetToolTipString(L("TXT_KEY_DO_CS_STATUS_PROTECT_TT", g_sCsName, sProtectingPlayers))
-	else
-		controlTable.CsProtect:SetText(sProtectingPlayers)
+		controlTable.CsProtect:SetToolTipString(sProtectingPlayersTT)
 	end
 	sortEntry.protected = iSortProtected
 	
+	-- Distance
+	local iMinDistance = CheckDistance(pPlayer, pCs)
+	controlTable.CsDistance:SetText(iMinDistance)
+	controlTable.CsDistance:SetToolTipString(L("TXT_KEY_DO_CS_STATUS_DISTANCE_TT", g_sCsName))
+	sortEntry.distance = iMinDistance
+	
+	controlTable.CsCenter:SetVoid1(eCs)
+	controlTable.CsCenter:RegisterCallback(Mouse.eLClick, OnCsCenter)
+
 	-- Quests
 	iSortQuests = SetQuests(controlTable.CsQuest, pCs, pPlayer, false)
 	sortEntry.quests = iSortQuests
@@ -205,17 +223,27 @@ function GetCsControl(im, eCs, ePlayer)
 	return controlTable
 end
 
+function OnCsSelectedGetInto(eCs)
+	Events.SerialEventGameMessagePopup({Type=ButtonPopupTypes.BUTTONPOPUP_CITY_STATE_DIPLO, Data1=eCs})
+end
+
+function OnCsCenter(eCs)
+	local pPlot = Map.GetPlot(g_tCsCoordinates[eCs].iX, g_tCsCoordinates[eCs].iY)
+   
+	if pPlot ~= nil then
+		UI.LookAt(pPlot)
+	end
+end
+
 function CheckDistance(pPlayer, pCs)
 	local iMinDistance = 10000
-	local pCity = pCs:GetCapitalCity()
-	local iX = pCity:GetX()
-	local iY = pCity:GetY()
-	
+	local eCs = pCs:GetID()
+
 	for city in pPlayer:Cities() do
 		local iCityX = city:GetX()
 		local iCityY = city:GetY()
-
-		local iPlotDistance = Map.PlotDistance(iCityX, iCityY, iX, iY)
+		 
+		local iPlotDistance = Map.PlotDistance(iCityX, iCityY, g_tCsCoordinates[eCs].iX, g_tCsCoordinates[eCs].iY)
 		
 		if iPlotDistance < iMinDistance then
 			iMinDistance = iPlotDistance
@@ -238,11 +266,11 @@ function GetUnitSpawnFlag(pIcon, pCs, pPlayer)
 				-- Unit spawning is off
 				if pCs:IsAllies(ePlayer) then
 					iSort = 0
-					sFlag = "[ICON_TEAM_2]"
+					sFlag = L("TXT_KEY_DO_CS_RED_FLAG")
 					sFlagTT = L("TXT_KEY_DO_CS_STATUS_MILITARY_ALLY_DIS_TT", g_sCsName)
 				else
 					iSort = 1
-					sFlag = "[ICON_TEAM_9]"
+					sFlag = L("TXT_KEY_DO_CS_ORANGE_FLAG")
 					sFlagTT = L("TXT_KEY_DO_CS_STATUS_MILITARY_FRIEND_DIS_TT", g_sCsName)
 				end
 				
@@ -252,11 +280,11 @@ function GetUnitSpawnFlag(pIcon, pCs, pPlayer)
 				-- Unit spawning is on
 				if pCs:IsAllies(ePlayer) then
 					iSort = 2
-					sFlag = "[ICON_TEAM_5]"
+					sFlag = L("TXT_KEY_DO_CS_CYAN_FLAG")
 					sFlagTT = L("TXT_KEY_DO_CS_STATUS_MILITARY_ALLY_EN_TT", g_sCsName)
 				else
 					iSort = 3
-					sFlag = "[ICON_TEAM_4]"
+					sFlag = L("TXT_KEY_DO_CS_GREEN_FLAG")
 					sFlagTT = L("TXT_KEY_DO_CS_STATUS_MILITARY_FRIEND_EN_TT", g_sCsName)
 				end
 
@@ -268,11 +296,11 @@ function GetUnitSpawnFlag(pIcon, pCs, pPlayer)
 			
 			if iInfluence >= 0 then
 				iSort = 4
-				sFlag = "[ICON_TEAM_1]"
+				sFlag = L("TXT_KEY_DO_CS_WHITE_FLAG")
 				sFlagTT = L("TXT_KEY_DO_CS_STATUS_MILITARY_NOBODY_TT", g_sCsName)
 			else
 				iSort = 5
-				sFlag = "[ICON_TEAM_11]"
+				sFlag = L("TXT_KEY_DO_CS_BLACK_FLAG")
 				sFlagTT = L("TXT_KEY_DO_CS_STATUS_MILITARY_NOBODY_ANGRY_TT", g_sCsName)
 			end
 		end
@@ -300,17 +328,14 @@ function OnSpawnChangeSelected(eCs)
 end
 
 function GetSpy(pIcon, pCs, pPlayer)
-	local pCity = pCs:GetCapitalCity()
-	local iX = pCity:GetX()
-	local iY = pCity:GetY()
 	local sSpy = ""
 	local sSpyTT = ""
 	local iSort = 0
 	local bIdleSpy = false
+	local eCs = pCs:GetID()
 		
 	for _, spy in ipairs(pPlayer:GetEspionageSpies()) do
-		print(spy.Name, spy.AgentActivity, spy.EstablishedSurveillance, spy.State)
-		if spy.CityX == iX and spy.CityY == iY then
+		if spy.CityX == g_tCsCoordinates[eCs].iX and spy.CityY == g_tCsCoordinates[eCs].iY then
 			local sRank = "[COLOR_POSITIVE_TEXT]" .. Locale.Lookup(spy.Rank)
 			local sName = Locale.Lookup(spy.Name) .. "[ENDCOLOR]"
 			
@@ -321,7 +346,7 @@ function GetSpy(pIcon, pCs, pPlayer)
 			pIcon:RegisterCallback(Mouse.eLClick, OnSpySelected)
 		end
 		
-		if not tNotIdleSpyStates[spy.State] then
+		if not g_tNotIdleSpyStates[spy.State] then
 			bIdleSpy = true
 		end
 	end
@@ -371,10 +396,6 @@ end
 
 -- If we spend money with the CS, the list is updated in OnGameDataDirty, 
 -- If we make peace/war with the CS, the list is updated in OnWarStateChanged
-function OnCsSelected(eCs)
-	Events.SerialEventGameMessagePopup({Type=ButtonPopupTypes.BUTTONPOPUP_CITY_STATE_DIPLO, Data1=eCs})
-end
-
 function OnMakePeaceSelected(eCs)
 	Network.SendChangeWar(Players[eCs]:GetTeam(), false)
 end
@@ -386,7 +407,7 @@ function GetAlly(pCs, pActivePlayer)
 
 	if pCs:IsAllies(eActivePlayer) then
 		iSort = "AAAA"
-		sAlly = g_sColorCyan .. L("TXT_KEY_YOU") .. "[ENDCOLOR]"
+		sAlly = L("TXT_KEY_DO_CS_YOU")
 	else
 		local eAlly = pCs:GetAlly() or -1
 		local pAlly = Players[eAlly]
@@ -435,66 +456,36 @@ end
 
 function GetProtectingPlayers(pCs, pActivePlayer)
 	local sProtecting = ""
+	local sProtectingTT = ""
 	local eCs = pCs:GetID()
 	local eActivePlayer = pActivePlayer:GetID()
 	local iSortNumber = 0
-  
+	
 	for iCivPlayer = 0, GameDefines.MAX_MAJOR_CIVS-1, 1 do
 		pCivPlayer = Players[iCivPlayer]
-
+		
 		if pCivPlayer:IsAlive() then
 			if pCivPlayer:IsProtectingMinor(eCs) then
 				if sProtecting ~= "" then
 					sProtecting = sProtecting .. ", "
 				end
-
+				
 				if iCivPlayer == eActivePlayer then
-					sProtecting = sProtecting .. g_sColorCyan .. L("TXT_KEY_YOU") .. "[ENDCOLOR]"
+					sProtecting = sProtecting .. L("TXT_KEY_DO_CS_YOU")
 				else
-					sProtecting = L(Players[iCivPlayer]:GetCivilizationShortDescriptionKey())
-					sProtecting = GetApproach(pActivePlayer, pCivPlayer, sProtecting)
+					sProtecting = sProtecting .. GetApproach(pActivePlayer, pCivPlayer, L(Players[iCivPlayer]:GetCivilizationShortDescriptionKey()))
 				end
-
+				
 				iSortNumber = iSortNumber + 1
 			end
 		end
 	end
-
-	return sProtecting, -iSortNumber
-end
-
-function GetApproach(pActivePlayer, pPlayer, sPlayerName)
-	local sApproach = ""
-
-	if pActivePlayer:GetID() ~= pPlayer:GetID() then
-		if Teams[pActivePlayer:GetTeam()]:IsAtWar(pPlayer:GetTeam()) then
-			sApproach = g_sColorWar .. sPlayerName .. "[ENDCOLOR]"
-		elseif pPlayer:IsDenouncingPlayer(pActivePlayer:GetID()) then
-			sApproach = g_sColorDenounce .. sPlayerName .. "[ENDCOLOR]"
-		else
-			local iApproach = pActivePlayer:GetApproachTowardsUsGuess(pPlayer:GetID())
-  
-			if iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_WAR then
-				sApproach = g_sColorWar .. sPlayerName .. "[ENDCOLOR]"
-			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_HOSTILE then
-				sApproach = g_sColorWar .. sPlayerName .. "[ENDCOLOR]"
-			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_GUARDED then
-				sApproach = g_sColorGuarded .. sPlayerName .. "[ENDCOLOR]"
-			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_NEUTRAL then
-				sApproach = sPlayerName .. "[ENDCOLOR]"
-			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_FRIENDLY then
-				sApproach = g_sColorFriendly .. sPlayerName .. "[ENDCOLOR]"
-			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_AFRAID then
-				sApproach = g_sColorAfraid .. sPlayerName .. "[ENDCOLOR]"
-			end
-		end
+	
+	if sProtecting ~= "" then
+		sProtectingTT = L("TXT_KEY_DO_CS_STATUS_PROTECT_TT", g_sCsName, sProtecting)
 	end
-
-	if sApproach ~= "" then
-		sApproach = sApproach
-	end
-
-	return sApproach
+	
+	return -iSortNumber, sProtecting, sProtectingTT
 end
 
 function GetQuests(pCs, pPlayer, bForcePeace)
@@ -521,7 +512,7 @@ function SetQuests(pText, pCs, pPlayer, bForcePeace)
 		iSort = -iQuests
 	else
 		pText:SetText("")
-		pText:SetToolTipString(L("TXT_KEY_DO_CS_STATUS_NO_QUEST_TT", pCs:GetName()))
+		pText:SetToolTipString(L("TXT_KEY_DO_CS_STATUS_NO_QUEST_TT", g_sCsName))
 	end
 
 	return iSort
@@ -530,61 +521,89 @@ end
 function GetInfluence(pCs, pPlayer)
 	local iInfluence = pCs:GetMinorCivFriendshipWithMajor(ePlayer)
 	local sInfluence = iInfluence
+	local iInfluenceChange = pCs:GetFriendshipChangePerTurnTimes100(ePlayer)
 	local iNeededInfluence, sNeededInfluence, iSortInfluence = GetNeededInfluence(pCs, pPlayer)
+	local sNeed = ""
+	local sChange = ""
 	
 	if iNeededInfluence > 0 then
-		sInfluence = iInfluence .. " (" ..iNeededInfluence .. ")"
-	end
-	
-	local iInfluenceChange = pCs:GetFriendshipChangePerTurnTimes100(ePlayer)
+		sNeed = " (" ..iNeededInfluence .. ")"
+	end	
 
 	if iInfluenceChange ~= 0 then
-		sInfluence = sInfluence .. (" (%+2.2g / "):format(iInfluenceChange / 100) .. "Turn)"
-	end
+		sChange = (" (%+2.2g / "):format(iInfluenceChange / 100) .. "Turn)"
+	end	
 	
-	sInfluence = GetCsApproach(pCs, pPlayer, sInfluence)
+	sInfluence = GetCsApproach(pCs, pPlayer, L("TXT_KEY_DO_CS_INFLUENCE_VALUE", iInfluence, sNeed, sChange))
 	
 	return iSortInfluence, iInfluence, sInfluence, iNeededInfluence, sNeededInfluence
 end
 
 function GetNeededInfluence(pCs, pPlayer)
 	local iNeededInfluence = 0
-	local sNeededInfluence = nil
+	local sNeededInfluence = ""	
+	local iSortInfluence
 	local iPlayerInfluence = pCs:GetMinorCivFriendshipWithMajor(pPlayer:GetID())
 	local eAlly = pCs:GetAlly()
 	
 	if eAlly ~= nil and eAlly ~= -1 then
 		if eAlly ~= pPlayer:GetID() then
 			local pAlly = Players[eAlly]
+			local iAllyInfluence = pCs:GetMinorCivFriendshipWithMajor(eAlly)
 			local sAlly = L(pAlly:GetCivilizationShortDescriptionKey())
 			sAlly = GetApproach(pPlayer, pAlly, sAlly)
 	
-			iNeededInfluence = pCs:GetMinorCivFriendshipWithMajor(eAlly) - iPlayerInfluence + 1
+			iNeededInfluence = iAllyInfluence - iPlayerInfluence + 1
 			sNeededInfluence = L("TXT_KEY_DO_CS_STATUS_INFLUENCE_TT", sAlly, g_sCsName, iNeededInfluence)
 		end
 	else
-		iNeededInfluence = GameDefines["FRIENDSHIP_THRESHOLD_ALLIES"] - iPlayerInfluence
+		iNeededInfluence = g_iAllyThreshold - iPlayerInfluence
 		sNeededInfluence = L("TXT_KEY_DO_CS_STATUS_INFLUENCE_NOBODY_TT", g_sCsName, iNeededInfluence)
 	end
 	
-	local iSortInfluence
-	
 	if pPlayer:GetID() == eAlly then
-		-- I'm their ally, so entries go at the top of the table by my current influence
-		iSortInfluence = 10000 * iPlayerInfluence
-	elseif iPlayerInfluence >= GameDefines["FRIENDSHIP_THRESHOLD_FRIENDS"] then
-		-- I'm their friend, so entries go in the midle of the table by influence needed to make ally
-		iSortInfluence = 1000 * iPlayerInfluence - iNeededInfluence
+		iSortInfluence = 10000 * iPlayerInfluence -- Ally; top of the table by my current influence
+	elseif iPlayerInfluence >= g_iFriendThreshold then
+		iSortInfluence = 1000 * iPlayerInfluence - iNeededInfluence -- Friend; middle of the table by influence needed to make ally
 	else
-		-- Otherwise entries go at the bottom of the table by influence needed
-		iSortInfluence = 100 * iPlayerInfluence - iNeededInfluence
-	end
-	
-	if sNeededInfluence ~= nil then
-		sNeededInfluence, _ = string.gsub(sNeededInfluence, "%[NEWLINE].*", "")
+		iSortInfluence = 100 * iPlayerInfluence - iNeededInfluence -- Nothing; bottom of the table by influence needed
 	end
 	
 	return iNeededInfluence, sNeededInfluence, iSortInfluence
+end
+
+function GetApproach(pActivePlayer, pPlayer, sPlayerName)
+	local sApproach = ""
+
+	if pActivePlayer:GetID() ~= pPlayer:GetID() then
+		if Teams[pActivePlayer:GetTeam()]:IsAtWar(pPlayer:GetTeam()) then
+			sApproach = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorWar, sPlayerName)
+		elseif pPlayer:IsDenouncingPlayer(pActivePlayer:GetID()) then
+			sApproach = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorDenounce, sPlayerName)
+		else
+			local iApproach = pActivePlayer:GetApproachTowardsUsGuess(pPlayer:GetID())
+  
+			if iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_WAR then
+				sApproach = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorWar, sPlayerName)
+			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_HOSTILE then
+				sApproach = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorWar, sPlayerName)
+			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_GUARDED then
+				sApproach = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorGuarded, sPlayerName)
+			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_NEUTRAL then
+				sApproach = sPlayerName
+			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_FRIENDLY then
+				sApproach = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorFriendly, sPlayerName)
+			elseif iApproach == MajorCivApproachTypes.MAJOR_CIV_APPROACH_AFRAID then
+				sApproach = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorAfraid, sPlayerName)
+			end
+		end
+	end
+
+	if sApproach ~= "" then
+		sApproach = sApproach
+	end
+
+	return sApproach
 end
 
 function GetCsApproach(pCs, pPlayer, sText)
@@ -592,37 +611,28 @@ function GetCsApproach(pCs, pPlayer, sText)
 	local eTeam = pPlayer:GetTeam()
 	local bWar = Teams[eTeam]:IsAtWar(pCs:GetTeam())
 	local iInfluence = pCs:GetMinorCivFriendshipWithMajor(ePlayer)
-	local iNeutralThreshold = GameDefines.FRIENDSHIP_THRESHOLD_NEUTRAL
-	local iFriendshipThreshold = GameDefines.FRIENDSHIP_THRESHOLD_FRIENDS
-	local iNeededInfluence, i, j = GetNeededInfluence(pCs, pPlayer)
+	local iNeededInfluence, _, _ = GetNeededInfluence(pCs, pPlayer)
 	
-	local iNeededInfPercentage = (iInfluence / (iNeededInfluence + iInfluence)) * 100
-	local iNeededForFriendshipInfPercentage = (iInfluence / iFriendshipThreshold) * 100
+	local iPercentForAlly = (iInfluence / (iNeededInfluence + iInfluence)) * 100
+	local iPercentForFriend = (iInfluence / g_iFriendThreshold) * 100
 		
-	local sColor = ""
-	local sEndColor = "[ENDCOLOR]"
-	
 	if pCs:IsAllies(ePlayer) then
-		sColor = g_sColorCyan
+		sText = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorCyan, sText)
 	elseif pCs:IsMinorPermanentWar(eTeam) or bWar then
-		sColor = g_sColorRed
+		sText = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorRed, sText)
 	elseif pCs:IsPeaceBlocked(eTeam) then
-		sColor = g_sColorFadingRed
-	elseif pCs:IsFriends(ePlayer) and iNeededInfPercentage > 75 then
-		sColor = g_sColorDarkGreen
-	elseif pCs:IsFriends(ePlayer) and iNeededInfPercentage <= 75 then
-		sColor = g_sColorLightGreen
-	elseif iInfluence < iFriendshipThreshold and pCs:CanMajorBullyGold(ePlayer) then
-		sColor = g_sColorLightOrange
-	elseif iNeededForFriendshipInfPercentage > 75 then
-		sColor = g_sColorYellowGreen
-	elseif iInfluence < iNeutralThreshold and not pCs:CanMajorBullyGold(ePlayer) then
-		sColor = g_sColorMagenta	
-	else
-		sEndColor = ""
+		sText = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorFadingRed, sText)
+	elseif pCs:IsFriends(ePlayer) and iPercentForAlly > 75 then
+		sText = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorDarkGreen, sText)
+	elseif pCs:IsFriends(ePlayer) and iPercentForAlly <= 75 then
+		sText = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorLightGreen, sText)
+	elseif iInfluence < g_iFriendThreshold and pCs:CanMajorBullyGold(ePlayer) then
+		sText = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorLightOrange, sText)
+	elseif iPercentForFriend > 75 then
+		sText = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorYellowGreen, sText)
+	elseif iInfluence < g_iNeutralThreshold and not pCs:CanMajorBullyGold(ePlayer) then
+		sText = L("TXT_KEY_DO_CS_GET_APPROACH", g_sColorMagenta, sText)
 	end
-	
-	sText = sColor .. sText .. sEndColor
 	
 	return sText
 end
@@ -703,15 +713,10 @@ function OnSortCsName()
 end
 Controls.SortCsName:RegisterCallback(Mouse.eLClick, OnSortCsName)
 
-function OnSortCsDistance()
-	OnSortCs("distance")
+function OnSortCsPersonality()
+	OnSortCs("personality")
 end
-Controls.SortCsName:RegisterCallback(Mouse.eRClick, OnSortCsDistance)
-
-function OnSortCsAlly()
-	OnSortCs("ally")
-end
-Controls.SortCsAlly:RegisterCallback(Mouse.eLClick, OnSortCsAlly)
+Controls.SortCsPersonality:RegisterCallback(Mouse.eLClick, OnSortCsPersonality)
 
 function OnSortCsInfluence()
 	OnSortCs("influence")
@@ -728,20 +733,20 @@ function OnSortCsUnits()
 end
 Controls.SortCsUnits:RegisterCallback(Mouse.eLClick, OnSortCsUnits)
 
+function OnSortCsSpy()
+	OnSortCs("spy")
+end
+Controls.SortCsSpy:RegisterCallback(Mouse.eLClick, OnSortCsSpy)
+
 function OnSortCsWar()
 	OnSortCs("war")
 end
 Controls.SortCsWar:RegisterCallback(Mouse.eLClick, OnSortCsWar)
 
-function OnSortCsPersonality()
-	OnSortCs("personality")
+function OnSortCsAlly()
+	OnSortCs("ally")
 end
-Controls.SortCsPersonality:RegisterCallback(Mouse.eLClick, OnSortCsPersonality)
-
-function OnSortCsSpy()
-	OnSortCs("spy")
-end
-Controls.SortCsSpy:RegisterCallback(Mouse.eLClick, OnSortCsSpy)
+Controls.SortCsAlly:RegisterCallback(Mouse.eLClick, OnSortCsAlly)
 
 function OnSortCsPossibleProtection()
 	OnSortCs("possprotect")
@@ -752,6 +757,11 @@ function OnSortCsProtected()
 	OnSortCs("protected")
 end
 Controls.SortCsProtected:RegisterCallback(Mouse.eLClick, OnSortCsProtected)
+
+function OnSortCsDistance()
+	OnSortCs("distance")
+end
+Controls.SortCsDistance:RegisterCallback(Mouse.eLClick, OnSortCsDistance)
 
 function OnSortCsQuests()
 	OnSortCs("quests")

@@ -163,6 +163,40 @@
 			<Text>City-States</Text>
 		</Row>
 
+		<Row Tag="TXT_KEY_DO_CS_STATUS_CITY_STATE" >
+			<Text>City-State</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY" >
+			<Text>[ICON_VIEW_CITY]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_INFLUENCE" >
+			<Text>Influence</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_UNITS" >
+			<Text>[ICON_SILVER_FIST]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_SPY" >
+			<Text>[ICON_SPY]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_WAR" >
+			<Text>[ICON_RESISTANCE]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_ALLIED_WITH" >
+			<Text>Allied with</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_POSSIBLE_PROTECTION" >
+			<Text>[ICON_STRENGTH]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_PROTECTED_BY" >
+			<Text>Protected by</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_DISTANCE" >
+			<Text>[ICON_MOVES]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_QUESTS" >
+			<Text>Quests</Text>
+		</Row>
+
 		<Row Tag="TXT_KEY_DO_CS_SORT_TRAIT_TT" >
 			<Text>Sort by [COLOR_POSITIVE_TEXT]Trait[ENDCOLOR]</Text>
 		</Row>
@@ -172,8 +206,8 @@
 		<Row Tag="TXT_KEY_DO_CS_SORT_PERSONALITY_TT" >
 			<Text>Sort by [COLOR_POSITIVE_TEXT]Personality[ENDCOLOR]</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_CS_SORT_POSSIBLE_PROTECTION_TT" >
-			<Text>Sort by [COLOR_POSITIVE_TEXT]Protection Status[ENDCOLOR]</Text>
+		<Row Tag="TXT_KEY_DO_CS_SORT_INFLUENCE_TT" >
+			<Text>Sort by:[NEWLINE]LMB: [COLOR_POSITIVE_TEXT]Influence[ENDCOLOR][NEWLINE]RMB: [COLOR_POSITIVE_TEXT]Influence Needed[ENDCOLOR]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_SORT_UNITS_TT" >
 			<Text>Sort by [COLOR_POSITIVE_TEXT]Units Given[ENDCOLOR]</Text>
@@ -184,67 +218,37 @@
 		<Row Tag="TXT_KEY_DO_CS_SORT_WAR_TT" >
 			<Text>Sort by [COLOR_POSITIVE_TEXT]War Status[ENDCOLOR]</Text>
 		</Row>
+		<Row Tag="TXT_KEY_DO_CS_SORT_ALLY_TT" >
+			<Text>Sort by [COLOR_POSITIVE_TEXT]Ally[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_SORT_POSSIBLE_PROTECTION_TT" >
+			<Text>Sort by [COLOR_POSITIVE_TEXT]Protection Status[ENDCOLOR]</Text>
+		</Row>
 		<Row Tag="TXT_KEY_DO_CS_SORT_PROTECTED_TT" >
 			<Text>Sort by [COLOR_POSITIVE_TEXT]Number of Protectors[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_SORT_DISTANCE_TT" >
+			<Text>Sort by [COLOR_POSITIVE_TEXT]Distance[ENDCOLOR] between City-State and your closest City</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_SORT_QUESTS_TT" >
 			<Text>Sort by [COLOR_POSITIVE_TEXT]Number of Quests[ENDCOLOR]</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_CS_SORT_ALLY_TT" >
-			<Text>Sort by [COLOR_POSITIVE_TEXT]Ally[ENDCOLOR]</Text>
-		</Row>
-		<Row Tag="TXT_KEY_DO_CS_SORT_INFLUENCE_TT" >
-			<Text>Sort by:[NEWLINE]LMB: [COLOR_POSITIVE_TEXT]Influence[ENDCOLOR][NEWLINE]RMB: [COLOR_POSITIVE_TEXT]Influence Needed[ENDCOLOR]</Text>
-		</Row>
 
-		<Row Tag="TXT_KEY_DO_CS_STATUS_CITY_STATE" >
-			<Text>City-State</Text>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY_FRIEND_TT" >
+			<Text>Friend</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_ALLIED_WITH" >
-			<Text>Allied with</Text>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY_NEUTRAL_TT" >
+			<Text>Neutral</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_PROTECTED_BY" >
-			<Text>Protected by</Text>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY_HOSTILE_TT" >
+			<Text>Hostile</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_QUESTS" >
-			<Text>Quests</Text>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_INFLUENCE_TT" >
+			<Text>{1_ally} is currently Ally of {2_cs}. You need another {3_influence_need} [ICON_INFLUENCE] to surpass {1_ally} and become their new Ally.</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_INFLUENCE" >
-			<Text>Influence</Text>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_INFLUENCE_NOBODY_TT" >
+			<Text>Nobody is currently Ally of {1_cs}. You need another {2_influence_need} [ICON_INFLUENCE] to become their new Ally.</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_WAR" >
-			<Text>[ICON_RESISTANCE]</Text>
-		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY" >
-			<Text>[ICON_VIEW_CITY]</Text>
-		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_SPY" >
-			<Text>[ICON_SPY]</Text>
-		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_UNITS" >
-			<Text>[ICON_SILVER_FIST]</Text>
-		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_POSSIBLE_PROTECTION" >
-			<Text>[ICON_STRENGTH]</Text>
-		</Row>	  
-		<Row Tag="TXT_KEY_DO_CS_STATUS_PROTECT_TT" >
-			<Text>{1} is protected by[NEWLINE]{2}</Text>
-		</Row>
-
-		<Row Tag="TXT_KEY_DO_CS_STATUS_QUEST_TT" >
-			<Text>{1_QuestText}</Text>
-		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_NO_QUEST_TT" >
-			<Text>{1} currently has no requests</Text>
-		</Row>
-    
-		<Row Tag="TXT_KEY_DO_CS_STATUS_PEACE_TT" >
-			<Text>You are at war with {1_cs}. Click on the icon to sign a [COLOR_POSITIVE_TEXT]Peace Treaty[ENDCOLOR].</Text>
-		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_WAR_TT" >
-			<Text>You are at war with {1_cs} and you cannot sign a [COLOR_NEGATIVE_TEXT]Peace Treaty[ENDCOLOR].</Text>
-		</Row>
-
 		<Row Tag="TXT_KEY_DO_CS_STATUS_MILITARY_ALLY_DIS_TT" >
 			<Text>{1_cs} is your [COLOR_CYAN]Ally[ENDCOLOR] and you have unit spawn [COLOR_NEGATIVE_TEXT]Disabled[ENDCOLOR].</Text>
 		</Row>
@@ -266,19 +270,61 @@
 		<Row Tag="TXT_KEY_DO_CS_STATUS_MILITARY_UNIT_TT" >
 			<Text>[NEWLINE][NEWLINE]Unique [COLOR_CYAN]{1_era}[ENDCOLOR] ([COLOR_CYAN]{2_tech}[ENDCOLOR]) Unit:[NEWLINE][COLOR_YIELD_FOOD]{3_unit}[ENDCOLOR] - {4_help}</Text>
 		</Row>
-
+		<Row Tag="TXT_KEY_DO_CS_STATUS_PEACE_TT" >
+			<Text>You are at war with {1_cs}. Click on the icon to sign a [COLOR_POSITIVE_TEXT]Peace Treaty[ENDCOLOR].</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_WAR_TT" >
+			<Text>You are at war with {1_cs} and you cannot sign a [COLOR_NEGATIVE_TEXT]Peace Treaty[ENDCOLOR].</Text>
+		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_PROTECTION_PLEDGE_TT" >
 			<Text>Protection available. Click on icon to [COLOR_POSITIVE_TEXT]Pledge Protection[ENDCOLOR] over [COLOR_CYAN]{1_cs}[ENDCOLOR].</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_PROTECTION_REVOKE_TT" >
 			<Text>You already pledge protection over [COLOR_POSITIVE_TEXT]{1_cs}[ENDCOLOR]. Click on icon to [COLOR_NEGATIVE_TEXT]Revoke Protection[ENDCOLOR].</Text>
 		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_PROTECT_TT" >
+			<Text>{1} is protected by:[NEWLINE]{2}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_DISTANCE_TT" >
+			<Text>Click on distance to center map on {1_cs}.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_QUEST_TT" >
+			<Text>{1_QuestText}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_NO_QUEST_TT" >
+			<Text>{1} currently has no requests.</Text>
+		</Row>
 
-		<Row Tag="TXT_KEY_DO_CS_STATUS_INFLUENCE_TT" >
-			<Text>{1_ally} is currently Ally of {2_cs}. You need another {3_influence_need} [ICON_INFLUENCE] to surpass {1_ally} and become their new Ally.</Text>
+		<Row Tag="TXT_KEY_DO_CS_GET_APPROACH" >
+			<Text>{1_color}{2_text}[ENDCOLOR]</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_CS_STATUS_INFLUENCE_NOBODY_TT" >
-			<Text>Nobody is currently Ally of {1_cs}. You need another {2_influence_need} [ICON_INFLUENCE] to become their new Ally.</Text>
+		<Row Tag="TXT_KEY_DO_CS_INFLUENCE_VALUE" >
+			<Text>{1_inf}{2_need}{3_change}</Text>
 		</Row>
+
+		<Row Tag="TXT_KEY_DO_CS_RED_FLAG" >
+			<Text>[ICON_TEAM_2]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_ORANGE_FLAG" >
+			<Text>[ICON_TEAM_9]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_GREEN_FLAG" >
+			<Text>[ICON_TEAM_4]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_CYAN_FLAG" >
+			<Text>[ICON_TEAM_5]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_WHITE_FLAG" >
+			<Text>[ICON_TEAM_1]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_BLACK_FLAG" >
+			<Text>[ICON_TEAM_11]</Text>
+		</Row>
+
+		<Row Tag="TXT_KEY_DO_CS_YOU" >
+			<Text>[COLOR_CYAN]You[ENDCOLOR]</Text>
+		</Row>
+
+		
 	</Language_en_US>
 </GameData>

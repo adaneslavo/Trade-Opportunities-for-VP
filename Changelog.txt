@@ -7,21 +7,24 @@ v10:
 	- fixed player's highlight;
 - City-State View:
 	- better colours for cs approach;
-	- added clolour for allies and protectors approach;
+	- added colours for allies and protectors approach;
 	- added background colours;
 	- reworked table structure:
 		- much wider table with more content;
-		- added new columns (military cs, spies, personality and possible protection);
+		- added new columns:
+			- spawn state (they were added to cs name before) for military cs (shows different flags described in tooltip; unique unit with description in tooltip; you can change spawn option on LMB);
+			- spies (shows where they are located in tooltip; shows if at least one is unassigned; opens Espionage Overview on LMB);
+			- personality;
+			- possible protection (you can pledge or revoke protection on LMB);
+			- distance (shows which city is the closest one in tooltip; you can center on LMB);
 		- added sorting for all columns; improved existing sorting;
-		- added new and modified existing tooltips;
-			- added unique unit with description;
+		- added new and modified existing tooltips:
 			- added approach colors; highlighted important parts;
 			- fixed spaces and newlines;
-		- added few more flags (they were added to cs name before);
-		- added few additional action buttons (pledge/revoke protection, make peace);
 	- reworked tooltips for headers; added colours;
 	- added influence change value;
 - overall:
+	- code cleaning;
 	- added credits file and supporters;
 	- changed colour of buttons for pages in Diplomacy View;
 

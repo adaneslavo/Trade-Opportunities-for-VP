@@ -707,7 +707,7 @@ function InitCsList()
 									sCsAlly = L("TXT_KEY_MISC_UNKNOWN")
 								end
 							else
-								sCsAlly = g_sColorCyan .. L("TXT_KEY_YOU") .. "[ENDCOLOR]"
+								sCsAlly = L("TXT_KEY_DO_CS_YOU")
 							end					
 						end
 
