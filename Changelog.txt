@@ -1,4 +1,16 @@
 Changelog:
+v11:
+- City States View:
+	- added Pasture and to improvement list;
+	- added Building to improvement list (like Tern Egg from MWfVP);
+	- added resource icons for available resources in CS name's tooltip;
+	- increased and corrected sign "You have not met...";
+	- added majority religion in CS;
+- Trade View:
+	- centering on CS on right click;
+	- added found religion in major player's tooltip;
+	- added info about current amount of resources and resources available in every tooltip;
+
 v10:
 - Trade View:
 	- fix for resources added by Great Admiral;

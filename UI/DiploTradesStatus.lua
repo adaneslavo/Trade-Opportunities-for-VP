@@ -19,12 +19,15 @@ local g_ResourceIM = InstanceManager:new("TradeResourcesInstance", "TradeBox", C
 local g_SortTable
 local g_ePreviousResource = -1
 
+local g_tCsCoordinates = {}
+
 local g_tValidImprovements = {
 	"IMPROVEMENT_CAMP",
 	"IMPROVEMENT_MINE",
 	"IMPROVEMENT_QUARRY",
 	"IMPROVEMENT_PLANTATION",
-	"IMPROVEMENT_FISHING_BOATS"
+	"IMPROVEMENT_FISHING_BOATS",
+	"IMPROVEMENT_PASTURE"
 }
 
 local g_sColorBrown = "[COLOR_CITY_GREY]"
@@ -212,6 +215,22 @@ function GetCivControl(im, ePlayer, bCanTrade)
 							end
 						end
 					end
+
+					if sImprovement == "" then
+						for quantity in GameInfo.Building_ResourceQuantity{ResourceType=resource.Type} do
+							for building in GameInfo.Buildings{Type=quantity.BuildingType} do
+								sImprovement = L(building.Description)
+								break
+							end
+						end
+
+						for plot in GameInfo.Building_ResourcePlotsToPlace{ResourceType=resource.Type} do
+							for building in GameInfo.Buildings{Type=plot.BuildingType} do
+								sImprovement = L(building.Description)
+								break
+							end
+						end
+					end
 				end
 
 				local sHelp = L(resource.Help)
@@ -290,8 +309,23 @@ function GetCivControl(im, ePlayer, bCanTrade)
 	local iScore = pPlayer:GetScore()
 	local iGoldPerTurn = ("%+2g"):format(pPlayer:CalculateGoldRate())
 	local iTreasure = pPlayer:GetGold()
-
-	local sPlayerTooltip = L("TXT_KEY_DO_TRADE_CIV_STATUS", sCivName, iScore, sEraName, iTreasure, iGoldPerTurn)
+	
+	local eReligionCreated = pPlayer:GetReligionCreatedByPlayer()
+	local sReligionCreatedType, sReligionCreated
+	
+	if eReligionCreated ~= -1 then
+		for row in GameInfo.Religions{ID=pPlayer:GetReligionCreatedByPlayer()} do
+			sReligionCreatedType = row.Type
+		end
+		
+		local pReligion =  GameInfo.Religions[sReligionCreatedType]
+		
+		sReligionCreated = "[NEWLINE]" .. pReligion.IconString .. " " .. L(pReligion.Description)
+	else
+		sReligionCreated = ""
+	end
+		
+	local sPlayerTooltip = L("TXT_KEY_DO_TRADE_CIV_STATUS", sCivName, iScore, sEraName, iTreasure, iGoldPerTurn, sReligionCreated)
 
 	if sVerifiedDeals ~= "" then
 		sPlayerTooltip = sPlayerTooltip .. "[NEWLINE][NEWLINE]" .. sVerifiedDeals
@@ -526,7 +560,9 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		
 		-- monopolies
 		local bIsStrategic = (pResource.ResourceUsage == 1)
-		local fRatio = (pPlayer:GetNumResourceTotal(eResource, false) + pPlayer:GetResourceExport(eResource)) / Map.GetNumResources(eResource)
+		local iResourceOwn = pPlayer:GetNumResourceTotal(eResource, false) + pPlayer:GetResourceExport(eResource)
+		local iResourceOnMap = Map.GetNumResources(eResource)
+		local fRatio = iResourceOwn / iResourceOnMap
 		local bGlobalMonopoly = fRatio > 0.5
 		local bStrategicMonopoly = fRatio > 0.25
 		local sMonopoly = ""	
@@ -540,7 +576,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		end
 		
 		sText = L("TXT_KEY_DO_TRADE_VALUE", sColorValue, iTotal, sMonopoly)
-		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP", pResource.IconString, g_sColorResourceName, L(pResource.Description), sText, sCityList)
+		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP", pResource.IconString, g_sColorResourceName, L(pResource.Description), sText, sCityList, sColorValue, iResourceOwn, iResourceOnMap)
 	else
 		sText = L("TXT_KEY_DO_TRADE_VALUE_NONE", g_sColorBrown)
 		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_NONE", pResource.IconString, g_sColorResourceName, L(pResource.Description), g_sColorBrown)
@@ -737,9 +773,16 @@ function InitCsList()
 
 						local sToolTip = L("TXT_KEY_DO_TRADE_CS_TOOLTIP", sAmount, resource.IconString, sCsName, iCSInfluence, sCsAlly, GetCsStrategicsOrLuxuries(pCs, eResource))
 						
+						local pCsCity = pCs:GetCapitalCity()
+						g_tCsCoordinates[csloop] = {
+							iX = pCsCity:GetX(),
+							iY = pCsCity:GetY()
+						}
+
 						tCSTextControlTable.CsButton:SetToolTipString(sToolTip)
 						tCSTextControlTable.CsButton:SetVoid1(csloop)
 						tCSTextControlTable.CsButton:RegisterCallback(Mouse.eLClick, OnCsSelected)
+						tCSTextControlTable.CsButton:RegisterCallback(Mouse.eRClick, OnCsCenter)
 					end
 
 					bCsMet = true
@@ -975,6 +1018,14 @@ function OnCsSelected(iCs)
 	}
     
 	Events.SerialEventGameMessagePopup(popupInfo)
+end
+
+function OnCsCenter(eCs)
+	local pPlot = Map.GetPlot(g_tCsCoordinates[eCs].iX, g_tCsCoordinates[eCs].iY)
+   
+	if pPlot ~= nil then
+		UI.LookAt(pPlot)
+	end
 end
 
 ---------------------------

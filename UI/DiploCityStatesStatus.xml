@@ -233,7 +233,7 @@
 					<Stack Anchor="L,T" StackGrowth="B" Padding="0" ID="CsStack" />
 				</ScrollPanel>
 
-				<Label ID="CsNoneMetText" Offset="0,0" Anchor="C,C" String="{TXT_KEY_DO_NO_MINORS:upper}" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" Hidden="1" />
+				<Label ID="CsNoneMetText" Offset="0,0" Anchor="C,C" String="{TXT_KEY_DO_NO_MINORS:upper}" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" Hidden="1" />
 			</Box>
 		</Box>
 

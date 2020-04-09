@@ -123,14 +123,36 @@ function GetCsControl(im, eCs, ePlayer)
 	
 	-- Name
 	local sName = pCs:GetName()
-	controlTable.CsName:SetText(sName)
 	sortEntry.name = sName
+	local sNameWithReligion = sName
+
+	for row in GameInfo.Religions{ID=pCsCity:GetReligiousMajority()} do
+		sNameWithReligion = sNameWithReligion .. " " .. GameInfo.Religions[row.Type].IconString 
+	end
+	controlTable.CsName:SetText(sNameWithReligion)
 	
 	g_sCsName = GetCsApproach(pCs, pPlayer, sName)
 	
 	controlTable.CsButton:SetVoid1(eCs)
 	controlTable.CsButton:RegisterCallback(Mouse.eLClick, OnCsSelectedGetInto)
 	
+	local sResources = ""
+
+	for row in GameInfo.Resources() do
+		if row.ResourceUsage > 0 then
+			if IsCsNearResource(pCs, row.ID) or IsCsHasResource(pCs, row.ID) then
+				if sResources == "" then
+					sResources = row.IconString
+				else
+					sResources = sResources .. ", " .. row.IconString
+				end
+			end
+		end
+	end
+
+	sResources = sResources
+	controlTable.CsButton:SetToolTipString(sResources)
+
 	-- Influence
 	local iSortInfluence, iInfluence, sInfluence, iNeededInfluence, sNeededInfluence = GetInfluence(pCs, pPlayer)
 	controlTable.CsInfluence:SetText(sInfluence)
@@ -786,3 +808,48 @@ Events.WarStateChanged.Add(OnWarStateChanged)
 print("Loaded DiploCityStateStatus.lua from TOfVP")
 --------------------------------------------------------------
 --------------------------------------------------------------
+
+
+-- checking nearby resources
+function IsCsNearResource(pCs, eResource)
+	local iCs = pCs:GetID()
+	local pCapital = pCs:GetCapitalCity()
+	
+	if pCapital ~= nil then
+		local iThisX = pCapital:GetX()
+		local iThisY = pCapital:GetY()
+		
+		local iRange = 5
+		local iCloseRange = 2
+		
+		for iDX = -iRange, iRange, 1 do
+			for iDY = -iRange, iRange, 1 do
+				local pTargetPlot = Map.GetPlotXY(iThisX, iThisY, iDX, iDY)
+        
+				if pTargetPlot ~= nil then
+					local eOwner = pTargetPlot:GetOwner()
+          
+					if eOwner == iCs or eOwner == -1 then
+						local plotDistance = Map.PlotDistance(iThisX, iThisY, pTargetPlot:GetX(), pTargetPlot:GetY())
+            
+						if plotDistance <= iRange and (plotDistance <= iCloseRange or eOwner == iCs) then
+							if pTargetPlot:GetResourceType(Game.GetActiveTeam()) == eResource then
+								return true
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+-- checks for CS resources
+function IsCsHasResource(pCs, eResource)
+	return (GetCsResourceCount(pCs, eResource) > 0)
+end
+
+-- subfunction
+function GetCsResourceCount(pCs, eResource)
+	return pCs:GetNumResourceTotal(eResource, false) + pCs:GetResourceExport(eResource)
+end

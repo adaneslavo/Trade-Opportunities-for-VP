@@ -12,7 +12,7 @@
 			<Text>{1_icon} {2_c_resource}{3_resource}:[ENDCOLOR] {4_help}</Text>
 		</Row> 
 		<Row Tag="TXT_KEY_DO_TRADE_CIV_STATUS" >
-			<Text>{1_civ} ({2_points})[NEWLINE]{3_era}[NEWLINE]{4_gold}[ICON_GOLD] ({5_gold_change}[ICON_GOLD] GPT)</Text>
+			<Text>{1_civ} ({2_points})[NEWLINE]{3_era}[NEWLINE]{4_gold}[ICON_GOLD] ({5_gold_change}[ICON_GOLD] GPT){6_Religion}</Text>
 		</Row>
 
 		<Row Tag="TXT_KEY_DO_TRADE_STATUS_WAR" >
@@ -65,7 +65,7 @@
 			<Text>{1_color}{2_value}{3_monopoly}[ENDCOLOR]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP" >
-			<Text>{1_icon} {2_c_resource}{3_resource}:[ENDCOLOR] {4_value}{5_demand}</Text>
+			<Text>{1_icon} {2_c_resource}{3_resource}:[ENDCOLOR] {4_value}{5_demand} {6_c_monopol}({7_resource_own}/{8_resource_pos})[ENDCOLOR]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_NONE" >
 			<Text>{1_color}-[ENDCOLOR]</Text>
@@ -332,6 +332,9 @@
 			<Text>[COLOR_CYAN]You[ENDCOLOR]</Text>
 		</Row>
 
-		
+		<Update>
+			<Where Tag="TXT_KEY_DO_NO_MINORS" />
+			<Set Text="You have not met any City-States." />
+		</Update>
 	</Language_en_US>
 </GameData>
