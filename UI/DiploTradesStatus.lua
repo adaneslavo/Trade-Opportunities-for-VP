@@ -885,10 +885,11 @@ function IsCsNearResource(pCs, eResource)
 						if plotDistance <= iRange and (plotDistance <= iCloseRange or eOwner == iCs) then
 							if pTargetPlot:GetResourceType(Game.GetActiveTeam()) == eResource then
 								local eImprovement = pTargetPlot:GetImprovementType()
-
+								
 								if (eImprovement == (-1) 
 								or pTargetPlot:IsImprovementPillaged()
-								or (eImprovement ~= (-1) and not pTargetPlot:IsResourceConnectedByImprovement(eImprovement)))
+								or (eImprovement ~= (-1) and not pTargetPlot:IsResourceConnectedByImprovement(eImprovement))
+								or (eImprovement ~= (-1) and pTargetPlot:IsResourceConnectedByImprovement(eImprovement) and not IsCsHasResource(pCs, eResource)))
 								and not pTargetPlot:IsCity() then
 									g_tIsCsHasResourceUnimproved[eResource] = true
 								end
