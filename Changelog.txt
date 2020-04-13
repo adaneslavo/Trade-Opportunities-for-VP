@@ -1,4 +1,7 @@
 Changelog:
+v11.1:
+- fix: for CS which have resource improved (via f.e. Embassy, GPI), but they don't have it connected, because of tech restriction (f.e. Oil);
+
 v11:
 - City States View:
 	- added Pasture and to improvement list;
