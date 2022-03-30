@@ -5,7 +5,7 @@
     <ProjectGuid>{5173639b-adc0-40d5-a401-ee8fa1983ce0}</ProjectGuid>
     <Name>(ui) Trade Opportunities for VP</Name>
     <Guid>9e735b12-3815-4ce3-9845-5396afb189da</Guid>
-    <ModVersion>11</ModVersion>
+    <ModVersion>12</ModVersion>
     <Stability>Stable</Stability>
     <Teaser>Visualise trading opportunities and city-state affairs</Teaser>
     <Description>Makes trading resources easier than any before. All needed information in one colourful tab. Supports resources outside VP.</Description>
@@ -22,11 +22,11 @@
     <ModReferences />
     <Homepage>http://https://forums.civfanatics.com/threads/trade-opportunities-for-vp.636230/</Homepage>
     <ModDependencies>
-      <Association xmlns="">
+      <Association>
         <Type>Mod</Type>
-        <Name>(5) More Luxuries - CBO Edition</Name>
-        <Id>be2d13ee-d18d-410e-8f04-7cd19cd99a98</Id>
-        <MinVersion>0</MinVersion>
+        <Name>(2) Community Balance Overhaul</Name>
+        <Id>8411a7a8-dad3-4622-a18e-fcc18324c799</Id>
+        <MinVersion>14</MinVersion>
         <MaxVersion>999</MaxVersion>
       </Association>
     </ModDependencies>
