@@ -204,8 +204,10 @@ function GetCivControl(im, ePlayer, bCanTrade)
 			
 			if controlHeader == nil then
 				local sImprovement = ""
-
-				if resource.OnlyMinorCivs then
+				local pImprovement = GameInfo.Improvement_ResourceTypes{ResourceType=resource.Type}()
+				local bIsUniqueLuxuryNotFromMercantile = pImprovement and pImprovement.ImprovementType == 'IMPROVEMENT_CITY'
+				
+				if resource.OnlyMinorCivs or bIsUniqueLuxuryNotFromMercantile then
 					sImprovement = "City-State"
 				else
 					for _, validImprovement in ipairs(g_tValidImprovements) do
@@ -232,7 +234,7 @@ function GetCivControl(im, ePlayer, bCanTrade)
 						end
 					end
 				end
-
+				
 				local sHelp = L(resource.Help)
 				sHelp = string.gsub(sHelp, "(.-)(Monopoly Bonus:)(.-)", "[COLOR_POSITIVE_TEXT]M.B.:[ENDCOLOR]%3")
 
@@ -421,14 +423,14 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 	local sColorValue = g_sColorBrown
 	
 	if IsAvailableLuxury(eResource) and IsVisibleUsefulResource(eResource, pActivePlayer) then
-		local iMinors  = pPlayer:GetResourceFromMinors(eResource)
+		local iMinors  = pPlayer:GetResourceFromMinors(eResource) -- doubling the number of resources after allying? Commented out...
 		local iImports = pPlayer:GetResourceImport(eResource)
 		local iExports = pPlayer:GetResourceExport(eResource)
 		local iLocal   = pPlayer:GetNumResourceTotal(eResource, false) + iExports
 		local iUsed    = pPlayer:GetNumResourceUsed(eResource)
 		
 		local iSurplus = iLocal - iExports - iUsed
-		iTotal = iLocal + iMinors + iImports - iExports - iUsed
+		iTotal = iLocal + --[[iMinors +--]] iImports - iExports - iUsed
 		
 		if bIsActivePlayer then
 			if iTotal == 0 then
@@ -457,14 +459,14 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 				end
 			end
 		else
-			local iActiveMinors  = pActivePlayer:GetResourceFromMinors(eResource)
+			local iActiveMinors  = pActivePlayer:GetResourceFromMinors(eResource) -- doubling the number of resources after allying? Commented out...
 			local iActiveImports = pActivePlayer:GetResourceImport(eResource)
 			local iActiveExports = pActivePlayer:GetResourceExport(eResource)
 			local iActiveLocal   = pActivePlayer:GetNumResourceTotal(eResource, false) + iActiveExports
 			local iActiveUsed	 = pActivePlayer:GetNumResourceUsed(eResource)
 			
 			local iActiveSurplus = iActiveLocal - iActiveExports - iActiveUsed
-			local iActiveTotal   = iActiveLocal + iActiveMinors + iActiveImports - iActiveExports - iActiveUsed
+			local iActiveTotal   = iActiveLocal + --[[iActiveMinors +--]] iActiveImports - iActiveExports - iActiveUsed
 			
 			if iSurplus > 3 and iActiveTotal <= 0 then
 				sColorValue = g_sColorDarkGreen
@@ -590,7 +592,7 @@ function IsVisibleUsefulResource(eResource, pPlayer)
 	local ePlayer = pPlayer:GetID()
 	local pTeam = Teams[pPlayer:GetTeam()]
 	
-	for playerLoop = 0, GameDefines.MAX_CIV_PLAYERS-1, 1 do
+	for playerLoop = 0, GameDefines.MAX_CIV_PLAYERS - 1, 1 do
 		local pOtherPlayer = Players[playerLoop]
 		local eOtherTeam = pOtherPlayer:GetTeam()
     
@@ -636,7 +638,7 @@ function IsPlayerNearResource(pPlayer, eResource)
 			  
 						if eOwner == ePlayer or eOwner == -1 then
 							local plotDistance = Map.PlotDistance(iThisX, iThisY, pTargetPlot:GetX(), pTargetPlot:GetY())
-				
+							
 							if plotDistance <= iRange and (plotDistance <= iCloseRange or eOwner == ePlayer) then
 								if pTargetPlot:GetResourceType(Game.GetActiveTeam()) == eResource then
 									return true
@@ -1087,10 +1089,10 @@ end
 
 -- any luxuries from City States
 function GetCsLuxuriesAndStrategics()
-	for iCs = GameDefines.MAX_MAJOR_CIVS, GameDefines.MAX_CIV_PLAYERS-1, 1 do
+	for iCs = GameDefines.MAX_MAJOR_CIVS, GameDefines.MAX_CIV_PLAYERS - 1, 1 do
 		local pCs = Players[iCs]
 			
-		if pCs:IsEverAlive() and pCs:GetMinorCivTrait() == MinorCivTraitTypes.MINOR_CIV_TRAIT_MERCANTILE then
+		if pCs:IsEverAlive() then
 			local pPlot = pCs:GetStartingPlot()
 			local resource = pPlot and GameInfo.Resources[pPlot:GetResourceType()]
 
@@ -1103,7 +1105,7 @@ end
 
 -- any civ specific luxuries and strategics
 function GetCivLuxuriesAndStrategics()
-	for iCiv = 0, GameDefines.MAX_MAJOR_CIVS-1, 1 do
+	for iCiv = 0, GameDefines.MAX_MAJOR_CIVS - 1, 1 do
 		local pCiv = Players[iCiv]
 		
 		if pCiv:IsEverAlive() then
@@ -1111,7 +1113,10 @@ function GetCivLuxuriesAndStrategics()
 
 			for resource in GameInfo.Resources() do
 				if resource.ResourceUsage > 0 then
-					if resource.CivilizationType == sCivType then
+					local pImprovement = GameInfo.Improvement_ResourceTypes{ResourceType=resource.Type}()
+					local bIsUniqueLuxuryNotFromMercantile = pImprovement and pImprovement.ImprovementType == 'IMPROVEMENT_CITY'
+					
+					if resource.CivilizationType == sCivType or bIsUniqueLuxuryNotFromMercantile then
 						gAvailableUsefulResources[resource.ID] = true
 					end
 				end
