@@ -1,4 +1,11 @@
 Changelog:
+v13:
+- fix for number of resources granted from CSs' alliances;
+- prepared stuff for UCS v15 additions;
+
+v12:
+- small corrections;
+
 v11.1:
 - fix: for CS which have resource improved (via f.e. Embassy, GPI), but they don't have it connected, because of tech restriction (f.e. Oil);
 
