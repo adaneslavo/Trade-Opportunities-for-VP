@@ -242,13 +242,16 @@
 		</Row>
 
 		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY_FRIEND_TT" >
-			<Text>Friend</Text>
+			<Text>Affable</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY_NEUTRAL_TT" >
-			<Text>Neutral</Text>
+			<Text>Pragmatic</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY_HOSTILE_TT" >
-			<Text>Hostile</Text>
+			<Text>Reclusive</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY_IRRATIONAL_TT" >
+			<Text>Enigmatic</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_INFLUENCE_TT" >
 			<Text>{1_ally} is currently Ally of {2_cs}. You need another {3_influence_need} [ICON_INFLUENCE] to surpass {1_ally} and become their new Ally.</Text>
@@ -311,6 +314,9 @@
 
 		<Row Tag="TXT_KEY_DO_CS_RED_FLAG" >
 			<Text>[ICON_TEAM_2]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_PINK_FLAG" >
+			<Text>[ICON_TEAM_6]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_ORANGE_FLAG" >
 			<Text>[ICON_TEAM_9]</Text>

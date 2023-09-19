@@ -124,34 +124,72 @@ function GetCsControl(im, eCs, ePlayer)
 	-- Name
 	local sName = pCs:GetName()
 	sortEntry.name = sName
-	local sNameWithReligion = sName
+	
+	local sExpandedName = sName
+	local sEmbassyOwner, sSphereOwner = "", ""
+
+	local bEmbassy = false
+	local bSphereOfInfluence = Game.IsResolutionPassed(GameInfoTypes.RESOLUTION_SPHERE_OF_INFLUENCE, eCs)
 
 	for row in GameInfo.Religions{ID=pCsCity:GetReligiousMajority()} do
-		sNameWithReligion = sNameWithReligion .. " " .. GameInfo.Religions[row.Type].IconString 
+		sExpandedName = sExpandedName .. " " .. GameInfo.Religions[row.Type].IconString 
 	end
-	controlTable.CsName:SetText(sNameWithReligion)
+
+	for cityPlot = 1, pCsCity:GetNumCityPlots() - 1, 1 do
+		local pPlot = pCsCity:GetCityIndexPlot(cityPlot)
+		
+		bEmbassy = pPlot:IsImprovementEmbassy()
+
+		if bEmbassy then
+			sExpandedName = sExpandedName .. " [ICON_CITY_STATE]"
+			sEmbassyOwner = Players[pPlot:GetPlayerThatBuiltImprovement()]:GetCivilizationDescription()
+			break
+		end
+	end
+
+	if bSphereOfInfluence then
+		sExpandedName = sExpandedName .. " [ICON_LOCKED]"
+		sSphereOwner = Players[pCs:GetPermanentAlly()]:GetCivilizationDescription()
+	end
+	
+	controlTable.CsName:SetText(sExpandedName)
 	
 	g_sCsName = GetCsApproach(pCs, pPlayer, sName)
 	
 	controlTable.CsButton:SetVoid1(eCs)
 	controlTable.CsButton:RegisterCallback(Mouse.eLClick, OnCsSelectedGetInto)
 	
-	local sResources = ""
+	local sNameTooltip = ""
 
 	for row in GameInfo.Resources() do
 		if row.ResourceUsage > 0 then
 			if IsCsNearResource(pCs, row.ID) or IsCsHasResource(pCs, row.ID) then
-				if sResources == "" then
-					sResources = row.IconString
+				if sNameTooltip == "" then
+					sNameTooltip = row.IconString
 				else
-					sResources = sResources .. ", " .. row.IconString
+					sNameTooltip = sNameTooltip .. ", " .. row.IconString
 				end
 			end
 		end
 	end
 
-	sResources = sResources
-	controlTable.CsButton:SetToolTipString(sResources)
+	if bEmbassy or bSphereOfInfluence then
+		sNameTooltip = sNameTooltip .. "[NEWLINE][NEWLINE]"
+
+		if bEmbassy then
+			sNameTooltip = sNameTooltip .. "[ICON_CITY_STATE] ([COLOR_CYAN]" .. sEmbassyOwner .. "[ENDCOLOR])"
+		end			
+
+		if bSphereOfInfluence then
+			if bEmbassy then
+				sNameTooltip = sNameTooltip .. "[NEWLINE]"
+			end
+
+			sNameTooltip = sNameTooltip .. "[ICON_LOCKED] ([COLOR_CYAN]" .. sSphereOwner .. "[ENDCOLOR])"
+		end
+	end
+
+	controlTable.CsButton:SetToolTipString(sNameTooltip)
 
 	-- Influence
 	local iSortInfluence, iInfluence, sInfluence, iNeededInfluence, sNeededInfluence = GetInfluence(pCs, pPlayer)
@@ -168,16 +206,19 @@ function GetCsControl(im, eCs, ePlayer)
 	local sPersonality = ""
 	local sPersonalityTT = ""
 	sortEntry.personality = pCs:GetPersonality()
-	
+	print("TRADE_OPPORTUNITIES", sortEntry.personality)
 	if sortEntry.personality == 0 then
 		sPersonality = L("TXT_KEY_DO_CS_GREEN_FLAG")
 		sPersonalityTT = L("TXT_KEY_DO_CS_STATUS_PERSONALITY_FRIEND_TT")
 	elseif sortEntry.personality == 1 then
 		sPersonality = L("TXT_KEY_DO_CS_WHITE_FLAG")
 		sPersonalityTT = L("TXT_KEY_DO_CS_STATUS_PERSONALITY_NEUTRAL_TT")
-	else
+	elseif sortEntry.personality == 2 then
 		sPersonality = L("TXT_KEY_DO_CS_RED_FLAG")
 		sPersonalityTT = L("TXT_KEY_DO_CS_STATUS_PERSONALITY_HOSTILE_TT")
+	else
+		sPersonality = L("TXT_KEY_DO_CS_PINK_FLAG")
+		sPersonalityTT = L("TXT_KEY_DO_CS_STATUS_PERSONALITY_IRRATIONAL_TT")
 	end
 	
 	controlTable.CsPersonality:SetText(sPersonality)

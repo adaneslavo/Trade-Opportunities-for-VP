@@ -1,4 +1,10 @@
 Changelog:
+v14:
+- City-State screen:
+	- added Irrational personality (pink flag);
+	- added info and icon about the Embassy owner;
+	- added info and icon about the Sphere of Influence owner;
+
 v13:
 - fix for number of resources granted from CSs' alliances;
 - prepared stuff for UCS v15 additions;
