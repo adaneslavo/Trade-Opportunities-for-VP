@@ -1,4 +1,7 @@
 Changelog:
+v14.1:
+- fixed bug for CS placed near border of the map (pPlot=nil);
+
 v14:
 - City-State screen:
 	- added Irrational personality (pink flag);

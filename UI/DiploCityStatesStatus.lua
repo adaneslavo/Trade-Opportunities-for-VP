@@ -138,7 +138,7 @@ function GetCsControl(im, eCs, ePlayer)
 	for cityPlot = 1, pCsCity:GetNumCityPlots() - 1, 1 do
 		local pPlot = pCsCity:GetCityIndexPlot(cityPlot)
 		
-		bEmbassy = pPlot:IsImprovementEmbassy()
+		bEmbassy = pPlot and pPlot:IsImprovementEmbassy()
 
 		if bEmbassy then
 			sExpandedName = sExpandedName .. " [ICON_CITY_STATE]"
@@ -206,7 +206,7 @@ function GetCsControl(im, eCs, ePlayer)
 	local sPersonality = ""
 	local sPersonalityTT = ""
 	sortEntry.personality = pCs:GetPersonality()
-	print("TRADE_OPPORTUNITIES", sortEntry.personality)
+	
 	if sortEntry.personality == 0 then
 		sPersonality = L("TXT_KEY_DO_CS_GREEN_FLAG")
 		sPersonalityTT = L("TXT_KEY_DO_CS_STATUS_PERSONALITY_FRIEND_TT")
