@@ -5,7 +5,7 @@
     <ProjectGuid>{5173639b-adc0-40d5-a401-ee8fa1983ce0}</ProjectGuid>
     <Name>(ui) Trade Opportunities for VP</Name>
     <Guid>9e735b12-3815-4ce3-9845-5396afb189da</Guid>
-    <ModVersion>14</ModVersion>
+    <ModVersion>15</ModVersion>
     <Stability>Stable</Stability>
     <Teaser>Visualise trading opportunities and city-state affairs</Teaser>
     <Description>Makes trading resources easier than any before. All needed information in one colourful tab. Supports resources outside VP.</Description>

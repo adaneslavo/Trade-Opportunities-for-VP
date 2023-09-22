@@ -126,32 +126,11 @@ function GetCsControl(im, eCs, ePlayer)
 	sortEntry.name = sName
 	
 	local sExpandedName = sName
-	local sEmbassyOwner, sSphereOwner = "", ""
-
-	local bEmbassy = false
-	local bSphereOfInfluence = Game.IsResolutionPassed(GameInfoTypes.RESOLUTION_SPHERE_OF_INFLUENCE, eCs)
-
+	
 	for row in GameInfo.Religions{ID=pCsCity:GetReligiousMajority()} do
 		sExpandedName = sExpandedName .. " " .. GameInfo.Religions[row.Type].IconString 
 	end
 
-	for cityPlot = 1, pCsCity:GetNumCityPlots() - 1, 1 do
-		local pPlot = pCsCity:GetCityIndexPlot(cityPlot)
-		
-		bEmbassy = pPlot and pPlot:IsImprovementEmbassy()
-
-		if bEmbassy then
-			sExpandedName = sExpandedName .. " [ICON_CITY_STATE]"
-			sEmbassyOwner = Players[pPlot:GetPlayerThatBuiltImprovement()]:GetCivilizationDescription()
-			break
-		end
-	end
-
-	if bSphereOfInfluence then
-		sExpandedName = sExpandedName .. " [ICON_LOCKED]"
-		sSphereOwner = Players[pCs:GetPermanentAlly()]:GetCivilizationDescription()
-	end
-	
 	controlTable.CsName:SetText(sExpandedName)
 	
 	g_sCsName = GetCsApproach(pCs, pPlayer, sName)
@@ -270,6 +249,43 @@ function GetCsControl(im, eCs, ePlayer)
 	end
 	sortEntry.protected = iSortProtected
 	
+	-- Anyone established an Embassy?
+	local sEmbassyOwner = ""
+	local bEmbassy = false
+
+	for cityPlot = 1, pCsCity:GetNumCityPlots() - 1, 1 do
+		local pPlot = pCsCity:GetCityIndexPlot(cityPlot)
+		
+		bEmbassy = pPlot and pPlot:IsImprovementEmbassy()
+
+		if bEmbassy then
+			controlTable.CsEmbassy:SetText("[ICON_CITY_STATE]")
+			sEmbassyOwner = Players[pPlot:GetPlayerThatBuiltImprovement()]:GetCivilizationDescription()
+			controlTable.CsEmbassy:SetToolTipString(L("TXT_KEY_DO_CS_STATUS_EMBASSY_TT", sEmbassyOwner))
+			sortEntry.embassy = sEmbassyOwner
+			break
+		end
+	end	
+
+	if not bEmbassy then
+		controlTable.CsEmbassy:SetText("")
+		sortEntry.embassy = "ZZZ"
+	end	
+
+	-- Anyone has a Sphere of Influence over this CS?
+	local sSphereOwner = ""
+	local bSphereOfInfluence = Game.IsResolutionPassed(GameInfoTypes.RESOLUTION_SPHERE_OF_INFLUENCE, eCs)
+	
+	if bSphereOfInfluence then
+		controlTable.CsSphere:SetText("[ICON_LOCKED]")
+		sSphereOwner = Players[pCs:GetPermanentAlly()]:GetCivilizationDescription()
+		controlTable.CsSphere:SetToolTipString(L("TXT_KEY_DO_CS_STATUS_SPHERE_TT", sSphereOwner))
+		sortEntry.sphere = sSphereOwner
+	else
+		controlTable.CsSphere:SetText("")
+		sortEntry.sphere = "ZZZ"
+	end		
+
 	-- Distance
 	local iMinDistance, sClosestCity = CheckDistance(pPlayer, pCs)
 	controlTable.CsDistance:SetText(iMinDistance)
@@ -826,6 +842,16 @@ function OnSortCsProtected()
 	OnSortCs("protected")
 end
 Controls.SortCsProtected:RegisterCallback(Mouse.eLClick, OnSortCsProtected)
+
+function OnSortCsEmbassy()
+	OnSortCs("embassy")
+end
+Controls.SortCsEmbassy:RegisterCallback(Mouse.eLClick, OnSortCsEmbassy)
+
+function OnSortCsSphere()
+	OnSortCs("sphere")
+end
+Controls.SortCsSphere:RegisterCallback(Mouse.eLClick, OnSortCsSphere)
 
 function OnSortCsDistance()
 	OnSortCs("distance")

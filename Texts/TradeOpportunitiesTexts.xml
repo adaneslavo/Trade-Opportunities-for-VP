@@ -167,7 +167,7 @@
 			<Text>City-State</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_PERSONALITY" >
-			<Text>[ICON_SWAP]</Text>
+			<Text>[ICON_FLOWER]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_INFLUENCE" >
 			<Text>Influence</Text>
@@ -176,7 +176,7 @@
 			<Text>[ICON_SILVER_FIST]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_SPY" >
-			<Text>[ICON_VIEW_CITY]</Text>
+			<Text>[ICON_VP_SPY_POINTS]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_WAR" >
 			<Text>[ICON_RESISTANCE]</Text>
@@ -189,6 +189,12 @@
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_PROTECTED_BY" >
 			<Text>Protected by</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_EMBASSY" >
+			<Text>[ICON_DIPLOMAT]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_SPHERE" >
+			<Text>[ICON_INFLUENCE]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_DISTANCE" >
 			<Text>[ICON_MOVES]</Text>
@@ -233,6 +239,12 @@
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_SORT_PROTECTED_TT" >
 			<Text>Sort by [COLOR_POSITIVE_TEXT]Number of Protectors[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_SORT_EMBASSY_TT" >
+			<Text>Sort by [COLOR_POSITIVE_TEXT]Embassy[ENDCOLOR] presence</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_SORT_SPHERE_TT" >
+			<Text>Sort by [COLOR_POSITIVE_TEXT]Sphere of Influence[ENDCOLOR] presence</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_SORT_DISTANCE_TT" >
 			<Text>Sort by [COLOR_POSITIVE_TEXT]Distance[ENDCOLOR] between City-State and your closest City</Text>
@@ -294,6 +306,12 @@
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_PROTECT_TT" >
 			<Text>{1} is protected by:[NEWLINE]{2}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_EMBASSY_TT" >
+			<Text>[COLOR_CYAN]{1_MajorPlayer}[ENDCOLOR] has established an Embassy in this City-State.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_SPHERE_TT" >
+			<Text>[COLOR_CYAN]{1_MajorPlayer}[ENDCOLOR] has a [COLOR_POSITIVE_TEXT]Sphere of Influence[ENDCOLOR] over this City-State.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_CS_STATUS_DISTANCE_TT" >
 			<Text>Your closest City is [COLOR_CYAN]{1_city}[ENDCOLOR].[NEWLINE][NEWLINE]Click on distance to center map on {2_cs}.</Text>

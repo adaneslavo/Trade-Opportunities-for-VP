@@ -1,4 +1,9 @@
 Changelog:
+v15:
+- City-State screen:
+	- Embassy and Sphere of Influence info moved to separate column allowing sorting;
+	- replaced some icons with other;
+
 v14.1:
 - fixed bug for CS placed near border of the map (pPlot=nil);
 
