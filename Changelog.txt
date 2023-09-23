@@ -1,8 +1,15 @@
 Changelog:
 v15:
+- added new Relationship Graph (from Global Relationship, and this from InfoAddict):
+	- changed the way GPT are described;
+	- added additional colours for one-sided relations;
+- changed the order of tabs in Diplo Overview;
+- now RelationshipGraph is a default tab after opening the Diplo Overview;
 - City-State screen:
 	- Embassy and Sphere of Influence info moved to separate column allowing sorting;
-	- replaced some icons with other;
+	- replaced some icons with another;
+- Trade Opportunities:
+	- now "/Turn" instead of "GPT";
 
 v14.1:
 - fixed bug for CS placed near border of the map (pPlot=nil);

@@ -26,6 +26,16 @@
 
 			<Stack Anchor="C,T" Size="971,32" Offset="0,0" Padding="0" StackGrowth="Right">
 
+				<Button  Anchor="L,T" Size="180,24" Offset="0,0" String="TXT_KEY_DO_RELATIONS_GRAPH" ID="GraphButton" >
+					<ShowOnMouseOver>
+						<AlphaAnim Anchor="L,C" Size="180,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1"  >
+							<Grid   Size="180,27" Offset="0,2" Padding="0,0" Style="Grid9FrameTurnsHL" />
+						</AlphaAnim>
+					</ShowOnMouseOver>
+					<!-- Selected State  -->
+					<Grid Anchor="C,C" Offset="0,1" Size="180,26"  Style="Grid9FrameTurns" Hidden="1" ID="GraphSelectHighlight" />
+				</Button>
+
 				<Button  Anchor="L,T" Size="180,24" Offset="0,0" String="TXT_KEY_DO_YOUR_RELATIONS" ID="RelationsButton" >
 					<ShowOnMouseOver>
 						<AlphaAnim Anchor="L,C" Size="180,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1"  >
@@ -34,6 +44,16 @@
 					</ShowOnMouseOver>
 					<!-- Selected State  -->
 					<Grid Anchor="C,C" Offset="0,1" Size="180,26"  Style="Grid9FrameTurns" Hidden="1" ID="RelationsSelectHighlight" />
+				</Button>
+
+				<Button  Anchor="L,T" Size="180,24" Offset="0,0" String="TXT_KEY_DO_GLOBAL_RELATIONS" ID="GlobalPoliticsButton" >
+					<ShowOnMouseOver>
+						<AlphaAnim Anchor="L,C" Size="180,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1"  >
+							<Grid   Size="180,27" Offset="0,2" Padding="0,0" Style="Grid9FrameTurnsHL" />
+						</AlphaAnim>
+					</ShowOnMouseOver>
+					<!-- Selected State  -->
+					<Grid Anchor="C,C" Offset="0,1" Size="180,26"  Style="Grid9FrameTurns" Hidden="1" ID="GlobalSelectHighlight" />
 				</Button>
 
 				<Button  Anchor="L,T" Size="180,24" Offset="0,0" String="TXT_KEY_DO_TRADE_STATUS" ID="TradesButton" >
@@ -66,16 +86,6 @@
 					<Grid Anchor="C,C" Offset="0,1" Size="180,26"  Style="Grid9FrameTurns" Hidden="1" ID="DealsSelectHighlight" />
 				</Button>
 
-				<Button  Anchor="L,T" Size="180,24" Offset="0,0" String="TXT_KEY_DO_GLOBAL_RELATIONS" ID="GlobalPoliticsButton" >
-					<ShowOnMouseOver>
-						<AlphaAnim Anchor="L,C" Size="180,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1"  >
-							<Grid   Size="180,27" Offset="0,2" Padding="0,0" Style="Grid9FrameTurnsHL" />
-						</AlphaAnim>
-					</ShowOnMouseOver>
-					<!-- Selected State  -->
-					<Grid Anchor="C,C" Offset="0,1" Size="180,26"  Style="Grid9FrameTurns" Hidden="1" ID="GlobalSelectHighlight" />
-				</Button>
-
 			</Stack>
 			<Image Anchor="C,B" Offset="0,0" Texture="HorizontalTrim.dds" Size="1307.5" />
 
@@ -93,10 +103,11 @@
 
 	</Grid>
 
-	<LuaContext FileName="Assets/UI/InGame/Popups/DiploCurrentDeals" ID="DealsPanel" Hidden="1" />
-	<LuaContext FileName="Assets/UI/InGame/Popups/DiploRelationships" ID="RelationsPanel" Hidden="0" />
+	<LuaContext FileName="Assets/UI/InGame/Popups/DiploRelationships" ID="RelationsPanel" Hidden="1" />
 	<LuaContext FileName="Assets/UI/InGame/Popups/DiploGlobalRelationships" ID="GlobalPanel" Hidden="1" />
+	<LuaContext FileName="Assets/UI/InGame/Popups/DiploCurrentDeals" ID="DealsPanel" Hidden="1" />
 
 	<LuaContext FileName="UI/InGame/Popups/DiploTradesStatus" ID="TradesPanel" Hidden="1" />
 	<LuaContext FileName="UI/InGame/Popups/DiploCityStatesStatus" ID="CityStatesPanel" Hidden="1" />
+	<LuaContext FileName="UI/InGame/Popups/InfoAddictCivRelations" ID="GraphPanel" Hidden="0" />
 </Context>
