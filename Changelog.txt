@@ -1,4 +1,7 @@
 Changelog:
+v16:
+-
+
 v15:
 - added new Relationship Graph (from Global Relationship, and this from InfoAddict):
 	- changed the way income and GPT are described;
