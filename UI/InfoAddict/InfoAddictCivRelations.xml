@@ -87,8 +87,8 @@
 				</TextButton>
 			</Stack>
 
-			<Stack Anchor="R,B" Size="300,24" Offset="-100,0" Padding="10" StackGrowth="Left" >
-				<Label Anchor="L,C" Offset="35,0" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_INFOADDICT_RELATIONKEY_ONE_SIDED" />
+			<Stack Anchor="R,B" Size="300,24" Offset="-100,0" Padding="7" StackGrowth="Left" >
+				<Label Anchor="L,C" Offset="40,0" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_INFOADDICT_RELATIONKEY_ONE_SIDED" />
 				<Label Anchor="L,C" Offset="0,0" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_INFOADDICT_RELATIONKEY_MUTUAL" />
 			</Stack>
 
@@ -126,13 +126,19 @@
 				</TextButton>
 			</Stack>
 
-			<Stack Anchor="R,B" Size="300,24" Offset="0,0" Padding="0" StackGrowth="Left" ID="TradeRouteKey" Hidden="1">
+			<Stack Anchor="R,B" Size="300,24" Offset="-100,0" Padding="0" StackGrowth="Left" ID="TradeRouteKey" Hidden="1">
+				<Image Anchor="C,C"  Offset="0,0" Texture="bar300x2.dds" Size="100.1"  ID="TradeRouteOneKeyBar" />
 				<Image Anchor="C,C"  Offset="0,0" Texture="bar300x2.dds" Size="100.1"  ID="TradeRouteKeyBar" />
 				<TextButton Anchor="L,C"  Offset="0,0" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_INFOADDICT_RELATIONKEY_TRADEROUTE" ID="TradeRouteKeyButton" >
 					<ShowOnMouseOver>
 						<Label Anchor="L,C" Offset="0,0" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" Color="70.130.180.255" FontStyle="Shadow" String="TXT_KEY_INFOADDICT_RELATIONKEY_TRADEROUTE" />
 					</ShowOnMouseOver>
 				</TextButton>
+			</Stack>
+
+			<Stack Anchor="R,B" Size="300,24" Offset="-100,0" Padding="7" StackGrowth="Left" >
+				<Label Anchor="L,C" Offset="40,0" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_INFOADDICT_RELATIONKEY_ONE_SIDED" />
+				<Label Anchor="L,C" Offset="0,0" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_INFOADDICT_RELATIONKEY_MUTUAL" />
 			</Stack>
 		</Stack>
 

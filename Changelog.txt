@@ -1,8 +1,16 @@
 Changelog:
 v15:
 - added new Relationship Graph (from Global Relationship, and this from InfoAddict):
-	- changed the way GPT are described;
-	- added additional colours for one-sided relations;
+	- changed the way income and GPT are described;
+	- added additional colours for one-sided relations (Open Borders, Denouncements and Trade Routes);
+		- reworked the key table;
+	- reworked colours for military strength comparison;
+		- added 2 more levels and reworked thresholds;
+	- changed order of elements for both key tables;
+	- changed attitude colours:
+		- Guarded now orange (previously Hostile);
+		- Hostile now magenta (like in the EUI);
+	- added resetting connections on panel change (Political <--> Economic);
 - changed the order of tabs in Diplo Overview;
 - now RelationshipGraph is a default tab after opening the Diplo Overview;
 - City-State screen:

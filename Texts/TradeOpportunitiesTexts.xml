@@ -370,33 +370,39 @@
 		<!-- RELATIONSHIP GRAPH -->
 		<!-- Borrowed from Global Relations from Info Addict -->
 		<Row Tag="TXT_KEY_GR_IMMENSE">
-			<Text>[COLOR_RED]IMMENSE</Text>
+			<Text>[COLOR:210:0:0:255]IMMENSE</Text>
 		</Row>
 		<Row Tag="TXT_KEY_GR_POWERFUL">
-			<Text>[COLOR_PLAYER_ORANGE_TEXT]POWERFUL</Text>
+			<Text>[COLOR:245:80:40:255]POWERFUL</Text>
 		</Row>
 		<Row Tag="TXT_KEY_GR_STRONG">
-			<Text>[COLOR_YELLOW]STRONG</Text>
+			<Text>[COLOR:245:150:10:255]STRONG</Text>
 		</Row>
-		<Row Tag="TXT_KEY_GR_AVERAGE">
+		<Row Tag="TXT_KEY_GR_SIGNIFICANT">
+			<Text>[COLOR:205:215:60:255]SIGNIFICANT</Text>
+		</Row>
+		<Row Tag="TXT_KEY_GR_SIMILAR">
 			<Text>[COLOR_WHITE]SIMILAR</Text>
 		</Row>
-		<Row Tag="TXT_KEY_GR_POOR">
-			<Text>[COLOR_CYAN]INFERIOR</Text>
+		<Row Tag="TXT_KEY_GR_INFERIOR">
+			<Text>[COLOR:175:220:255:255]INFERIOR</Text>
 		</Row>
 		<Row Tag="TXT_KEY_GR_WEAK">
-			<Text>[COLOR:69:130:181:255]WEAK</Text>
+			<Text>[COLOR:125:180:220:255]WEAK</Text>
+		</Row>
+		<Row Tag="TXT_KEY_GR_POOR">
+			<Text>[COLOR:45:220:190:255]POOR</Text>
 		</Row>
 		<Row Tag="TXT_KEY_GR_PATHETIC">
-			<Text>[COLOR_GREEN]PATHETIC</Text>
+			<Text>[COLOR:55:240:85:255]PATHETIC</Text>
 		</Row>
 
 		<!-- Relationship view titles -->
 		<Row Tag="TXT_KEY_INFOADDICT_RELATIONVIEW_ECONOMIC">
-			<Text>Economic</Text>
+			<Text>Economic View</Text>
 		</Row>
 		<Row Tag="TXT_KEY_INFOADDICT_RELATIONVIEW_POLITICAL">
-			<Text>Political</Text>
+			<Text>Political View</Text>
 		</Row>
 		<!--<Row Tag="TXT_KEY_INFOADDICT_RELATIONVIEW_ATTITUDE">
 			<Text>Attitude</Text>

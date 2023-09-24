@@ -1,5 +1,5 @@
 -- InfoAddictCivRelations
--- Author: robk + Aristos
+-- Author: robk + Aristos + adan_eslavo
 -- DateCreated: 10/8/2010 10:57:08 PM
 --------------------------------------------------------------
 include("InfoAddictLib")
@@ -8,89 +8,90 @@ include("FLuaVector")
 
 local L = Locale.ConvertTextKey
 
-
 -- This is the max number of icons that are available. Since I'm pre-generating all the
 -- positions and connectors, this is tied to external program that writes the XML and
 -- generates those connectors.
 local iconCount = 22
 
-
 -- A bunch of colors that I'm defining myself since I may want to make them slightly
 -- different than the named colors available. After the color vectors are defined,
 -- they're assigned to the various connection types and the key bars are set.
-local red = Vector4(.8, .2, .2, 1)
-local green = Vector4(0, .8, .2, 1)
-local yellow = Vector4(1, 1, 0, 1)
-local purple = Vector4(.63, .13, .94, 1)
-local lightpink = Vector4(.93, .51, .93, 1)
-local orange = Vector4(1, .50, 0, 1) --(1, .65, 0, 1)
-local lightorange = Vector4(1, .87, 0, 1)
-local peachpuff = Vector4(.8, .69, .58, 1)
-local white = Vector4(1, 1, 1, 1)
-local pink = Vector4(.8, 0, .8, 1)
-local steelblue = Vector4(.14, .35, .57, 1) --(.27, .51, .71, 1)
-local lightsteelblue = Vector4(.68, .78, .96, 1)
-local gold = Vector4(.93, .91, .67, 1)
+local colors = {}
+	colors.red				= Vector4(0.8,	0.2,	0.2,	1)
+	colors.green			= Vector4(0,	0.8,	0.2,	1)
+	colors.yellow			= Vector4(1,	1,		0,		1)
+	colors.purple			= Vector4(0.63,	0.13,	0.94,	1)
+	colors.lightpink		= Vector4(0.93, 0.51,	0.93,	1)
+	colors.orange			= Vector4(1,	0.50,	0,		1) --(1, .65, 0, 1)
+	colors.lightorange		= Vector4(1,	0.87,	0,		1)
+	colors.peachpuff		= Vector4(0.8,	0.69,	0.58,	1)
+	colors.white			= Vector4(1,	1,		1,		1)
+	colors.pink				= Vector4(0.8,	0,		0.8,	1)
+	colors.steelblue		= Vector4(0.14, 0.35,	0.57,	1) --(.27, .51, .71, 1)
+	colors.lightsteelblue	= Vector4(0.68, 0.78,	0.96,	1)
+	colors.gold				= Vector4(0.93, 0.91,	0.67,	1)
 
--- text
-local redtext = "[COLOR:204:51:51:255]"
-local greentext = "[COLOR:0:204:51:255]"
-local yellowtext = "[COLOR:255:255:0:255]"
-local lightpinktext = "[COLOR:238:130:238:255]"
-local purpletext = "[COLOR:160:32:240:255]"
-local orangetext = "[COLOR:255:128:0:255]" --255:153:0
-local whitetext = "[COLOR:255:255:255:255]"
-local pinktext = "[COLOR:205:0:205:255]"
-local peachpufftext = "[COLOR:204:176:148:255]"
-local steelbluetext = "[COLOR:35:90:145:255]" --69:130:181
-local goldtext = "[COLOR:238:232:170:255]"
+local textcolors = {}
+	textcolors.redtext			= "[COLOR:204:51:51:255]"
+	textcolors.greentext		= "[COLOR:0:204:51:255]"
+	textcolors.yellowtext		= "[COLOR:255:255:0:255]"
+	textcolors.lightpinktext	= "[COLOR:238:130:238:255]"
+	textcolors.purpletext		= "[COLOR:160:32:240:255]"
+	textcolors.orangetext		= "[COLOR:255:128:0:255]"		-- original: 255:153:0
+	textcolors.whitetext		= "[COLOR:255:255:255:255]"
+	textcolors.pinktext			= "[COLOR:205:0:205:255]"
+	textcolors.peachpufftext	= "[COLOR:204:176:148:255]"
+	textcolors.steelbluetext	= "[COLOR:35:90:145:255]"		-- original: 69:130:181
+	textcolors.goldtext			= "[COLOR:238:232:170:255]"
 
 -- Political colors
-local war_color = red
-local war_text = redtext
+local war_color = colors.red
+local war_text = textcolors.redtext
 Controls.WarKeyBar:SetColor(war_color)
 
-local openBorders_color = steelblue
-local openBordersHalf_color = lightsteelblue
-local openBorders_text = steelbluetext
+local openBorders_color = colors.steelblue
+local openBordersHalf_color = colors.lightsteelblue
+local openBorders_text = textcolors.steelbluetext
 Controls.BordersKeyBar:SetColor(openBorders_color)
 Controls.BordersOneKeyBar:SetColor(openBordersHalf_color)
 
-local DoF_color = green
-local DoF_text = greentext
+local DoF_color = colors.green
+local DoF_text = textcolors.greentext
 Controls.DoFKeyBar:SetColor(DoF_color)
 
-local denounce_color = orange
-local denounceHalf_color = lightorange
-local denounce_text = orangetext
+local denounce_color = colors.orange
+local denounceHalf_color = colors.lightorange
+local denounce_text = textcolors.orangetext
 Controls.DenounceKeyBar:SetColor(denounce_color)
 Controls.DenounceOneKeyBar:SetColor(denounceHalf_color)
 
-local defensivePact_color = pink
-local defensivePact_text = pinktext
+local defensivePact_color = colors.white
+local defensivePact_text = textcolors.whitetext
 Controls.DefensiveKeyBar:SetColor(defensivePact_color)
 
 --Economic colors
-local gold_color = gold
-local gold_text = goldtext
+local gold_color = colors.gold
+local gold_text = textcolors.goldtext
 Controls.GPTKeyBar:SetColor(gold_color)
 
-local research_color = steelblue
-local research_text = steelbluetext
+local research_color = colors.steelblue
+local research_text = textcolors.steelbluetext
 Controls.ResearchKeyBar:SetColor(research_color)
 
-local resource_color = green
-local resource_text = greentext
+local resource_color = colors.green
+local resource_text = textcolors.greentext
 Controls.ResourceKeyBar:SetColor(resource_color)
 
-local traderoute_color = lightpink
-local traderoute_text = lightpinktext
+local traderoute_color = colors.pink
+local traderouteHalf_color = colors.lightpink
+local traderoute_text = textcolors.pinktext
 Controls.TradeRouteKeyBar:SetColor(traderoute_color)
+Controls.TradeRouteOneKeyBar:SetColor(traderouteHalf_color)
 
 Controls.TradeRouteKey:SetHide(false)
 
-local export_text = purpletext
-local import_text = orangetext
+local export_text = textcolors.purpletext
+local import_text = textcolors.orangetext
 
 -- This table keeps track of the connector counts between two icons. Also have a max value
 -- in here that's set by the external program that generates the XML for the connectors.
@@ -110,19 +111,20 @@ local lastView = "political"
 -- Controls for the various keys are kept in keyBarControls and referenced later on by
 -- keyBarHandler(). keyBarControls is set up in initkeySelected()
 local keyBarControl = {}
+local keyBarExtControl = {}
 
 -- Various keys that we're displaying
 local keyType = {}
-keyType.war = 0
-keyType.defensive = 1
-keyType.denounce = 2
-keyType.DoF = 3
-keyType.borders = 4
-keyType.research = 5
-keyType.GPT = 6
-keyType.resource = 7
-keyType.traderoute = 8
-
+	keyType.borders = 1
+	keyType.denounce = 2
+	keyType.DoF = 6
+	keyType.defensive = 4
+	keyType.war = 5
+	keyType.traderoute = 3
+	keyType.GPT = 7
+	keyType.resource = 8
+	keyType.research = 9
+	
 -- Global table that holds icon positions for each civ. Initialized when the game is loaded
 -- and referenced through getIconPosition().
 local iconPositionTable = {}
@@ -157,41 +159,39 @@ initCivSelected()
 
 -- Initialize the key selections and keyBarControls
 function initKeySelected()
-	  -- Political Keys
-	  keySelected[keyType.war] = false
-	  keyBarControl[keyType.war] = Controls.WarKeyBar
-
-	  keySelected[keyType.defensive] = false
-	  keyBarControl[keyType.defensive] = Controls.DefensiveKeyBar
-
-	  keySelected[keyType.denounce] = false
-	  keyBarControl[keyType.denounce] = Controls.DenounceKeyBar
-	  keyBarControl[keyType.denounce] = Controls.DenounceOneKeyBar
-
-	  keySelected[keyType.borders] = false
-	  keyBarControl[keyType.borders] = Controls.BordersKeyBar
-	  keyBarControl[keyType.borders] = Controls.BordersOneKeyBar
-
-	  keySelected[keyType.DoF] = false
-	  keyBarControl[keyType.DoF] = Controls.DoFKeyBar
-
-
-	  -- Economic Keys
-	  keySelected[keyType.GPT] = false
-	  keyBarControl[keyType.GPT] = Controls.GPTKeyBar
-
-	  keySelected[keyType.resource] = false
-	  keyBarControl[keyType.resource] = Controls.ResourceKeyBar
-
-	  keySelected[keyType.research] = false
-	  keyBarControl[keyType.research] = Controls.ResearchKeyBar
-
-	  keySelected[keyType.traderoute] = false
-	  keyBarControl[keyType.traderoute] = Controls.TradeRouteKeyBar
+	-- Political Keys
+	keySelected[keyType.war] = false
+	keyBarControl[keyType.war] = Controls.WarKeyBar
+	
+	keySelected[keyType.defensive] = false
+	keyBarControl[keyType.defensive] = Controls.DefensiveKeyBar
+	
+	keySelected[keyType.denounce] = false
+	keyBarControl[keyType.denounce] = Controls.DenounceKeyBar
+	keyBarExtControl[keyType.denounce] = Controls.DenounceOneKeyBar
+	
+	keySelected[keyType.DoF] = false
+	keyBarControl[keyType.DoF] = Controls.DoFKeyBar
+	
+	keySelected[keyType.borders] = false
+	keyBarControl[keyType.borders] = Controls.BordersKeyBar
+	keyBarExtControl[keyType.borders] = Controls.BordersOneKeyBar
+	
+	-- Economic Keys
+	keySelected[keyType.traderoute] = false
+	keyBarControl[keyType.traderoute] = Controls.TradeRouteKeyBar
+	keyBarExtControl[keyType.traderoute] = Controls.TradeRouteOneKeyBar
+	
+	keySelected[keyType.GPT] = false
+	keyBarControl[keyType.GPT] = Controls.GPTKeyBar
+	
+	keySelected[keyType.resource] = false
+	keyBarControl[keyType.resource] = Controls.ResourceKeyBar
+	
+	keySelected[keyType.research] = false
+	keyBarControl[keyType.research] = Controls.ResearchKeyBar
 end
 initKeySelected()
-
-
 
 -- Returns the icon position of a given civ
 function getIconPosition(pid)
@@ -199,8 +199,6 @@ function getIconPosition(pid)
 	--logger:trace(pid .. " is at position " .. pos)
 	return pos
 end
-
-
 
 -- This handler acts as a toggle when the civ icon is selected. Selection
 -- state is held in the civSelected table and selecting the civ icon
@@ -239,18 +237,22 @@ function getMilitaryPowerText(iPlayer)
 	local hisPower = basePower + Players[iPlayer]:GetMilitaryMight()
 	local milRatio =  100 * hisPower / ourPower
 	
-	if milRatio >= 250 then
+	if milRatio >= 185 then
 		return L("TXT_KEY_GR_IMMENSE")
-	elseif milRatio >= 165 then
+	elseif milRatio >= 160 then
 		return L("TXT_KEY_GR_POWERFUL")
-	elseif milRatio >= 115 then
+	elseif milRatio >= 135 then
 		return L("TXT_KEY_GR_STRONG")
-	elseif milRatio >= 85 then
-		return L("TXT_KEY_GR_AVERAGE")
-	elseif milRatio >= 60 then
-		return L("TXT_KEY_GR_POOR")
-	elseif milRatio >= 40 then
+	elseif milRatio >= 110 then
+		return L("TXT_KEY_GR_SIGNIFICANT")
+	elseif milRatio >= 90 then
+		return L("TXT_KEY_GR_SIMILAR")
+	elseif milRatio >= 70 then
+		return L("TXT_KEY_GR_INFERIOR")
+	elseif milRatio >= 50 then
 		return L("TXT_KEY_GR_WEAK")
+	elseif milRatio >= 30 then
+		return L("TXT_KEY_GR_POOR")
 	else
 		return L("TXT_KEY_GR_PATHETIC")
 	end
@@ -580,7 +582,7 @@ function getCivSummaryToolTip(iPlayer)
 		if not pActiveTeam:IsAtWar(pTeam) then
 			if approachID == MajorCivApproachTypes.MAJOR_CIV_APPROACH_HOSTILE then
 				statusIcon	= "[ICON_HAPPINESS_4]"
-				statusColor	= "[COLOR_PLAYER_ORANGE_TEXT]"
+				statusColor	= "[COLOR_CULTURE_STORED]"
 				statusTip	= L("TXT_KEY_GR_HOSTILE")
 			elseif approachID == MajorCivApproachTypes.MAJOR_CIV_APPROACH_GUARDED then
 				statusIcon	= "[ICON_HAPPINESS_3]"
@@ -588,7 +590,7 @@ function getCivSummaryToolTip(iPlayer)
 				statusTip	= L("TXT_KEY_GR_GUARDED")
 			elseif approachID == MajorCivApproachTypes.MAJOR_CIV_APPROACH_AFRAID then
 				statusIcon	= "[ICON_HAPPINESS_3]"
-				statusColor	= "[COLOR_CULTURE_STORED]"
+				statusColor	= "[COLOR_PLAYER_ORANGE_TEXT]"
 				statusTip	= L("TXT_KEY_GR_AFRAID")
 			elseif approachID == MajorCivApproachTypes.MAJOR_CIV_APPROACH_FRIENDLY then
 				statusIcon	= "[ICON_HAPPINESS_1]"
@@ -614,8 +616,9 @@ function getCivSummaryToolTip(iPlayer)
 	str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_GR_ERA") ..  " [COLOR_WHITE]" .. L(GameInfo.Eras[Players[iPlayer]:GetCurrentEra()].Description) .. "[ENDCOLOR]"
 	
 	if not pActiveTeam:IsAtWar(pTeam) then
-		str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_GR_INCOME") .. " [COLOR_WHITE]" .. Players[iPlayer]:GetGold() .. (" (%+2g[ICON_GOLD]/"):format(Players[iPlayer]:CalculateGoldRate()) .. L("TXT_KEY_INFOADDICT_TURN") .. ")[ENDCOLOR]"
+		str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_GR_INCOME") .. " [COLOR_WHITE]" .. Players[iPlayer]:GetGold() .. ("[ICON_GOLD] (%+2g[ICON_GOLD]/"):format(Players[iPlayer]:CalculateGoldRate()) .. L("TXT_KEY_INFOADDICT_TURN") .. ")[ENDCOLOR]"
 	end
+
 	if Game.GetActivePlayer() ~= iPlayer then
 		str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_GR_MILITARY") .. " " .. getMilitaryPowerText(iPlayer) .. "[ENDCOLOR]"
 	end
@@ -813,10 +816,10 @@ function economicView()
 										end
 
 									-- Deal is RA
-									elseif( TradeableItems.TRADE_ITEM_RESEARCH_AGREEMENT == itemType ) then     
+									elseif TradeableItems.TRADE_ITEM_RESEARCH_AGREEMENT == itemType then     
 										local exportstr = tooltipPad .. "[ICON_RESEARCH]" .. iconPad .. " " .. toName .. " (" .. turnsLeft .. ")"
 
-										if (alreadyseen[exportstr .. fromName] ~= 1 and (isCivSelected(fromPid) or isCivSelected(toPid)) and isKeySelected(keyType.research)) then
+										if alreadyseen[exportstr .. fromName] ~= 1 and (isCivSelected(fromPid) or isCivSelected(toPid)) and isKeySelected(keyType.research) then
 											--logger:trace("   " .. exportstr .. " [fromName = " .. fromName .. ", toName = " .. toName .. ", thisPid = " .. thisPid .. "]")
 											research[fromPid] = research[fromPid] .. exportstr
 											alreadyseen[exportstr .. fromName] = 1
@@ -906,7 +909,12 @@ function economicView()
 	-- Grab the data for any established trade routes and show connectors for them. Build strings for the tooltips
 	-- while we're at it.
 
+	-- color checker for one-sided trade routes
+	local colorPlayerTable = {}
+	
 	for thisPid = 0, GameDefines.MAX_MAJOR_CIVS-1, 1 do
+		colorPlayerTable[thisPid] = {}
+
 		if hasMetCiv(thisPid) and Players[thisPid]:IsAlive() then 
 			local thisPlayer = Players[thisPid]
 			--logger:debug("Looking at thisPid = " .. thisPid .. " for established trade routes")
@@ -940,12 +948,14 @@ function economicView()
 
 					-- nice space padding and the number of turns left
 					str = str .. iconPad .. "(" .. turnsLeft .. ")"
-				
+					
+					colorPlayerTable[thisPid][toPid] = true
+					
 					if (isCivSelected(thisPid) or isCivSelected(toPid)) and isKeySelected(keyType.traderoute) then
 						if traderoutes[thisPid] == nil then
 							traderoutes[thisPid] = {}
 						end
-
+						
 						traderoutes[thisPid][str] = turnsLeft
 						--logger:debug("traderoute string = " .. str)
 					end
@@ -960,15 +970,34 @@ function economicView()
 					end
 
 					local check = "traderoute:" .. firstPid .. "-" .. secondPid
-					
+					print("TRADE_ROUTES", check)	
 					if alreadyseen[check] ~= 1 then
-						if (isKeySelected(keyType.traderoute)) then
-							showConnector(thisPid, toPid, traderoute_color)
+						if isKeySelected(keyType.traderoute) then
+							if colorCheckerA and colorCheckerB then
+								--showConnector(thisPid, toPid, traderoute_color)
+							elseif colorCheckerA or colorCheckerB then
+								--showConnector(thisPid, toPid, traderouteHalf_color)
+							end
 						end
 
 						alreadyseen[check] = 1
 					end
 				end
+			end
+		end
+	end
+	
+	for first, innertable in pairs(colorPlayerTable) do
+		for second, value in pairs(innertable) do
+			print(first, second, value);
+			if colorPlayerTable[first][second] and colorPlayerTable[second][first] then
+				print("SETTING_CONNECTIONS_MUTUAL")
+				showConnector(first, second, traderoute_color)
+				colorPlayerTable[first][second] = false
+				colorPlayerTable[second][first] = false
+			elseif colorPlayerTable[first][second] then
+				print("SETTING_CONNECTIONS_ONE_SIDED")
+				showConnector(first, second, traderouteHalf_color)
 			end
 		end
 	end
@@ -1232,6 +1261,14 @@ function keyBarHandler()
 			keyBarControl:SetAlpha(0)
 		end
 	end
+	
+	for key, keyBarExtControl in ipairs(keyBarExtControl) do
+		if isKeySelected(key) then
+			keyBarExtControl:SetAlpha(1)
+		else
+			keyBarExtControl:SetAlpha(0)
+		end
+	end
 end
 
 -- Shows or hides the reset button depending on whether anything selected.
@@ -1274,12 +1311,14 @@ function HighlightSelected(type)
 end
 
 function OnPolitical()
+	OnSelectionReset()
 	BuildView("political")
 	HighlightSelected("political")
 end
 Controls.PoliticalButton:RegisterCallback(Mouse.eLClick, OnPolitical)
 
 function OnEconomic()
+	OnSelectionReset()
 	BuildView("economic")
 	HighlightSelected("economic")
 end
