@@ -561,8 +561,14 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		end
 		
 		-- monopolies
+		local bHasStatecraftPolicyForMonopolies = pPlayer:HasPolicy(GameInfoTypes.POLICY_CULTURAL_DIPLOMACY)
 		local bIsStrategic = (pResource.ResourceUsage == 1)
-		local iResourceOwn = pPlayer:GetNumResourceTotal(eResource, false) + pPlayer:GetResourceExport(eResource)
+		local iResourceOwn = iLocal
+
+		if bHasStatecraftPolicyForMonopolies then
+			iResourceOwn = iResourceOwn + iMinors
+		end
+
 		local iResourceOnMap = Map.GetNumResources(eResource)
 		local fRatio = iResourceOwn / iResourceOnMap
 		local bGlobalMonopoly = fRatio > 0.5

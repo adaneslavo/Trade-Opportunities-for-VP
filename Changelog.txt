@@ -1,6 +1,7 @@
 Changelog:
 v16:
 - cleaning the tags and file names;
+- fixed Monopolies marker for players that got Statecraft's policy;
 
 v15:
 - added new Relationship Graph (from Global Relationship, and this from InfoAddict):
