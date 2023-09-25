@@ -1,6 +1,6 @@
 Changelog:
 v16:
--
+- cleaning the tags and file names;
 
 v15:
 - added new Relationship Graph (from Global Relationship, and this from InfoAddict):

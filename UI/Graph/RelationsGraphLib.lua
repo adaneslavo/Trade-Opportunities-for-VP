@@ -224,7 +224,7 @@ function getFullLeaderTitle(pid)
   local player = Players[pid];
   local name = Locale.ConvertTextKey( GameInfo.Civilizations[ player:GetCivilizationType() ].Description );
   local leader = player:GetName();
-  return leader .. " " .. Locale.ConvertTextKey("TXT_KEY_INFOADDICT_OF_THE") .. " " .. name;
+  return leader .. " " .. Locale.ConvertTextKey("TXT_KEY_DO_GR_OF_THE") .. " " .. name;
 
 end;
 

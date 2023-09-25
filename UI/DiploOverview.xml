@@ -105,5 +105,5 @@
 
 	<LuaContext FileName="UI/InGame/Popups/DiploTradesStatus" ID="TradesPanel" Hidden="1"/>
 	<LuaContext FileName="UI/InGame/Popups/DiploCityStatesStatus" ID="CityStatesPanel" Hidden="1"/>
-	<LuaContext FileName="UI/InGame/Popups/InfoAddictCivRelations" ID="GraphPanel" Hidden="0"/>
+	<LuaContext FileName="UI/InGame/Popups/RelationsGraph" ID="GraphPanel" Hidden="0"/>
 </Context>

@@ -2,7 +2,7 @@
 -- Author: robk + Aristos + adan_eslavo
 -- DateCreated: 10/8/2010 10:57:08 PM
 --------------------------------------------------------------
-include("InfoAddictLib")
+include("RelationsGraphLib.lua")
 include("IconSupport")
 include("FLuaVector")
 
@@ -120,7 +120,7 @@ local keyType = {}
 	keyType.DoF = 6
 	keyType.defensive = 4
 	keyType.war = 5
-	keyType.traderoute = 3
+	keyType.traderoute = 3 -- problems with array require it to have such a low number
 	keyType.GPT = 7
 	keyType.resource = 8
 	keyType.research = 9
@@ -238,23 +238,23 @@ function getMilitaryPowerText(iPlayer)
 	local milRatio =  100 * hisPower / ourPower
 	
 	if milRatio >= 185 then
-		return L("TXT_KEY_GR_IMMENSE")
+		return L("TXT_KEY_DO_GR_IMMENSE")
 	elseif milRatio >= 160 then
-		return L("TXT_KEY_GR_POWERFUL")
+		return L("TXT_KEY_DO_GR_POWERFUL")
 	elseif milRatio >= 135 then
-		return L("TXT_KEY_GR_STRONG")
+		return L("TXT_KEY_DO_GR_STRONG")
 	elseif milRatio >= 110 then
-		return L("TXT_KEY_GR_SIGNIFICANT")
+		return L("TXT_KEY_DO_GR_SIGNIFICANT")
 	elseif milRatio >= 90 then
-		return L("TXT_KEY_GR_SIMILAR")
+		return L("TXT_KEY_DO_GR_SIMILAR")
 	elseif milRatio >= 70 then
-		return L("TXT_KEY_GR_INFERIOR")
+		return L("TXT_KEY_DO_GR_INFERIOR")
 	elseif milRatio >= 50 then
-		return L("TXT_KEY_GR_WEAK")
+		return L("TXT_KEY_DO_GR_WEAK")
 	elseif milRatio >= 30 then
-		return L("TXT_KEY_GR_POOR")
+		return L("TXT_KEY_DO_GR_POOR")
 	else
-		return L("TXT_KEY_GR_PATHETIC")
+		return L("TXT_KEY_DO_GR_PATHETIC")
 	end
 end
 
@@ -533,27 +533,27 @@ function politicalView()
 
 			-- Any wars?
 			if (tooltipData["war"][thisPid] ~= "") then
-				str = str .. "[NEWLINE]" .. war_text .. L("TXT_KEY_INFOADDICT_RELATIONKEY_WAR") .. ":[ENDCOLOR] " .. tooltipData["war"][thisPid]
+				str = str .. "[NEWLINE]" .. war_text .. L("TXT_KEY_DO_GR_RELATIONKEY_WAR") .. ":[ENDCOLOR] " .. tooltipData["war"][thisPid]
 			end
 
 			-- Defensive pacts
 			if (tooltipData["defensive"][thisPid] ~= "") then
-				str = str .. "[NEWLINE]" .. defensivePact_text .. L("TXT_KEY_INFOADDICT_RELATIONKEY_DEFENSIVE_PACT") .. ":[ENDCOLOR] " .. tooltipData["defensive"][thisPid]
+				str = str .. "[NEWLINE]" .. defensivePact_text .. L("TXT_KEY_DO_GR_RELATIONKEY_DEFENSIVE_PACT") .. ":[ENDCOLOR] " .. tooltipData["defensive"][thisPid]
 			end
 
 			-- Declaration of Friendship
 			if (tooltipData["DoF"][thisPid] ~= "") then
-				str = str .. "[NEWLINE]" .. DoF_text .. L("TXT_KEY_INFOADDICT_RELATIONKEY_DECLARATION_OF_FRIENDSHIP") .. ":[ENDCOLOR] " .. tooltipData["DoF"][thisPid]
+				str = str .. "[NEWLINE]" .. DoF_text .. L("TXT_KEY_DO_GR_RELATIONKEY_DECLARATION_OF_FRIENDSHIP") .. ":[ENDCOLOR] " .. tooltipData["DoF"][thisPid]
 			end
 
 			-- Open Borders?
 			if (tooltipData["borders"][thisPid] ~= "") then
-				str = str .. "[NEWLINE]" .. openBorders_text .. L("TXT_KEY_INFOADDICT_RELATIONKEY_OPEN_BORDERS") .. ":[ENDCOLOR] " .. tooltipData["borders"][thisPid]
+				str = str .. "[NEWLINE]" .. openBorders_text .. L("TXT_KEY_DO_GR_RELATIONKEY_OPEN_BORDERS") .. ":[ENDCOLOR] " .. tooltipData["borders"][thisPid]
 			end
 
 			-- Denouncements
 			if (tooltipData["denounce"][thisPid] ~= nil and tooltipData["denounce"][thisPid] ~= "") then
-				str = str .. "[NEWLINE]" .. denounce_text .. L("TXT_KEY_INFOADDICT_RELATIONKEY_DENOUNCEMENT") .. ":[ENDCOLOR] " .. tooltipData["denounce"][thisPid]
+				str = str .. "[NEWLINE]" .. denounce_text .. L("TXT_KEY_DO_GR_RELATIONKEY_DENOUNCEMENT") .. ":[ENDCOLOR] " .. tooltipData["denounce"][thisPid]
 			end
 
 			local icon = getIconPosition(thisPid)
@@ -583,50 +583,50 @@ function getCivSummaryToolTip(iPlayer)
 			if approachID == MajorCivApproachTypes.MAJOR_CIV_APPROACH_HOSTILE then
 				statusIcon	= "[ICON_HAPPINESS_4]"
 				statusColor	= "[COLOR_CULTURE_STORED]"
-				statusTip	= L("TXT_KEY_GR_HOSTILE")
+				statusTip	= L("TXT_KEY_DO_GR_HOSTILE")
 			elseif approachID == MajorCivApproachTypes.MAJOR_CIV_APPROACH_GUARDED then
 				statusIcon	= "[ICON_HAPPINESS_3]"
 				statusColor	= "[COLOR_YELLOW]"
-				statusTip	= L("TXT_KEY_GR_GUARDED")
+				statusTip	= L("TXT_KEY_DO_GR_GUARDED")
 			elseif approachID == MajorCivApproachTypes.MAJOR_CIV_APPROACH_AFRAID then
 				statusIcon	= "[ICON_HAPPINESS_3]"
 				statusColor	= "[COLOR_PLAYER_ORANGE_TEXT]"
-				statusTip	= L("TXT_KEY_GR_AFRAID")
+				statusTip	= L("TXT_KEY_DO_GR_AFRAID")
 			elseif approachID == MajorCivApproachTypes.MAJOR_CIV_APPROACH_FRIENDLY then
 				statusIcon	= "[ICON_HAPPINESS_1]"
 				statusColor	= "[COLOR_GREEN]"
-				statusTip	= L("TXT_KEY_GR_FRIENDLY")
+				statusTip	= L("TXT_KEY_DO_GR_FRIENDLY")
 			else
 				statusIcon	= "[ICON_HAPPINESS_2]"
 				statusColor	= "[COLOR_WHITE]"
-				statusTip	= L("TXT_KEY_GR_NEUTRAL_STANCE")
+				statusTip	= L("TXT_KEY_DO_GR_NEUTRAL_STANCE")
 			end
 		else
 			statusIcon	= "[ICON_WAR]"
 			statusColor	= "[COLOR_RED]"
-			statusTip	= L("TXT_KEY_GR_AT_WAR")
+			statusTip	= L("TXT_KEY_DO_GR_AT_WAR")
 		end
 
-		str = str .. L("TXT_KEY_GR_STANCE") .. " " .. statusColor  .. statusTip .. " " .. statusIcon
+		str = str .. L("TXT_KEY_DO_GR_STANCE") .. " " .. statusColor  .. statusTip .. " " .. statusIcon
 	else
-		str = str .. L("TXT_KEY_GR_OUR_EMPIRE")
+		str = str .. L("TXT_KEY_DO_GR_OUR_EMPIRE")
 	end
 
-	str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_GR_SCORE") ..  " [COLOR_WHITE]" .. Players[iPlayer]:GetScore().. "[ENDCOLOR]"
-	str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_GR_ERA") ..  " [COLOR_WHITE]" .. L(GameInfo.Eras[Players[iPlayer]:GetCurrentEra()].Description) .. "[ENDCOLOR]"
+	str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_DO_GR_SCORE") ..  " [COLOR_WHITE]" .. Players[iPlayer]:GetScore().. "[ENDCOLOR]"
+	str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_DO_GR_ERA") ..  " [COLOR_WHITE]" .. L(GameInfo.Eras[Players[iPlayer]:GetCurrentEra()].Description) .. "[ENDCOLOR]"
 	
 	if not pActiveTeam:IsAtWar(pTeam) then
-		str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_GR_INCOME") .. " [COLOR_WHITE]" .. Players[iPlayer]:GetGold() .. ("[ICON_GOLD] (%+2g[ICON_GOLD]/"):format(Players[iPlayer]:CalculateGoldRate()) .. L("TXT_KEY_INFOADDICT_TURN") .. ")[ENDCOLOR]"
+		str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_DO_GR_INCOME") .. " [COLOR_WHITE]" .. Players[iPlayer]:GetGold() .. ("[ICON_GOLD] (%+2g[ICON_GOLD]/"):format(Players[iPlayer]:CalculateGoldRate()) .. L("TXT_KEY_DO_GR_TURN") .. ")[ENDCOLOR]"
 	end
 
 	if Game.GetActivePlayer() ~= iPlayer then
-		str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_GR_MILITARY") .. " " .. getMilitaryPowerText(iPlayer) .. "[ENDCOLOR]"
+		str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_DO_GR_MILITARY") .. " " .. getMilitaryPowerText(iPlayer) .. "[ENDCOLOR]"
 	end
 
 	-- Policies
 	if Game.GetActivePlayer() ~= iPlayer then
 		local pOtherPlayer = Players[ iPlayer ]
-		local strText = "[NEWLINE]" .. "[COLOR_CULTURE_STORED]" .. L("TXT_KEY_GR_POLICY") .. "[ENDCOLOR]"
+		local strText = "[NEWLINE]" .. "[COLOR_CULTURE_STORED]" .. L("TXT_KEY_DO_GR_POLICY") .. "[ENDCOLOR]"
 		
 		for pPolicyBranch in GameInfo.PolicyBranchTypes() do
 			local iPolicyBranch = pPolicyBranch.ID	
@@ -783,8 +783,8 @@ function economicView()
 									-- Deal is for gold per turn
 									if TradeableItems.TRADE_ITEM_GOLD_PER_TURN == itemType and isHuman then             
 										local goldamount = data1
-										local exportstr = tooltipPad .. "[ICON_GOLD]" .. iconPad .. goldamount .. " " .. L("TXT_KEY_INFOADDICT_RELATIONTOOLTIP_GPT_TO") .. " " .. toName .. " (" .. turnsLeft .. ")"
-										local importstr = tooltipPad .. "[ICON_GOLD]" .. iconPad .. goldamount .. " " .. L("TXT_KEY_INFOADDICT_RELATIONTOOLTIP_GPT_FROM") .. " " .. fromName .. " (" .. turnsLeft .. ")"
+										local exportstr = tooltipPad .. "[ICON_GOLD]" .. iconPad .. goldamount .. " " .. L("TXT_KEY_DO_GR_TT_GPT_TO") .. " " .. toName .. " (" .. turnsLeft .. ")"
+										local importstr = tooltipPad .. "[ICON_GOLD]" .. iconPad .. goldamount .. " " .. L("TXT_KEY_DO_GR_TT_GPT_FROM") .. " " .. fromName .. " (" .. turnsLeft .. ")"
 
 										--logger:debug("   " .. exportstr)
 										--logger:debug("   " .. importstr)
@@ -847,8 +847,8 @@ function economicView()
 									elseif TradeableItems.TRADE_ITEM_RESOURCES == itemType and isHuman then
 										local resourceName = L(GameInfo.Resources[data1].Description)
 										local iconstr = GameInfo.Resources[data1].IconString
-										local exportstr = tooltipPad .. iconstr .. iconPad .. resourceName .. " " .. L("TXT_KEY_INFOADDICT_RELATIONTOOLTIP_TO") .. " " .. toName .. " (" .. turnsLeft .. ")"
-										local importstr = tooltipPad .. iconstr .. iconPad .. resourceName .. " " .. L("TXT_KEY_INFOADDICT_RELATIONTOOLTIP_FROM") .. " " .. fromName .. " (" .. turnsLeft .. ")"
+										local exportstr = tooltipPad .. iconstr .. iconPad .. resourceName .. " " .. L("TXT_KEY_DO_GR_TT_TO") .. " " .. toName .. " (" .. turnsLeft .. ")"
+										local importstr = tooltipPad .. iconstr .. iconPad .. resourceName .. " " .. L("TXT_KEY_DO_GR_TT_FROM") .. " " .. fromName .. " (" .. turnsLeft .. ")"
 
 										-- Check to see if this is a strategic resource. If it is, the number traded is included in the
 										-- tooltip.
@@ -856,8 +856,8 @@ function economicView()
 										if GameInfo.Resources[data1].ResourceUsage == 1 then
 											local amount = data2
 											
-											exportstr = tooltipPad .. iconstr .. iconPad .. data2 .. " " .. resourceName .. " " .. L("TXT_KEY_INFOADDICT_RELATIONTOOLTIP_TO") .. " " .. toName .. " (" .. turnsLeft .. ")"
-											importstr = tooltipPad .. iconstr .. iconPad .. data2 .. " " .. resourceName .. " " .. L("TXT_KEY_INFOADDICT_RELATIONTOOLTIP_FROM") .. " " .. fromName .. " (" .. turnsLeft .. ")"
+											exportstr = tooltipPad .. iconstr .. iconPad .. data2 .. " " .. resourceName .. " " .. L("TXT_KEY_DO_GR_TT_TO") .. " " .. toName .. " (" .. turnsLeft .. ")"
+											importstr = tooltipPad .. iconstr .. iconPad .. data2 .. " " .. resourceName .. " " .. L("TXT_KEY_DO_GR_TT_FROM") .. " " .. fromName .. " (" .. turnsLeft .. ")"
 										end
 
 										--logger:debug("   " .. exportstr)
@@ -1054,21 +1054,21 @@ function economicView()
 
 			-- Any exports?
 			if exportstr ~= "" then
-			str = str .. "[NEWLINE]" .. export_text .. L("TXT_KEY_INFOADDICT_RELATIONTOOLTIP_EXPORTS") .. ":[ENDCOLOR] " .. exportstr
+			str = str .. "[NEWLINE]" .. export_text .. L("TXT_KEY_DO_GR_TT_EXPORTS") .. ":[ENDCOLOR] " .. exportstr
 			end
 
 			-- Any imports?
 			if importstr ~= "" then
-				str = str .. "[NEWLINE]" .. import_text .. L("TXT_KEY_INFOADDICT_RELATIONTOOLTIP_IMPORTS") .. ":[ENDCOLOR] " .. importstr
+				str = str .. "[NEWLINE]" .. import_text .. L("TXT_KEY_DO_GR_TT_IMPORTS") .. ":[ENDCOLOR] " .. importstr
 			end
 
 			-- Any trade routes?
 			if traderoutesstr ~= "" then
-				str = str .. "[NEWLINE]" .. traderoute_text .. L("TXT_KEY_INFOADDICT_RELATIONTOOLTIP_TRADEROUTES") .. ":[ENDCOLOR] " .. traderoutesstr
+				str = str .. "[NEWLINE]" .. traderoute_text .. L("TXT_KEY_DO_GR_TT_TRADEROUTES") .. ":[ENDCOLOR] " .. traderoutesstr
 			end
 			-- Any research?
 			if research[thisPid] ~= nil and research[thisPid] ~= "" then
-				str = str .. "[NEWLINE]" .. research_text .. L("TXT_KEY_INFOADDICT_RELATIONTOOLTIP_RESEARCH_AGREEMENTS") .. ":[ENDCOLOR] " .. research[thisPid]
+				str = str .. "[NEWLINE]" .. research_text .. L("TXT_KEY_DO_GR_TT_RESEARCH_AGREEMENTS") .. ":[ENDCOLOR] " .. research[thisPid]
 			end
 
 			local icon = getIconPosition(thisPid)

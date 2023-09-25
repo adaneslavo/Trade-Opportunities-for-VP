@@ -61,7 +61,7 @@
   <ItemGroup>
     <Folder Include="Texts" />
     <Folder Include="UI" />
-    <Folder Include="UI\InfoAddict" />
+    <Folder Include="UI\Graph" />
     <Folder Include="UI\New" />
     <Folder Include="UI\Original" />
   </ItemGroup>
@@ -86,15 +86,15 @@
       <SubType>Lua</SubType>
       <ImportIntoVFS>True</ImportIntoVFS>
     </Content>
-    <Content Include="UI\InfoAddict\InfoAddictCivRelations.lua">
+    <Content Include="UI\Graph\RelationsGraph.lua">
       <SubType>Lua</SubType>
       <ImportIntoVFS>True</ImportIntoVFS>
     </Content>
-    <Content Include="UI\InfoAddict\InfoAddictCivRelations.xml">
+    <Content Include="UI\Graph\RelationsGraph.xml">
       <SubType>Lua</SubType>
       <ImportIntoVFS>True</ImportIntoVFS>
     </Content>
-    <Content Include="UI\InfoAddict\InfoAddictLib.lua">
+    <Content Include="UI\Graph\RelationsGraphLib.lua">
       <SubType>Lua</SubType>
       <ImportIntoVFS>True</ImportIntoVFS>
     </Content>
