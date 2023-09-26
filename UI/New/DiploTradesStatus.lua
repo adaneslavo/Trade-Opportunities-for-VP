@@ -562,10 +562,11 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		
 		-- monopolies
 		local bHasStatecraftPolicyForMonopolies = pPlayer:HasPolicy(GameInfoTypes.POLICY_CULTURAL_DIPLOMACY)
+		local bHasBonusFromTegucigalpa = pPlayer:HasPolicy(GameInfoTypes.POLICY_HONDURAS)
 		local bIsStrategic = (pResource.ResourceUsage == 1)
 		local iResourceOwn = iLocal
 
-		if bHasStatecraftPolicyForMonopolies then
+		if bHasStatecraftPolicyForMonopolies or bHasBonusFromTegucigalpa then
 			iResourceOwn = iResourceOwn + iMinors
 		end
 

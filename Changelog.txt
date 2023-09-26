@@ -1,4 +1,10 @@
 Changelog:
+v17:
+- added +/-10% error while assesing military strength of other players (so now you can eunder- or overestimate the actual power of his military);
+
+v16.1:
+- now Tegucigalpa's ability also counts for the monopoly tooltip (same as Statecraft);
+
 v16:
 - cleaning the tags and file names;
 - fixed Monopolies marker for players that got Statecraft's policy;

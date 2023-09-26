@@ -233,8 +233,10 @@ end
 -- glider1, Aristos
 function getMilitaryPowerText(iPlayer)
 	local basePower = 30
+	local errorFactor = Game.Rand(21, "+/-10% factor for measurement error") - 10
 	local ourPower = basePower + Players[Game.GetActivePlayer()]:GetMilitaryMight()
 	local hisPower = basePower + Players[iPlayer]:GetMilitaryMight()
+	hisPower = ((hisPower * errorFactor) / 100) + hisPower
 	local milRatio =  100 * hisPower / ourPower
 	
 	if milRatio >= 185 then
