@@ -30,6 +30,7 @@ local colors = {}
 	colors.steelblue		= Vector4(0.14, 0.35,	0.57,	1) --(.27, .51, .71, 1)
 	colors.lightsteelblue	= Vector4(0.68, 0.78,	0.96,	1)
 	colors.gold				= Vector4(0.93, 0.91,	0.67,	1)
+	colors.cyan				= Vector4(0,	1,	1,	1)
 
 local textcolors = {}
 	textcolors.redtext			= "[COLOR:204:51:51:255]"
@@ -43,6 +44,7 @@ local textcolors = {}
 	textcolors.peachpufftext	= "[COLOR:204:176:148:255]"
 	textcolors.steelbluetext	= "[COLOR:35:90:145:255]"		-- original: 69:130:181
 	textcolors.goldtext			= "[COLOR:238:232:170:255]"
+	textcolors.cyantext			= "[COLOR:0:255:255:255]"
 
 -- Political colors
 local war_color = colors.red
@@ -92,6 +94,7 @@ Controls.TradeRouteKey:SetHide(false)
 
 local export_text = textcolors.purpletext
 local import_text = textcolors.orangetext
+local technology_text = textcolors.cyantext
 
 -- This table keeps track of the connector counts between two icons. Also have a max value
 -- in here that's set by the external program that generates the XML for the connectors.
@@ -623,6 +626,23 @@ function getCivSummaryToolTip(iPlayer)
 
 	if Game.GetActivePlayer() ~= iPlayer then
 		str = str .. "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_DO_GR_MILITARY") .. " " .. getMilitaryPowerText(iPlayer) .. "[ENDCOLOR]"
+	end
+
+	-- Technologies
+	if Game.GetActivePlayer() ~= iPlayer then
+		local pOtherPlayer = Players[ iPlayer ]
+		local iOtherTeam = pOtherPlayer:GetTeam()
+		local pOtherTeam = Teams[iOtherTeam]
+		local pActiveTeam = Teams[Game.GetActivePlayer()]
+		
+		local iOtherTeamTechnologies = pOtherTeam:
+		local iActiveTeamTechnologies = pActiveTeam:
+		local iDifference = iActiveTeamTechnologies - iOtherTeamTechnologies
+
+		local strText = "[NEWLINE]" .. "[COLOR_CYAN]" .. L("TXT_KEY_DO_GR_TECHNOLOGY") .. "[ENDCOLOR]"
+		local strText = strText .. iOtherTeamTechnologies .. " (%+2g"):format(iDifference)
+		
+		str = str .. strText 
 	end
 
 	-- Policies
