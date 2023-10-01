@@ -566,6 +566,12 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		local bHasStatecraftPolicyForMonopolies = pPlayer:HasPolicy(GameInfoTypes.POLICY_CULTURAL_DIPLOMACY)
 		local bHasBonusFromTegucigalpa = pPlayer:HasPolicy(GameInfoTypes.POLICY_HONDURAS)
 		local bIsStrategic = (pResource.ResourceUsage == 1)
+		local sResourcesFromGP = ""
+		
+		if iFromGP > 0 then
+			sResourcesFromGP = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_GP", iFromGP)
+		end
+		
 		local iResourceOwn = iLocal - iFromGP -- so GP resources do not count towards monopolies
 
 		if bHasStatecraftPolicyForMonopolies or bHasBonusFromTegucigalpa then
@@ -587,7 +593,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		end
 		
 		sText = L("TXT_KEY_DO_TRADE_VALUE", sColorValue, iTotal, sMonopoly)
-		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP", pResource.IconString, g_sColorResourceName, L(pResource.Description), sText, sCityList, sColorValue, iResourceOwn, iResourceOnMap)
+		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP", pResource.IconString, g_sColorResourceName, L(pResource.Description), sText, sCityList, sColorValue, iResourceOwn, iResourceOnMap, sResourcesFromGP)
 	else
 		sText = L("TXT_KEY_DO_TRADE_VALUE_NONE", g_sColorBrown)
 		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_NONE", pResource.IconString, g_sColorResourceName, L(pResource.Description), g_sColorBrown)
