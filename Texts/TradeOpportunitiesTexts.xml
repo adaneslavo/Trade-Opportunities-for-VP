@@ -486,9 +486,13 @@
 		<Row Tag="TXT_KEY_DO_GR_MILITARY">
 			<Text>Military Power:</Text>
 		</Row>
+		<Row Tag="TXT_KEY_DO_GR_TECHNOLOGY">
+			<Text>Technologies:</Text>
+		</Row>
 		<Row Tag="TXT_KEY_DO_GR_POLICY">
 			<Text>Social Policies</Text>
 		</Row>
+		
 
 		<!-- Tooltip text fragments for the relationship graphs -->
 		<Row Tag="TXT_KEY_DO_GR_TT_GPT_TO">
