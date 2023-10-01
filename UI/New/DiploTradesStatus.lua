@@ -428,6 +428,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		local iExports = pPlayer:GetResourceExport(eResource)
 		local iLocal   = pPlayer:GetNumResourceTotal(eResource, false) + iExports
 		local iUsed    = pPlayer:GetNumResourceUsed(eResource)
+		local iFromGP  = pPlayer:GetResourcesFromGP(eResource) -- included in iLocal
 		
 		local iSurplus = iLocal - iExports - iUsed
 		iTotal = iLocal + --[[iMinors +--]] iImports - iExports - iUsed
@@ -463,7 +464,8 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local iActiveImports = pActivePlayer:GetResourceImport(eResource)
 			local iActiveExports = pActivePlayer:GetResourceExport(eResource)
 			local iActiveLocal   = pActivePlayer:GetNumResourceTotal(eResource, false) + iActiveExports
-			local iActiveUsed	 = pActivePlayer:GetNumResourceUsed(eResource)
+			local iActiveUsed    = pActivePlayer:GetNumResourceUsed(eResource)
+			local iActiveFromGP  = pPlayer:GetResourcesFromGP(eResource) -- included in iActiveLocal
 			
 			local iActiveSurplus = iActiveLocal - iActiveExports - iActiveUsed
 			local iActiveTotal   = iActiveLocal + --[[iActiveMinors +--]] iActiveImports - iActiveExports - iActiveUsed
@@ -564,7 +566,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		local bHasStatecraftPolicyForMonopolies = pPlayer:HasPolicy(GameInfoTypes.POLICY_CULTURAL_DIPLOMACY)
 		local bHasBonusFromTegucigalpa = pPlayer:HasPolicy(GameInfoTypes.POLICY_HONDURAS)
 		local bIsStrategic = (pResource.ResourceUsage == 1)
-		local iResourceOwn = iLocal
+		local iResourceOwn = iLocal - iFromGP -- so GP resources do not count towards monopolies
 
 		if bHasStatecraftPolicyForMonopolies or bHasBonusFromTegucigalpa then
 			iResourceOwn = iResourceOwn + iMinors
@@ -1058,6 +1060,7 @@ function GetAvailableUsefulResources()
 	GetBuildingLuxuriesAndStrategics()
 	GetCsLuxuriesAndStrategics()
 	GetCivLuxuriesAndStrategics()
+	GetCivExtraLuxuriesFromGP()
 end
 
 -- any luxuries placed on the map
@@ -1124,6 +1127,27 @@ function GetCivLuxuriesAndStrategics()
 					local bIsUniqueLuxuryNotFromMercantile = pImprovement and pImprovement.ImprovementType == 'IMPROVEMENT_CITY'
 					
 					if resource.CivilizationType == sCivType or bIsUniqueLuxuryNotFromMercantile then
+						gAvailableUsefulResources[resource.ID] = true
+					end
+				end
+			end
+		end
+	end
+end
+
+-- check for any luxuries added by GP (Great Admirals) normally not present on the map
+function GetCivExtraLuxuriesFromGP()
+	for iCiv = 0, GameDefines.MAX_MAJOR_CIVS - 1, 1 do
+		local pCiv = Players[iCiv]
+		
+		if pCiv:IsEverAlive() then
+			local sCivType = GameInfo.Civilizations[pCiv:GetCivilizationType()].Type
+
+			for resource in GameInfo.Resources() do
+				if resource.ResourceUsage == 2 then
+					local iNumExtraResFromGP = pCiv:GetResourcesFromGP(resource.ID)
+					
+					if iNumExtraResFromGP > 0 then
 						gAvailableUsefulResources[resource.ID] = true
 					end
 				end
