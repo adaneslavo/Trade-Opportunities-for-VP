@@ -1,6 +1,6 @@
 Changelog:
 v17:
-- added +/-10% error while assesing military strength of other players (so now you can eunder- or overestimate the actual power of his military);
+- added +/-10% error while assessing military strength of other players (so now you can eunder- or overestimate the actual power of his military);
 
 v16.1:
 - now Tegucigalpa's ability also counts for the monopoly tooltip (same as Statecraft);
