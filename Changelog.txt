@@ -1,6 +1,11 @@
 Changelog:
 v17:
-- added +/-10% error while assessing military strength of other players (so now you can eunder- or overestimate the actual power of his military);
+- Graph:
+	- added +/-10% error while assessing military strength of other players (so now you can eunder- or overestimate the actual power of his military);
+	- added info about number of technologies researched by the player and the difference between him and the active player;
+- Trade Opportunities:
+	- now resources given by Great People (Great Admirals) should show up in the table;
+	- expanded the tooltip by the number of copies player got from Great People (Great Admirals) and additional note that they do not count towards monopolies;
 
 v16.1:
 - now Tegucigalpa's ability also counts for the monopoly tooltip (same as Statecraft);
