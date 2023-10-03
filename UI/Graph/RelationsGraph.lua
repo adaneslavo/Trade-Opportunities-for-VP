@@ -626,10 +626,10 @@ function getCivSummaryToolTip(iPlayer)
 		
 		local iOtherTeamTechnologies = pOtherTeam:GetTeamTechs():GetNumTechsKnown()
 		local iActiveTeamTechnologies = pActiveTeam:GetTeamTechs():GetNumTechsKnown()
-		local iDifference = iActiveTeamTechnologies - iOtherTeamTechnologies
+		local iDifference = iOtherTeamTechnologies - iActiveTeamTechnologies
 
-		local strText = "[NEWLINE]" .. "[COLOR_LIGHT_GREY]" .. L("TXT_KEY_DO_GR_TECHNOLOGY") .. "[ENDCOLOR]"
-		strText = strText .. " [COLOR_WHITE]" .. iOtherTeamTechnologies .. " (%+2g[ENDCOLOR]"):format(iDifference)
+		local strText = "[NEWLINE][COLOR_LIGHT_GREY]" .. L("TXT_KEY_DO_GR_TECHNOLOGY") .. "[ENDCOLOR]"
+		strText = strText .. " [COLOR_WHITE]" .. iOtherTeamTechnologies .. (" (%+2g)[ENDCOLOR]"):format(iDifference)
 		
 		str = str .. strText 
 	end

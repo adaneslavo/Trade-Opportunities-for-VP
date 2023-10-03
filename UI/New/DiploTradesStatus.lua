@@ -428,7 +428,6 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		local iExports = pPlayer:GetResourceExport(eResource)
 		local iLocal   = pPlayer:GetNumResourceTotal(eResource, false) + iExports
 		local iUsed    = pPlayer:GetNumResourceUsed(eResource)
-		local iFromGP  = pPlayer:GetResourcesFromGP(eResource) -- included in iLocal
 		
 		local iSurplus = iLocal - iExports - iUsed
 		iTotal = iLocal + --[[iMinors +--]] iImports - iExports - iUsed
@@ -565,20 +564,96 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		-- monopolies
 		local bHasStatecraftPolicyForMonopolies = pPlayer:HasPolicy(GameInfoTypes.POLICY_CULTURAL_DIPLOMACY)
 		local bHasBonusFromTegucigalpa = pPlayer:HasPolicy(GameInfoTypes.POLICY_HONDURAS)
+		local bIsDutch = pPlayer:GetCivilizationType() == GameInfoTypes.CIVILIZATION_NETHERLANDS
+		
+		local bIsLuxury = (pResource.ResourceUsage == 2)
 		local bIsStrategic = (pResource.ResourceUsage == 1)
-		local sResourcesFromGP = ""
 		
-		if iFromGP > 0 then
-			sResourcesFromGP = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_GP", iFromGP)
-		end
-		
-		local iResourceOwn = iLocal - iFromGP -- so GP resources do not count towards monopolies
-
-		if bHasStatecraftPolicyForMonopolies or bHasBonusFromTegucigalpa then
-			iResourceOwn = iResourceOwn + iMinors
-		end
-
+		local iResourceOwn = iLocal
 		local iResourceOnMap = Map.GetNumResources(eResource)
+
+		local iExtraMisc = pPlayer:GetResourcesMisc(eResource) -- included in iLocal
+			local iExtraFromCorporation = pPlayer:GetResourcesFromCorporation(eResource)
+			local iExtraFromFranchise = pPlayer:GetResourcesFromFranchises(eResource)
+			local iExtraFromCSAlliances = pPlayer:GetResourceFromCSAlliances(eResource) -- Foreign Service
+			local iExtraFromAdmiral = pPlayer:GetResourcesFromGP(eResource)
+			local iExtraFromModifiers = iExtraMisc - (iExtraFromCorporation + iExtraFromFranchise + iExtraFromCSAlliances + iExtraFromAdmiral)
+				local iExtraFromThirdAlternativeMod = pPlayer:GetStrategicResourceMod(eResource) - 100
+				local iExtraFromZealotryMod = pPlayer:GetResourceModFromReligion(eResource)
+		
+		local sResourcesExtra = ""
+		local sResourcesExtraFromCorpAndFranch = ""
+		local sResourcesExtraFromCSAlliances = ""
+		local sResourcesExtraFromAdmiral = ""
+		local sResourcesExtraFromModifiers = ""
+		local sResourcesByNeds = ""
+		local sResourcesFromStatecraft = ""
+
+		if bIsDutch and bIsLuxury then
+			iResourceOwn = iResourceOwn + iImports
+
+			if iImports == 1 then
+				sResourcesByNeds = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_NETHERLANDS_ONE")
+			elseif iImports > 1 then
+				sResourcesByNeds = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_NETHERLANDS_MORE", iImports)
+			end
+		end	
+
+		if (bHasStatecraftPolicyForMonopolies or bHasBonusFromTegucigalpa) and not (bIsDutch and bIsLuxury) then
+			iResourceOwn = iResourceOwn + iMinors
+
+			if iMinors == 1 then
+				sResourcesFromStatecraft = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT_ONE")
+			elseif iMinors > 1 then
+				sResourcesFromStatecraft = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT_MORE", iMinors)
+			end
+		end
+		
+		if iExtraFromAdmiral > 0 then
+			-- two copies of resource granted by expending a GA
+			-- if all resources are on the map, then it spawns one and it counts towards monopoly
+			-- if there are some resources not available on the map, he chooses one of them and it does not count towards monopolys
+			sResourcesExtraFromAdmiral = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_GP", iExtraFromAdmiral)
+
+			if iResourceOnMap == 0 then
+				sResourcesExtraFromAdmiral = sResourcesExtraFromAdmiral .. " " .. L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_EXT")
+				iResourceOwn = iResourceOwn - iExtraFromAdmiral -- so resources do not count towards monopolies
+			end
+		end	
+
+		if iExtraFromCorporation > 0  or iExtraFromFranchise > 0 then
+			-- Hexxon Refineries (+1 Oil and Coal for every three Global Franchises)
+			-- Corporations_NumFreeResources (unused in VP)
+			sResourcesExtraFromCorpAndFranch = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_CORP", iExtraFromCorporation, iExtraFromFranchise)
+
+			if iResourceOnMap == 0 then
+				sResourcesExtraFromAdmiral = sResourcesExtraFromAdmiral .. " " .. L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_EXT")
+				iResourceOwn = iResourceOwn - iExtraFromCorporation - iExtraFromFranchise -- so resources do not count towards monopolies
+			end
+		end			
+
+		if iExtraFromCSAlliances > 0 then
+			-- +1 of every strategic for every 3 CS alliances
+			if iExtraFromCSAlliances == 1 then
+				sResourcesExtraFromCSAlliances = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_ALLY_ONE")
+			elseif iExtraFromCSAlliances > 1 then
+				sResourcesExtraFromCSAlliances = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_ALLY_MORE", iExtraFromCSAlliances)
+			end
+		end					
+
+		if iExtraFromModifiers > 0 then
+			-- Zealotry (belief):				+1% of every strategic resource for each city following your religion
+			-- Third Alternative (policy):		+100% of every strategic resource
+			if iExtraFromModifiers == 1 then
+				sResourcesExtraFromModifiers = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_ONE", iExtraFromThirdAlternativeMod, iExtraFromZealotryMod)
+			elseif iExtraFromModifiers > 1 then
+				sResourcesExtraFromModifiers = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_MORE", iExtraFromModifiers, iExtraFromThirdAlternativeMod, iExtraFromZealotryMod)
+			end
+		end	
+		
+		sResourcesExtra = sResourcesByNeds .. sResourcesFromStatecraft .. sResourcesExtraFromAdmiral .. sResourcesExtraFromCSAlliances 
+							.. sResourcesExtraFromCorpAndFranch  .. sResourcesExtraFromModifiers
+
 		local fRatio = iResourceOwn / iResourceOnMap
 		local bGlobalMonopoly = fRatio > 0.5
 		local bStrategicMonopoly = fRatio > 0.25
@@ -593,7 +668,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		end
 		
 		sText = L("TXT_KEY_DO_TRADE_VALUE", sColorValue, iTotal, sMonopoly)
-		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP", pResource.IconString, g_sColorResourceName, L(pResource.Description), sText, sCityList, sColorValue, iResourceOwn, iResourceOnMap, sResourcesFromGP)
+		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP", pResource.IconString, g_sColorResourceName, L(pResource.Description), sText, sCityList, sColorValue, iResourceOwn, iResourceOnMap, sResourcesExtra)
 	else
 		sText = L("TXT_KEY_DO_TRADE_VALUE_NONE", g_sColorBrown)
 		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_NONE", pResource.IconString, g_sColorResourceName, L(pResource.Description), g_sColorBrown)
