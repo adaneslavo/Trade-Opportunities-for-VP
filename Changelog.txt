@@ -2,9 +2,9 @@ Changelog:
 v17:
 - Graph:
 	- added +/-10% error while assessing military strength of other players (so now you can under- or overestimate the actual power of his military);
-	- added info about number of technologies researched by the player and the difference between him and the active player to the tooltips;
+	- added info to the tooltips about number of technologies researched by the player and the difference between him and the active player;
 - Trade Opportunities:
-	- expanded the tooltip by the number of copies player got from different non-map sources and additional note that they do  or do not count towards monopolies (in the case when there are no other copies on the map);
+	- expanded the tooltip by the number of copies player got from different non-map sources and additional note that they do or do not count towards monopolies (in the case when there are no other copies on the map);
 		- now resources given by Great People (Great Admirals) should show up in the table;
 		- fixed the table for the Dutch (added imported luxuries in their case to the monopoly calculator);
 			- added case when Dutch got Statecraft policy or are allied to Tegucigalpa (was duplicating imported resources);
