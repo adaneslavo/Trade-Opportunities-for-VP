@@ -1345,7 +1345,7 @@ Controls.EconomicButton:RegisterCallback(Mouse.eLClick, OnEconomic)
 
 -- Re-draw the last view when the windows pops up just in case
 -- we've met someone recently.
-function OnShowHide( bIsHide ,bInitState )
+function OnShowHide(bIsHide, bInitState)
 	if not bInitState then
 		if not bIsHide then
 			BuildView(lastView)
