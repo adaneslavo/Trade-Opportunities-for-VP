@@ -175,7 +175,13 @@
 
 				<Container ID="TradeWar" Hidden="1">
 					<Box Offset="8,15" Anchor="L,C" Size="1270,40" Color="255,70,70,80">
-						<Label ID="WarText" Offset="9,-2" Anchor="R,C" Font="TwCenMT24" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_TRADE_STATUS_WAR"/>
+						<Label ID="WarText" Offset="9,-2" Anchor="C,C" Font="TwCenMT24" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_TRADE_STATUS_WAR"/>
+					</Box>
+				</Container>
+
+				<Container ID="TradeSanction" Hidden="1">
+					<Box Offset="8,15" Anchor="L,C" Size="1270,40" Color="255,165,30,80">
+						<Label ID="SanctionText" Offset="9,-2" Anchor="C,C" Font="TwCenMT24" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_TRADE_STATUS_SANCTION"/>
 					</Box>
 				</Container>
 			</Box>

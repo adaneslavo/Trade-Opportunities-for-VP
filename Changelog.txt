@@ -1,4 +1,8 @@
 Changelog:
+v18:
+- sanctioned players are now marked in the Trade window;
+- WAR marker is move to the center like SANCTIONED;
+
 v17:
 - Graph:
 	- added +/-10% error while assessing military strength of other players (so now you can under- or overestimate the actual power of his military);
