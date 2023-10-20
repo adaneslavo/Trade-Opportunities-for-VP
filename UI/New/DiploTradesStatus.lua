@@ -159,10 +159,12 @@ function GetCivControl(im, ePlayer, bCanTrade)
 	local imControlTable = im:GetInstance()
 		
 	imControlTable.TradeOps:SetHide(false)
-	imControlTable.TradeWar:SetHide(pActiveTeam:IsAtWar(eTeam) == false)
+
+	local bIsAtWar = pActiveTeam:IsAtWar(eTeam) == true
+	imControlTable.TradeWar:SetHide(not bIsAtWar)
 
 	local bIsSanctioned = Game.IsResolutionPassed(GameInfoTypes.RESOLUTION_PLAYER_EMBARGO, ePlayer)
-	imControlTable.TradeSanction:SetHide(not bIsSanctioned)
+	imControlTable.TradeSanction:SetHide(not bIsSanctioned or bIsAtWar)
 
 	imControlTable.CivName:SetText(L(civilization.ShortDescription))
 	CivIconHookup(ePlayer, 32, imControlTable.CivSymbol, imControlTable.CivIconBG, imControlTable.CivIconShadow, false, true)
