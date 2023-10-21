@@ -35,6 +35,7 @@ local g_sColorDarkGreen = "[COLOR:0:135:0:255]"
 local g_sColorLightGreen = "[COLOR:125:255:0:255]"
 local g_sColorYellowGreen = "[COLOR:200:180:0:255]"
 local g_sColorRed = "[COLOR:255:70:70:255]"
+local g_sColorViolet = "[COLOR:205:0:205:255]"
 local g_sColorBlue = "[COLOR_CITY_BLUE]"
 local g_sColorCyan = "[COLOR_CYAN]"	
 local g_sColorOrange = "[COLOR_YIELD_FOOD]"
@@ -474,7 +475,9 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local iActiveSurplus = iActiveLocal - iActiveExports - iActiveUsed
 			local iActiveTotal   = iActiveLocal + --[[iActiveMinors +--]] iActiveImports - iActiveExports - iActiveUsed
 			
-			if iSurplus > 3 and iActiveTotal <= 0 then
+			if Game.IsResolutionPassed(GameInfoTypes.RESOLUTION_BAN_LUXURY_HAPPINESS, eResource) then
+				sColorValue = g_sColorViolet
+			elseif iSurplus > 3 and iActiveTotal <= 0 then
 				sColorValue = g_sColorDarkGreen
 			elseif iSurplus > 1 and iActiveTotal <= 0 then
 				sColorValue = g_sColorLightGreen
