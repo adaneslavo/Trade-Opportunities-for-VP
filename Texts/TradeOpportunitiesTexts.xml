@@ -191,10 +191,10 @@
 			<Text>[COLOR_LIGHT_GREY]Surplus = Local - Exported - Used          Total = Local + from City-States + Imported - Exported - Used          &apos; - strategic monopoly          &quot; - global monopoly[ENDCOLOR]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_TRADE_COLOR_KEY_2" >
-			<Text>[COLOR_LIGHT_GREY]Active player:[ENDCOLOR]            [COLOR:0:135:0:255]Surplus &gt; 3[ENDCOLOR]     [COLOR:125:255:0:255]Surplus &gt; 1[ENDCOLOR]     [COLOR:200:180:0:255]Surplus = 1[ENDCOLOR]     [COLOR:255:70:70:255]Surplus &lt; 0[ENDCOLOR]     [COLOR_YIELD_FOOD]Total = 0[ENDCOLOR]     [COLOR_CYAN]One[ENDCOLOR][COLOR_LIGHT_GREY] or [ENDCOLOR][COLOR_CITY_BLUE]more[ENDCOLOR][COLOR_LIGHT_GREY] cities demand this resource[ENDCOLOR]     [COLOR_CITY_GREY]Rest[ENDCOLOR]</Text>
+			<Text>[COLOR_LIGHT_GREY]Active:[ENDCOLOR]          [COLOR:0:135:0:255]Surplus &gt; 3[ENDCOLOR]   [COLOR:125:255:0:255]Surplus &gt; 1[ENDCOLOR]   [COLOR:200:180:0:255]Surplus = 1[ENDCOLOR]   [COLOR:255:70:70:255]Surplus &lt; 0[ENDCOLOR]   [COLOR_YIELD_FOOD]Total = 0[ENDCOLOR]   [COLOR_CYAN]One[ENDCOLOR][COLOR_LIGHT_GREY] or [ENDCOLOR][COLOR_CITY_BLUE]more[ENDCOLOR][COLOR_LIGHT_GREY] cities demand it[ENDCOLOR]   [COLOR_CITY_GREY]Rest[ENDCOLOR]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_TRADE_COLOR_KEY_3" >
-			<Text>[COLOR_LIGHT_GREY]Non-active player:     Active player doesn&apos;t have this resource and:[ENDCOLOR] [COLOR:0:135:0:255]Surplus &gt; 3[ENDCOLOR] [COLOR_LIGHT_GREY]or[ENDCOLOR] [COLOR:125:255:0:255]Surplus &gt; 1[ENDCOLOR]     [COLOR:255:70:70:255]Surplus &lt; 0[ENDCOLOR]     [COLOR_YIELD_FOOD]Total = 0 and Active player has this resource[ENDCOLOR]     [COLOR_CITY_GREY]Rest[ENDCOLOR]</Text>
+			<Text>[COLOR_LIGHT_GREY]Non-active:   Active doesn&apos;t have it and:[ENDCOLOR] [COLOR:0:135:0:255]Surplus &gt; 3[ENDCOLOR][COLOR_LIGHT_GREY]/[ENDCOLOR][COLOR:125:255:0:255]Surplus &gt; 1[ENDCOLOR][COLOR_LIGHT_GREY]/[ENDCOLOR][COLOR:255:255:100:255]Surplus = 1 (has more)[ENDCOLOR][COLOR_LIGHT_GREY]/[ENDCOLOR][COLOR:255:100:255:255]Surplus = 1 (only one)[ENDCOLOR]    [COLOR:255:70:70:255]Surplus &lt; 0[ENDCOLOR]   [COLOR_YIELD_FOOD]Total = 0 and Active has it[ENDCOLOR]   [COLOR:255:50:150:255]Embargo[ENDCOLOR]   [COLOR_CITY_GREY]Rest[ENDCOLOR]</Text>
 		</Row>
 	  
 	  
@@ -363,6 +363,10 @@
 		<Row Tag="TXT_KEY_DO_CS_STATUS_NO_QUEST_TT" >
 			<Text>{1} currently has no requests.</Text>
 		</Row>
+		
+		<Row Tag="TXT_KEY_DO_CS_STATUS_MARRIAGE_TT" >
+			<Text>[NEWLINE][NEWLINE][COLOR_MAGENTA]Marriage:[ENDCOLOR] While at peace with the City-State, [ICON_RES_MARRIAGE] Marriages eliminate [ICON_INFLUENCE] Influence decay, grant an additional [ICON_DIPLOMAT] World Congress Delegate, and provide a +15% [ICON_GREAT_PEOPLE] Great Person Rate boost in the [ICON_CAPITAL] Capital.</Text>
+		</Row>		
 
 		<Row Tag="TXT_KEY_DO_CS_GET_APPROACH" >
 			<Text>{1_color}{2_text}[ENDCOLOR]</Text>

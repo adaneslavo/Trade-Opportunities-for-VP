@@ -51,6 +51,22 @@ local g_iAllyThreshold = GameDefines.FRIENDSHIP_THRESHOLD_ALLIES
 
 local g_tCsCoordinates = {}
 
+
+
+-- defining and looking for Austria (marriages)	
+local eCivAustria = GameInfoTypes.CIVILIZATION_AUSTRIA
+local eAustria = -1
+
+for eplayer = 0, GameDefines.MAX_MAJOR_CIVS - 1, 1 do
+	local pPlayer = Players[eplayer]
+	
+	if pPlayer:GetCivilizationType() == eCivAustria then
+		eAustria = eplayer
+	end
+end
+
+
+
 function ShowHideHandler(bIsHide, bIsInit)
 	if not bIsInit and not bIsHide then
 		InitCsList()
@@ -125,6 +141,12 @@ function GetCsControl(im, eCs, ePlayer)
 	local sName = pCs:GetName()
 	sortEntry.name = sName
 	
+	local bIsMarried = pCs:IsMarried(eAustria)
+	
+	if bIsMarried then
+		sName = g_sColorMagenta .. sName .. '[ENDCOLOR]'
+	end
+
 	local sExpandedName = sName
 	
 	for row in GameInfo.Religions{ID=pCsCity:GetReligiousMajority()} do
@@ -152,20 +174,8 @@ function GetCsControl(im, eCs, ePlayer)
 		end
 	end
 
-	if bEmbassy or bSphereOfInfluence then
-		sNameTooltip = sNameTooltip .. "[NEWLINE][NEWLINE]"
-
-		if bEmbassy then
-			sNameTooltip = sNameTooltip .. "[ICON_CITY_STATE] ([COLOR_CYAN]" .. sEmbassyOwner .. "[ENDCOLOR])"
-		end			
-
-		if bSphereOfInfluence then
-			if bEmbassy then
-				sNameTooltip = sNameTooltip .. "[NEWLINE]"
-			end
-
-			sNameTooltip = sNameTooltip .. "[ICON_LOCKED] ([COLOR_CYAN]" .. sSphereOwner .. "[ENDCOLOR])"
-		end
+	if bIsMarried then
+		sNameTooltip = sNameTooltip .. L("TXT_KEY_DO_CS_STATUS_MARRIAGE_TT")
 	end
 
 	controlTable.CsButton:SetToolTipString(sNameTooltip)

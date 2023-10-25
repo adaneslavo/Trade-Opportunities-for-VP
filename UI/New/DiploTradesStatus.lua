@@ -34,8 +34,10 @@ local g_sColorBrown = "[COLOR_CITY_GREY]"
 local g_sColorDarkGreen = "[COLOR:0:135:0:255]"
 local g_sColorLightGreen = "[COLOR:125:255:0:255]"
 local g_sColorYellowGreen = "[COLOR:200:180:0:255]"
+local g_sColorYellow = "[COLOR:255:255:100:255]"
 local g_sColorRed = "[COLOR:255:70:70:255]"
-local g_sColorViolet = "[COLOR:205:0:205:255]"
+local g_sColorPink = "[COLOR:255:100:255:255]"
+local g_sColorPurple = "[COLOR:255:50:150:255]"
 local g_sColorBlue = "[COLOR_CITY_BLUE]"
 local g_sColorCyan = "[COLOR_CYAN]"	
 local g_sColorOrange = "[COLOR_YIELD_FOOD]"
@@ -428,7 +430,10 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 	local iTotal = 0
 	local sColorValue = g_sColorBrown
 	
-	if IsAvailableLuxury(eResource) and IsVisibleUsefulResource(eResource, pActivePlayer) then
+	if IsAvailableLuxury(eResource) and IsVisibleUsefulResource(eResource, pActivePlayer) then		
+		local bIsLuxury = (pResource.ResourceUsage == 2)
+		local bIsStrategic = (pResource.ResourceUsage == 1)
+
 		local iMinors  = pPlayer:GetResourceFromMinors(eResource) -- doubling the number of resources after allying? Commented out...
 		local iImports = pPlayer:GetResourceImport(eResource)
 		local iExports = pPlayer:GetResourceExport(eResource)
@@ -476,7 +481,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local iActiveTotal   = iActiveLocal + --[[iActiveMinors +--]] iActiveImports - iActiveExports - iActiveUsed
 			
 			if Game.IsResolutionPassed(GameInfoTypes.RESOLUTION_BAN_LUXURY_HAPPINESS, eResource) then
-				sColorValue = g_sColorViolet
+				sColorValue = g_sColorPurple
 			elseif iSurplus > 3 and iActiveTotal <= 0 then
 				sColorValue = g_sColorDarkGreen
 			elseif iSurplus > 1 and iActiveTotal <= 0 then
@@ -485,6 +490,12 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 				sColorValue = g_sColorRed
 			elseif iTotal == 0 and iActiveSurplus > 0 then
 				sColorValue = g_sColorOrange
+			elseif iSurplus == 1 and iActiveTotal <= 0 and iTotal > 1 then
+				sColorValue = g_sColorYellow
+			elseif iSurplus == 1 and iActiveTotal <= 0 and bIsStrategic then
+				sColorValue = g_sColorYellow
+			elseif iSurplus == 1 and iActiveTotal <= 0 then
+				sColorValue = g_sColorPink
 			end
 			
 			-- current deals part copied and modified from EUI
@@ -573,9 +584,6 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		local bHasStatecraftPolicyForMonopolies = pPlayer:HasPolicy(GameInfoTypes.POLICY_CULTURAL_DIPLOMACY)
 		local bHasBonusFromTegucigalpa = pPlayer:HasPolicy(GameInfoTypes.POLICY_HONDURAS)
 		local bIsDutch = pPlayer:GetCivilizationType() == GameInfoTypes.CIVILIZATION_NETHERLANDS
-		
-		local bIsLuxury = (pResource.ResourceUsage == 2)
-		local bIsStrategic = (pResource.ResourceUsage == 1)
 		
 		local iResourceOwn = iLocal
 		local iResourceOnMap = Map.GetNumResources(eResource)

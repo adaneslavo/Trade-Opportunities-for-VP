@@ -570,8 +570,8 @@
 
 		<Image ID="BottomTrim" Anchor="C,B" Offset="0,90" Texture="HorizontalTrim.dds" Size="1296,5" />
 
-		<Box Color="White,0" Anchor="L,T" Size="32,32" Offset="265,567">
-			<Label Anchor="C,C" Offset="0,-2" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_TRADE_COLOR_KEY_TITLE"/>
+		<Box Color="White,0" Anchor="L,T" Size="32,32" Offset="225,567">
+			<Label Anchor="C,C" Offset="0, 0" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_TRADE_COLOR_KEY_TITLE"/>
 			<Label Anchor="L,C" Offset="70,-15" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_TRADE_COLOR_KEY_1"/>
 			<Label Anchor="L,C" Offset="70, 0" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_TRADE_COLOR_KEY_2"/>
 			<Label Anchor="L,C" Offset="70, 15" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_DO_TRADE_COLOR_KEY_3"/>

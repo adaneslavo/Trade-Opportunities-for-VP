@@ -1,4 +1,18 @@
 Changelog:
+v21:
+- ???
+
+v20:
+- now City-State with diplomatic Marriage (of Austria) have named coloured Magenta and additional info in tooltip;
+
+v19:
+- embargoed resources are now coloured dark purple;
+- non-active player now has 2 new colours:
+	- when he has only 1 tradable copy, but he has more of them from other sources (yellow);
+	- when he has only 1 tradable copy, and it is the only one he has (pink)
+		- exception is for Strategic Resources, so they always have yellow, even if they have only 1 copy;
+- adjusted colour key;
+
 v18:
 - sanctioned players are now marked in the Trade window;
 - WAR marker is move to the center like SANCTIONED;
