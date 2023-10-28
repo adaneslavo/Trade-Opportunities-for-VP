@@ -363,6 +363,13 @@
 		<Row Tag="TXT_KEY_DO_CS_STATUS_NO_QUEST_TT" >
 			<Text>{1} currently has no requests.</Text>
 		</Row>
+
+		<Row Tag="TXT_KEY_DO_CS_STATUS_UNKNOWN" >
+			<Text>Unknown</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_CS_STATUS_UNKNOWN_PLAYER" >
+			<Text>Unknown Player</Text>
+		</Row>
 		
 		<Row Tag="TXT_KEY_DO_CS_STATUS_MARRIAGE_TT" >
 			<Text>[NEWLINE][NEWLINE][COLOR_MAGENTA]Marriage:[ENDCOLOR] While at peace with the City-State, [ICON_RES_MARRIAGE] Marriages eliminate [ICON_INFLUENCE] Influence decay, grant an additional [ICON_DIPLOMAT] World Congress Delegate, and provide a +15% [ICON_GREAT_PEOPLE] Great Person Rate boost in the [ICON_CAPITAL] Capital.</Text>

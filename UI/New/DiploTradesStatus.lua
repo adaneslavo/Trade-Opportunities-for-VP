@@ -594,7 +594,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local iExtraFromCSAlliances = pPlayer:GetResourceFromCSAlliances(eResource) -- Foreign Service
 			local iExtraFromAdmiral = pPlayer:GetResourcesFromGP(eResource)
 			local iExtraFromModifiers = iExtraMisc - (iExtraFromCorporation + iExtraFromFranchise + iExtraFromCSAlliances + iExtraFromAdmiral)
-				local iExtraFromThirdAlternativeMod = pPlayer:GetStrategicResourceMod(eResource) - 100
+				local iExtraFromThirdAlternativeMod = pPlayer:GetStrategicResourceMod(eResource)
 				local iExtraFromZealotryMod = pPlayer:GetResourceModFromReligion(eResource)
 		
 		local sResourcesExtra = ""

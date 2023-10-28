@@ -142,8 +142,9 @@ function GetCsControl(im, eCs, ePlayer)
 	sortEntry.name = sName
 	
 	local bIsMarried = pCs:IsMarried(eAustria)
-	
-	if bIsMarried then
+	local bMetAustria = pTeam:IsHasMet(eAustria)
+
+	if bIsMarried and bMetAustria then
 		sName = g_sColorMagenta .. sName .. '[ENDCOLOR]'
 	end
 
@@ -174,7 +175,7 @@ function GetCsControl(im, eCs, ePlayer)
 		end
 	end
 
-	if bIsMarried then
+	if bIsMarried and bMetAustria then
 		sNameTooltip = sNameTooltip .. L("TXT_KEY_DO_CS_STATUS_MARRIAGE_TT")
 	end
 
@@ -270,7 +271,15 @@ function GetCsControl(im, eCs, ePlayer)
 
 		if bEmbassy then
 			controlTable.CsEmbassy:SetText("[ICON_CITY_STATE]")
-			sEmbassyOwner = Players[pPlot:GetPlayerThatBuiltImprovement()]:GetCivilizationDescription()
+
+			local eEmbassyOwner = pPlot:GetPlayerThatBuiltImprovement()
+
+			if pTeam:IsHasMet(eEmbassyOwner) then
+				sEmbassyOwner = Players[eEmbassyOwner]:GetCivilizationDescription()
+			else
+				sEmbassyOwner = L("TXT_KEY_DO_CS_STATUS_UNKNOWN_PLAYER")
+			end
+
 			controlTable.CsEmbassy:SetToolTipString(L("TXT_KEY_DO_CS_STATUS_EMBASSY_TT", sEmbassyOwner))
 			sortEntry.embassy = sEmbassyOwner
 			break
@@ -498,6 +507,8 @@ end
 
 function GetAlly(pCs, pActivePlayer)
 	local eActivePlayer = pActivePlayer:GetID()
+	local eTeam = pActivePlayer:GetTeam()
+	local pTeam = Teams[eTeam]
 	local sAlly = ""
 	local iSort = "ZZZZ"
 
@@ -507,11 +518,18 @@ function GetAlly(pCs, pActivePlayer)
 	else
 		local eAlly = pCs:GetAlly() or -1
 		local pAlly = Players[eAlly]
+		local bIsMet = pTeam:IsHasMet(eAlly)
 
 		if eAlly ~= -1 then
 			sAlly = L(pAlly:GetCivilizationShortDescriptionKey())
-			sAlly = GetApproach(pActivePlayer, pAlly, sAlly)
-			iSort = sAlly
+			
+			if bIsMet then
+				sAlly = GetApproach(pActivePlayer, pAlly, sAlly)
+				iSort = sAlly
+			else
+				sAlly = L("TXT_KEY_DO_CS_STATUS_UNKNOWN")
+				iSort = "ZZYY"
+			end
 		end
 	end
 
@@ -550,6 +568,8 @@ function OnPledgeProtectionSelected(eCs)
 end
 
 function GetProtectingPlayers(pCs, pActivePlayer)
+	local pTeam = Teams[pActivePlayer:GetTeam()]
+	
 	local sProtecting = ""
 	local sProtectingTT = ""
 	local eCs = pCs:GetID()
@@ -567,6 +587,8 @@ function GetProtectingPlayers(pCs, pActivePlayer)
 				
 				if iCivPlayer == eActivePlayer then
 					sProtecting = sProtecting .. L("TXT_KEY_DO_CS_YOU")
+				elseif not pTeam:IsHasMet(iCivPlayer) then
+					sProtecting = sProtecting .. L("TXT_KEY_DO_CS_STATUS_UNKNOWN")
 				else
 					sProtecting = sProtecting .. GetApproach(pActivePlayer, pCivPlayer, L(Players[iCivPlayer]:GetCivilizationShortDescriptionKey()))
 				end
@@ -635,19 +657,27 @@ function GetInfluence(pCs, pPlayer)
 end
 
 function GetNeededInfluence(pCs, pPlayer)
+	local pTeam = Teams[pPlayer:GetTeam()]
+	
 	local iNeededInfluence = 0
 	local sNeededInfluence = ""	
 	local iSortInfluence
 	local iPlayerInfluence = pCs:GetMinorCivFriendshipWithMajor(pPlayer:GetID())
 	local eAlly = pCs:GetAlly()
-	
+	local sAlly = ""
+
 	if eAlly ~= nil and eAlly ~= -1 then
 		if eAlly ~= pPlayer:GetID() then
 			local pAlly = Players[eAlly]
 			local iAllyInfluence = pCs:GetMinorCivFriendshipWithMajor(eAlly)
-			local sAlly = L(pAlly:GetCivilizationShortDescriptionKey())
-			sAlly = GetApproach(pPlayer, pAlly, sAlly)
-	
+			
+			if pTeam:IsHasMet(eAlly) then
+				sAlly = L(pAlly:GetCivilizationShortDescriptionKey())
+				sAlly = GetApproach(pPlayer, pAlly, sAlly)
+			else
+				sAlly = L("TXT_KEY_DO_CS_STATUS_UNKNOWN_PLAYER")
+			end
+
 			iNeededInfluence = iAllyInfluence - iPlayerInfluence + 1
 			sNeededInfluence = L("TXT_KEY_DO_CS_STATUS_INFLUENCE_TT", sAlly, g_sCsName, iNeededInfluence)
 		end

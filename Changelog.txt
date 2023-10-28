@@ -1,6 +1,9 @@
 Changelog:
 v21:
-- ???
+- Marriages are shown only when Austria is met by the Active Player;
+- now Unknown Players are mentioned as Allies and Protecting players (were blanks);
+- now Unknown Players are mentioned as Embassy Owners (were shown as met players);
+- reverted fix for Third Alternative (fixed in VP);
 
 v20:
 - now City-State with diplomatic Marriage (of Austria) have named coloured Magenta and additional info in tooltip;
