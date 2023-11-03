@@ -89,6 +89,12 @@
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT_MORE" >
 			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_imported} copies were imported, thus added to your [ICON_VP_MONOPOLY] Global Monopoly counter</Text>
 		</Row>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS_ONE" >
+			<Text>[NEWLINE][ICON_BULLET]1 copy was provided by a building</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS_MORE" >
+			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_buildings} copies were provided by buildings</Text>
+		</Row>
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_GP" >
 			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_GP} copies were granted by the [ICON_GREAT_ADMIRAL] Great Admiral</Text>
 		</Row>
@@ -102,10 +108,10 @@
 			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_ally} copies were granted by your [ICON_CITY_STATE] City-State Alliances ([COLOR_MAGENTA]Foreign Service[ENDCOLOR])</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_ONE" >
-			<Text>[NEWLINE][ICON_BULLET]1 copy was granted by additional modifiers ([COLOR_MAGENTA]Third Alternative[ENDCOLOR]: +{1_resource_ta_mod}%, [COLOR_WHITE]Zealotry[ENDCOLOR]: +{2_resource_z_mod}%)</Text>
+			<Text>[NEWLINE][ICON_BULLET]1 copy was granted by additional modifiers ([COLOR_MAGENTA]Third Alternative[ENDCOLOR]: +{1_resource_ta_mod}%, [COLOR_WHITE]Zealotry[ENDCOLOR]: +{2_resource_z_mod}%, [COLOR_LIGHT_GREY]Siberian Riches[ENDCOLOR]: +{3_resource_sr_mod}%)</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_MORE" >
-			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_mods} copies were granted by additional modifiers ([COLOR_MAGENTA]Third Alternative[ENDCOLOR]: +{2_resource_ta_mod}%, [COLOR_WHITE]Zealotry[ENDCOLOR]: +{3_resource_z_mod}%)</Text>
+			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_mods} copies were granted by additional modifiers ([COLOR_MAGENTA]Third Alternative[ENDCOLOR]: +{2_resource_ta_mod}%, [COLOR_WHITE]Zealotry[ENDCOLOR]: +{3_resource_z_mod}%, [COLOR_LIGHT_GREY]Siberian Riches[ENDCOLOR]: +{4_resource_sr_mod}%)</Text>
 		</Row>
 		
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_NONE" >

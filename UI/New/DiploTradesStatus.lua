@@ -592,14 +592,17 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local iExtraFromCorporation = pPlayer:GetResourcesFromCorporation(eResource)
 			local iExtraFromFranchise = pPlayer:GetResourcesFromFranchises(eResource)
 			local iExtraFromCSAlliances = pPlayer:GetResourceFromCSAlliances(eResource) -- Foreign Service
+				local iExtraFromBuildings = pPlayer:GetNumResourceFromBuildings(eResource)
 			local iExtraFromAdmiral = pPlayer:GetResourcesFromGP(eResource)
 			local iExtraFromModifiers = iExtraMisc - (iExtraFromCorporation + iExtraFromFranchise + iExtraFromCSAlliances + iExtraFromAdmiral)
 				local iExtraFromThirdAlternativeMod = pPlayer:GetStrategicResourceMod(eResource)
 				local iExtraFromZealotryMod = pPlayer:GetResourceModFromReligion(eResource)
+				local iExtraFromTraitsMod = pPlayer:GetResourceQuantityModifierFromTraits(eResource)
 		
 		local sResourcesExtra = ""
 		local sResourcesExtraFromCorpAndFranch = ""
 		local sResourcesExtraFromCSAlliances = ""
+		local sResourcesExtraFromBuildings = ""
 		local sResourcesExtraFromAdmiral = ""
 		local sResourcesExtraFromModifiers = ""
 		local sResourcesByNeds = ""
@@ -622,6 +625,22 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 				sResourcesFromStatecraft = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT_ONE")
 			elseif iMinors > 1 then
 				sResourcesFromStatecraft = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT_MORE", iMinors)
+			end
+		end
+	
+		if iExtraFromBuildings > 0 then
+			-- East India Company, World Wonders, Natural Wonders
+			-- if all resources are on the map, then it spawns one and it counts towards monopoly
+			-- if there are some resources not available on the map, he chooses one of them and it does not count towards monopolys
+			if iExtraFromBuildings == 1 then
+				sResourcesExtraFromBuildings = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS_ONE", sResourcesExtraFromBuildings)
+			elseif iExtraFromBuildings > 1 then
+				sResourcesExtraFromBuildings = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS_MORE", sResourcesExtraFromBuildings)
+			end
+
+			if iResourceOnMap == 0 then
+				sResourcesExtraFromBuildings = sResourcesExtraFromBuildings .. " " .. L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_EXT")
+				iResourceOwn = iResourceOwn - iExtraFromBuildings -- so resources do not count towards monopolies
 			end
 		end
 		
@@ -660,10 +679,11 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		if iExtraFromModifiers > 0 then
 			-- Zealotry (belief):				+1% of every strategic resource for each city following your religion
 			-- Third Alternative (policy):		+100% of every strategic resource
+			-- Russian UA (trait):				+100% of every strategic resource
 			if iExtraFromModifiers == 1 then
-				sResourcesExtraFromModifiers = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_ONE", iExtraFromThirdAlternativeMod, iExtraFromZealotryMod)
+				sResourcesExtraFromModifiers = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_ONE", iExtraFromThirdAlternativeMod, iExtraFromZealotryMod, iExtraFromTraitsMod)
 			elseif iExtraFromModifiers > 1 then
-				sResourcesExtraFromModifiers = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_MORE", iExtraFromModifiers, iExtraFromThirdAlternativeMod, iExtraFromZealotryMod)
+				sResourcesExtraFromModifiers = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_MORE", iExtraFromModifiers, iExtraFromThirdAlternativeMod, iExtraFromZealotryMod, iExtraFromTraitsMod)
 			end
 		end	
 		

@@ -1,4 +1,7 @@
 Changelog:
+v22:
+- added two missing labels for resources from Traits and Buidlings;
+
 v21:
 - Marriages are shown only when Austria is met by the Active Player;
 - now Unknown Players are mentioned as Allies and Protecting players (were blanks);
