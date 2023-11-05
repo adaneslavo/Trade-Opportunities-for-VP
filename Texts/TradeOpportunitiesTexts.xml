@@ -75,7 +75,7 @@
 			<Text>{1_icon} {2_c_resource}{3_resource}:[ENDCOLOR] {4_value}{5_demand} {6_c_monopol}({7_resource_own}/{8_resource_pos})[ENDCOLOR]{9_resource_GP}</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_EXT" >
-			<Text>and do not count towards [ICON_VP_MONOPOLY] Global Monopolies</Text>
+			<Text>(not counted towards [ICON_VP_MONOPOLY] Global Monopolies)</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_NETHERLANDS_ONE" >
 			<Text>[NEWLINE][ICON_BULLET]1 copy was imported, thus added to your [ICON_VP_MONOPOLY] Global Monopoly counter</Text>

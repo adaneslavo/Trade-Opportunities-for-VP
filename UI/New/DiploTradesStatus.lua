@@ -592,12 +592,15 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local iExtraFromCorporation = pPlayer:GetResourcesFromCorporation(eResource)
 			local iExtraFromFranchise = pPlayer:GetResourcesFromFranchises(eResource)
 			local iExtraFromCSAlliances = pPlayer:GetResourceFromCSAlliances(eResource) -- Foreign Service
-				local iExtraFromBuildings = pPlayer:GetNumResourceFromBuildings(eResource)
 			local iExtraFromAdmiral = pPlayer:GetResourcesFromGP(eResource)
+		local iExtraFromBuildings = pPlayer:GetNumResourceFromBuildings(eResource)
 			local iExtraFromModifiers = iExtraMisc - (iExtraFromCorporation + iExtraFromFranchise + iExtraFromCSAlliances + iExtraFromAdmiral)
 				local iExtraFromThirdAlternativeMod = pPlayer:GetStrategicResourceMod(eResource)
-				local iExtraFromZealotryMod = pPlayer:GetResourceModFromReligion(eResource)
-				local iExtraFromTraitsMod = pPlayer:GetResourceQuantityModifierFromTraits(eResource)
+				local iExtraFromZealotryMod = pPlayer:GetResourceModFromReligion(eResource)		
+		
+		local iResMinusExtra = iResourceOwn - (iExtraMisc + iExtraFromBuildings)
+				local iExtraFromTraitMod = pPlayer:GetResourceQuantityModifierFromTraits(eResource)
+		local iExtraFromTrait = (iResMinusExtra * 100) / (iExtraFromTraitMod + 100)
 		
 		local sResourcesExtra = ""
 		local sResourcesExtraFromCorpAndFranch = ""
@@ -627,15 +630,15 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 				sResourcesFromStatecraft = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT_MORE", iMinors)
 			end
 		end
-	
+		
 		if iExtraFromBuildings > 0 then
 			-- East India Company, World Wonders, Natural Wonders
 			-- if all resources are on the map, then it spawns one and it counts towards monopoly
 			-- if there are some resources not available on the map, he chooses one of them and it does not count towards monopolys
 			if iExtraFromBuildings == 1 then
-				sResourcesExtraFromBuildings = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS_ONE", sResourcesExtraFromBuildings)
+				sResourcesExtraFromBuildings = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS_ONE", iExtraFromBuildings)
 			elseif iExtraFromBuildings > 1 then
-				sResourcesExtraFromBuildings = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS_MORE", sResourcesExtraFromBuildings)
+				sResourcesExtraFromBuildings = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS_MORE", iExtraFromBuildings)
 			end
 
 			if iResourceOnMap == 0 then
@@ -675,19 +678,21 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 				sResourcesExtraFromCSAlliances = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_ALLY_MORE", iExtraFromCSAlliances)
 			end
 		end					
-
-		if iExtraFromModifiers > 0 then
+		print("TO_TEST", iExtraFromModifiers, iExtraFromTrait)
+		if iExtraFromModifiers > 0 or iExtraFromTrait > 0 then
+			local iSumFromMod = iExtraFromModifiers + iExtraFromTrait
+			
 			-- Zealotry (belief):				+1% of every strategic resource for each city following your religion
 			-- Third Alternative (policy):		+100% of every strategic resource
 			-- Russian UA (trait):				+100% of every strategic resource
-			if iExtraFromModifiers == 1 then
-				sResourcesExtraFromModifiers = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_ONE", iExtraFromThirdAlternativeMod, iExtraFromZealotryMod, iExtraFromTraitsMod)
-			elseif iExtraFromModifiers > 1 then
-				sResourcesExtraFromModifiers = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_MORE", iExtraFromModifiers, iExtraFromThirdAlternativeMod, iExtraFromZealotryMod, iExtraFromTraitsMod)
+			if iSumFromMod == 1 then
+				sResourcesExtraFromModifiers = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_ONE", iExtraFromThirdAlternativeMod, iExtraFromZealotryMod, iExtraFromTraitMod)
+			elseif iSumFromMod > 1 then
+				sResourcesExtraFromModifiers = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_MORE", iSumFromMod, iExtraFromThirdAlternativeMod, iExtraFromZealotryMod, iExtraFromTraitMod)
 			end
 		end	
 		
-		sResourcesExtra = sResourcesByNeds .. sResourcesFromStatecraft .. sResourcesExtraFromAdmiral .. sResourcesExtraFromCSAlliances 
+		sResourcesExtra = sResourcesByNeds .. sResourcesFromStatecraft .. sResourcesExtraFromBuildings .. sResourcesExtraFromAdmiral .. sResourcesExtraFromCSAlliances 
 							.. sResourcesExtraFromCorpAndFranch  .. sResourcesExtraFromModifiers
 
 		local fRatio = iResourceOwn / iResourceOnMap

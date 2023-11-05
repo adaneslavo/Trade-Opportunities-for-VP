@@ -1,6 +1,7 @@
 Changelog:
 v22:
 - added two missing labels for resources from Traits and Buidlings;
+- adjusted note about Global Monopoly exclusion;
 
 v21:
 - Marriages are shown only when Austria is met by the Active Player;
