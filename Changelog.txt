@@ -1,4 +1,8 @@
 Changelog:
+v23:
+- fixed labeling for policies and traits;
+- now policies and traits are only applied for strategic resources like they should be;
+
 v22:
 - added two missing labels for resources from Traits and Buidlings;
 - adjusted note about Global Monopoly exclusion;

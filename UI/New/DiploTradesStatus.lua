@@ -585,7 +585,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		local bHasBonusFromTegucigalpa = pPlayer:HasPolicy(GameInfoTypes.POLICY_HONDURAS)
 		local bIsDutch = pPlayer:GetCivilizationType() == GameInfoTypes.CIVILIZATION_NETHERLANDS
 		
-		local iResourceOwn = iLocal
+		local iResourceOwnAll = iLocal
 		local iResourceOnMap = Map.GetNumResources(eResource)
 
 		local iExtraMisc = pPlayer:GetResourcesMisc(eResource) -- included in iLocal
@@ -593,14 +593,14 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 			local iExtraFromFranchise = pPlayer:GetResourcesFromFranchises(eResource)
 			local iExtraFromCSAlliances = pPlayer:GetResourceFromCSAlliances(eResource) -- Foreign Service
 			local iExtraFromAdmiral = pPlayer:GetResourcesFromGP(eResource)
-		local iExtraFromBuildings = pPlayer:GetNumResourceFromBuildings(eResource)
 			local iExtraFromModifiers = iExtraMisc - (iExtraFromCorporation + iExtraFromFranchise + iExtraFromCSAlliances + iExtraFromAdmiral)
 				local iExtraFromThirdAlternativeMod = pPlayer:GetStrategicResourceMod(eResource)
-				local iExtraFromZealotryMod = pPlayer:GetResourceModFromReligion(eResource)		
-		
-		local iResMinusExtra = iResourceOwn - (iExtraMisc + iExtraFromBuildings)
-				local iExtraFromTraitMod = pPlayer:GetResourceQuantityModifierFromTraits(eResource)
-		local iExtraFromTrait = (iResMinusExtra * 100) / (iExtraFromTraitMod + 100)
+				local iExtraFromZealotryMod = pPlayer:GetResourceModFromReligion(eResource)	
+		local iExtraFromBuildings = pPlayer:GetNumResourceFromBuildings(eResource)	
+		local iResOwnPlusTrait = iResourceOwnAll - (iExtraMisc + iExtraFromBuildings)
+			local iExtraFromTraitMod = pPlayer:GetResourceQuantityModifierFromTraits(eResource)
+				local iExtraFromTrait = (iResOwnPlusTrait * iExtraFromTraitMod) / (iExtraFromTraitMod + 100)
+				local iResOwnFromMap = (iResOwnPlusTrait * 100) / (iExtraFromTraitMod + 100)
 		
 		local sResourcesExtra = ""
 		local sResourcesExtraFromCorpAndFranch = ""
@@ -612,7 +612,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		local sResourcesFromStatecraft = ""
 
 		if bIsDutch and bIsLuxury then
-			iResourceOwn = iResourceOwn + iImports
+			iResourceOwnAll = iResourceOwnAll + iImports
 
 			if iImports == 1 then
 				sResourcesByNeds = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_NETHERLANDS_ONE")
@@ -622,7 +622,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		end	
 
 		if (bHasStatecraftPolicyForMonopolies or bHasBonusFromTegucigalpa) and not (bIsDutch and bIsLuxury) then
-			iResourceOwn = iResourceOwn + iMinors
+			iResourceOwnAll = iResourceOwnAll + iMinors
 
 			if iMinors == 1 then
 				sResourcesFromStatecraft = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT_ONE")
@@ -643,7 +643,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 
 			if iResourceOnMap == 0 then
 				sResourcesExtraFromBuildings = sResourcesExtraFromBuildings .. " " .. L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_EXT")
-				iResourceOwn = iResourceOwn - iExtraFromBuildings -- so resources do not count towards monopolies
+				iResourceOwnAll = iResourceOwnAll - iExtraFromBuildings -- so resources do not count towards monopolies
 			end
 		end
 		
@@ -655,7 +655,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 
 			if iResourceOnMap == 0 then
 				sResourcesExtraFromAdmiral = sResourcesExtraFromAdmiral .. " " .. L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_EXT")
-				iResourceOwn = iResourceOwn - iExtraFromAdmiral -- so resources do not count towards monopolies
+				iResourceOwnAll = iResourceOwnAll - iExtraFromAdmiral -- so resources do not count towards monopolies
 			end
 		end	
 
@@ -666,7 +666,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 
 			if iResourceOnMap == 0 then
 				sResourcesExtraFromAdmiral = sResourcesExtraFromAdmiral .. " " .. L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_EXT")
-				iResourceOwn = iResourceOwn - iExtraFromCorporation - iExtraFromFranchise -- so resources do not count towards monopolies
+				iResourceOwnAll = iResourceOwnAll - iExtraFromCorporation - iExtraFromFranchise -- so resources do not count towards monopolies
 			end
 		end			
 
@@ -678,8 +678,8 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 				sResourcesExtraFromCSAlliances = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_ALLY_MORE", iExtraFromCSAlliances)
 			end
 		end					
-		print("TO_TEST", iExtraFromModifiers, iExtraFromTrait)
-		if iExtraFromModifiers > 0 or iExtraFromTrait > 0 then
+		
+		if (iExtraFromModifiers > 0 or iExtraFromTrait > 0) and bIsStrategic then
 			local iSumFromMod = iExtraFromModifiers + iExtraFromTrait
 			
 			-- Zealotry (belief):				+1% of every strategic resource for each city following your religion
@@ -695,7 +695,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		sResourcesExtra = sResourcesByNeds .. sResourcesFromStatecraft .. sResourcesExtraFromBuildings .. sResourcesExtraFromAdmiral .. sResourcesExtraFromCSAlliances 
 							.. sResourcesExtraFromCorpAndFranch  .. sResourcesExtraFromModifiers
 
-		local fRatio = iResourceOwn / iResourceOnMap
+		local fRatio = iResourceOwnAll / iResourceOnMap
 		local bGlobalMonopoly = fRatio > 0.5
 		local bStrategicMonopoly = fRatio > 0.25
 		local sMonopoly = ""	
@@ -709,7 +709,7 @@ function GetUsefulResourceText(pPlayer, pResource, bIsActivePlayer, pActivePlaye
 		end
 		
 		sText = L("TXT_KEY_DO_TRADE_VALUE", sColorValue, iTotal, sMonopoly)
-		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP", pResource.IconString, g_sColorResourceName, L(pResource.Description), sText, sCityList, sColorValue, iResourceOwn, iResourceOnMap, sResourcesExtra)
+		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP", pResource.IconString, g_sColorResourceName, L(pResource.Description), sText, sCityList, sColorValue, iResourceOwnAll, iResourceOnMap, sResourcesExtra)
 	else
 		sText = L("TXT_KEY_DO_TRADE_VALUE_NONE", g_sColorBrown)
 		sToolTip = L("TXT_KEY_DO_TRADE_VALUE_TOOLTIP_NONE", pResource.IconString, g_sColorResourceName, L(pResource.Description), g_sColorBrown)
