@@ -72,46 +72,40 @@
 		</Row>
 		
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP" >
-			<Text>{1_icon} {2_c_resource}{3_resource}:[ENDCOLOR] {4_value}{5_demand} {6_c_monopol}({7_resource_own}/{8_resource_pos})[ENDCOLOR]{9_resource_GP}</Text>
+			<Text>{1_icon} {2_c_resource}{3_resource}:[ENDCOLOR] {4_value}{5_demand} {6_c_monopol}({7_resource_own}/{8_resource_pos}, {9_ratio}%)[ENDCOLOR]{10_resource_GP}</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_EXT" >
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_EXCLUSION" >
 			<Text>(not counted towards [ICON_MONOPOLY] Global Monopolies)</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_NETHERLANDS_ONE" >
-			<Text>[NEWLINE][ICON_BULLET]1 copy was imported, thus added to your [ICON_MONOPOLY] Global Monopoly counter</Text>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_IMPORT" >
+			<Text>[NEWLINE][ICON_BULLET]{1_copies} cop{2_plural} imported from Other Civilizations</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_NETHERLANDS_MORE" >
-			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_imported} copies were imported, thus added to your [ICON_MONOPOLY] Global Monopoly counter</Text>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_IMPORT_ADDED" >
+			<Text> (added towards [ICON_MONOPOLY] Global Monopolies due to active [COLOR:45:90:170:255]Traits[ENDCOLOR])</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT_ONE" >
-			<Text>[NEWLINE][ICON_BULLET]1 copy was imported, thus added to your [ICON_MONOPOLY] Global Monopoly counter</Text>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT" >
+			<Text>[NEWLINE][ICON_BULLET]{1_copies} cop{2_plural} imported from [ICON_CITY_STATE] City-States</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT_MORE" >
-			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_imported} copies were imported, thus added to your [ICON_MONOPOLY] Global Monopoly counter</Text>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_STATECRAFT_ADDED" >
+			<Text> (added towards [ICON_MONOPOLY] Global Monopolies due to active [COLOR_MAGENTA]Exchange Markets[ENDCOLOR] or [COLOR:200:200:200:255]Honduras[ENDCOLOR])</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS_ONE" >
-			<Text>[NEWLINE][ICON_BULLET]1 copy was provided by a building</Text>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_EXTRACTION" >
+			<Text>[NEWLINE][ICON_BULLET]{1_copies} cop{2_plural} granted ({3_flat} from flat increase and {4_mod} from percentage modifiers) by additional improvement extractions ([COLOR_CITY_BROWN]Manufactories[ENDCOLOR] and other improvements)</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS_MORE" >
-			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_buildings} copies were provided by buildings</Text>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODIFIERS" >
+			<Text>[NEWLINE][ICON_BULLET]{1_copies} cop{2_plural} granted by additional modifiers ([COLOR_MAGENTA]Third Alternative[ENDCOLOR]: +{3_resource_ta_mod}%, [COLOR_WHITE]Zealotry[ENDCOLOR]: +{4_resource_z_mod}%, [COLOR:45:90:170:255]Siberian Riches[ENDCOLOR]: +{5_resource_sr_mod}%)</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_GP" >
-			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_GP} copies were granted by the [ICON_GREAT_ADMIRAL] Great Admiral</Text>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_BUILDINGS" >
+			<Text>[NEWLINE][ICON_BULLET]{1_copies} cop{2_plural} provided by [COLOR_YIELD_FOOD]Buildings[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_ADMIRAL" >
+			<Text>[NEWLINE][ICON_BULLET]{1_copies} copies were granted by the [ICON_GREAT_ADMIRAL] [COLOR_YIELD_GOLD]Great Admiral[ENDCOLOR]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_CORP" >
-			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_corp} and {2_resource_num_franch} copies were granted by your [ICON_MONOPOLY] Corporations and [ICON_MONOPOLY] Franchises respectively</Text>
+			<Text>[NEWLINE][ICON_BULLET]{1_copiesCorp} and {2_copiesFranch} copies were granted by your [ICON_MONOPOLY] [COLOR_YIELD_FOOD]Corporations[ENDCOLOR] and [ICON_MONOPOLY] [COLOR_YIELD_FOOD]Franchises[ENDCOLOR] respectively</Text>
 		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_ALLY_ONE" >
-			<Text>[NEWLINE][ICON_BULLET]1 copy was granted by your [ICON_CITY_STATE] City-State Alliances ([COLOR_MAGENTA]Foreign Service[ENDCOLOR])</Text>
-		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_ALLY_MORE" >
-			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_ally} copies were granted by your [ICON_CITY_STATE] City-State Alliances ([COLOR_MAGENTA]Foreign Service[ENDCOLOR])</Text>
-		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_ONE" >
-			<Text>[NEWLINE][ICON_BULLET]1 copy was granted by additional modifiers ([COLOR_MAGENTA]Third Alternative[ENDCOLOR]: +{1_resource_ta_mod}%, [COLOR_WHITE]Zealotry[ENDCOLOR]: +{2_resource_z_mod}%, [COLOR_LIGHT_GREY]Siberian Riches[ENDCOLOR]: +{3_resource_sr_mod}%)</Text>
-		</Row>
-		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_MODS_MORE" >
-			<Text>[NEWLINE][ICON_BULLET]{1_resource_num_mods} copies were granted by additional modifiers ([COLOR_MAGENTA]Third Alternative[ENDCOLOR]: +{2_resource_ta_mod}%, [COLOR_WHITE]Zealotry[ENDCOLOR]: +{3_resource_z_mod}%, [COLOR_LIGHT_GREY]Siberian Riches[ENDCOLOR]: +{4_resource_sr_mod}%)</Text>
+		<Row Tag="TXT_KEY_DO_TRADE_VALUE_TOOLTIP_CS_ALLIES" >
+			<Text>[NEWLINE][ICON_BULLET]{1_copies} cop{2_plural} granted by your [ICON_CITY_STATE] City-State Alliances ([COLOR_MAGENTA]Exchange Markets[ENDCOLOR])</Text>
 		</Row>
 		
 		<Row Tag="TXT_KEY_DO_TRADE_VALUE_NONE" >
